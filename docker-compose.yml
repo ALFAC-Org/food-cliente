@@ -1,0 +1,25 @@
+version: "3.3"
+
+volumes:
+  mysql_data: {}
+
+services:
+  mysql:
+    image: mysql:8.0
+    volumes: 
+      - ./mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pedidos
+      MYSQL_USER: pedidos
+      MYSQL_PASSWORD: pedidos
+  springboot-app:
+    image: springboot-app
+    build: .
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
