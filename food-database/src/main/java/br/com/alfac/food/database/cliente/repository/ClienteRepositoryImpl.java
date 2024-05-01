@@ -1,9 +1,12 @@
 package br.com.alfac.food.database.cliente.repository;
 
+import org.springframework.stereotype.Component;
+
 import br.com.alfac.food.core.application.cliente.ports.ClienteRepository;
 import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.database.cliente.entity.ClienteEntity;
 
+@Component
 public class ClienteRepositoryImpl implements ClienteRepository {
 
     public Cliente consultarCliente(){

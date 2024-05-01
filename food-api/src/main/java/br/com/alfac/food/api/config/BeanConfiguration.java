@@ -20,7 +20,7 @@ public class BeanConfiguration {
     public ClienteService clienteService(ClienteRepository clienteRepository) {
         return new ClienteServiceImpl(clienteRepository);
     }
-
+/*
     @Bean
     public PedidoService pedidoService(PedidoRepository pedidoRepository) {
         return new PedidoServiceImpl(pedidoRepository);
@@ -29,6 +29,6 @@ public class BeanConfiguration {
     @Bean
     public ItemService itemService(ItemRepository itemRepository) {
         return new ItemServiceImpl(itemRepository);
-    }
+    } */
 
 }
