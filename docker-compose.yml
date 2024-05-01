@@ -4,12 +4,14 @@ volumes:
   mysql_data: {}
 
 services:
-  mysql:
+  mysqldb:
     image: mysql:8.0
     volumes: 
       - ./mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
+    networks:
+      - foodapi-network
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -18,8 +20,14 @@ services:
       MYSQL_PASSWORD: pedidos
   springboot-app:
     image: springboot-app
+    networks:
+      - foodapi-network
+    environment:
+      DATASOURCE_URL: jdbc:mysql://mysqldb:3306/pedidos
     build: .
     depends_on:
-      - mysql
+      - mysqldb
     ports:
       - "8080:8080"
+networks:
+  foodapi-network:
