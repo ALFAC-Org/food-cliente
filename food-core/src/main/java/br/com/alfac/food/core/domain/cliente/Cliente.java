@@ -7,6 +7,7 @@ import br.com.alfac.food.core.domain.cliente.vo.CPF;
 public class Cliente implements AggregateRoot {
     private CPF cpf;
     private String nome;
+    private String email;
 
     public CPF getCpf() {
         return cpf;
@@ -24,7 +25,15 @@ public class Cliente implements AggregateRoot {
         this.nome = nome;
     }
 
-    public void validateEntity(){
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void validateEntity() {
         AssertionConcern.assertArgumentNotEmpty(nome, "O nome do cliente não pode estar vazio.");
     }
     
