@@ -1,8 +1,28 @@
 package br.com.alfac.food.database.cliente.entity;
 
-public class ClienteEntity {
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+
+import java.io.Serializable;
+
+@Entity
+@Table(name = "cliente")
+public class ClienteEntity implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotEmpty(message = "Nome do cliente é obrigatório")
     private String nome;
-    
+
+    @NotEmpty(message = "CPF do cliente é obrigatório")
+    private String cpf;
+
+    @NotEmpty(message = "Email do cliente é obrigatório")
+    private String email;
+
+
     public String getNome() {
         return nome;
     }
@@ -10,5 +30,28 @@ public class ClienteEntity {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(final String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
+    }
 }

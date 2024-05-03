@@ -41,6 +41,11 @@
             <artifactId>food-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.2.0.Final</version> <!-- Versão atualizada do Hibernate Validator -->
+        </dependency>
     </dependencies>
 
     <build>

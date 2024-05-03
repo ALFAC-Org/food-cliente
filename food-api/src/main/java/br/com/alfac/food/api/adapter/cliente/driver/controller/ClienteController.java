@@ -1,10 +1,17 @@
 package br.com.alfac.food.api.adapter.cliente.driver.controller;
 
+import br.com.alfac.food.api.dto.ClienteRequest;
+import br.com.alfac.food.core.domain.pedido.entities.Pedido;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
 import br.com.alfac.food.core.application.cliente.ports.ClienteService;
-import br.com.alfac.food.core.domain.cliente.Cliente;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,18 +26,25 @@ public class ClienteController {
 
     private ClienteService clienteService;
 
-    public ClienteController(ClienteService clienteService){
+    public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
     }
 
-    @GetMapping("/por-cpf/{cpf}")
-    public ClienteDTO consultarCliente(@PathVariable String cpf){
+    @Operation(summary = "Consultar Cliente pelo CPF")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "404", description = "Examples not found", content = {
+                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Pedido.class))
+            })})
+    @GetMapping(value = "/por-cpf/{cpf}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ClienteDTO consultarCliente(@PathVariable String cpf) throws Exception {
         return clienteService.consultarClientePorCpf(cpf);
     }
 
     @PostMapping
-    public void cadastrarCliente(@RequestBody ClienteDTO clienteDTO) {
+    public void cadastrarCliente(@RequestBody ClienteRequest clienteRequest) {
+        ClienteDTO clienteDTO = clienteRequest.toDTO();
         clienteService.cadastrarCliente(clienteDTO);
-    }    
+    }
 
 }

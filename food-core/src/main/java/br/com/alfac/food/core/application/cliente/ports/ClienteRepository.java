@@ -2,13 +2,15 @@ package br.com.alfac.food.core.application.cliente.ports;
 
 import br.com.alfac.food.core.domain.cliente.Cliente;
 
+import java.util.Optional;
+
 public interface ClienteRepository {
 
     /**
      * 
      */
-    public Cliente consultarCliente();
+    Optional<Cliente> consultarClientePorCPF(String cpf);
 
-    public void cadastrarCliente(Cliente cliente);
+    void cadastrarCliente(Cliente cliente);
 
 }

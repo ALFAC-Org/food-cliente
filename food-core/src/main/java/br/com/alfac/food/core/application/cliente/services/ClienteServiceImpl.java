@@ -5,17 +5,24 @@ import br.com.alfac.food.core.application.cliente.ports.ClienteRepository;
 import br.com.alfac.food.core.application.cliente.ports.ClienteService;
 import br.com.alfac.food.core.domain.cliente.Cliente;
 
+import java.util.Optional;
+
 public class ClienteServiceImpl implements ClienteService {
 
-    private ClienteRepository clienteRepository;
+    private final ClienteRepository clienteRepository;
 
-    public ClienteServiceImpl(ClienteRepository clienteRepository){
+    public ClienteServiceImpl(final ClienteRepository clienteRepository){
         this.clienteRepository = clienteRepository;
     }
 
-    public ClienteDTO consultarClientePorCpf(String cpf){
-        Cliente cliente = clienteRepository.consultarCliente();
-        return new ClienteDTO();
+    public ClienteDTO consultarClientePorCpf(String cpf) throws Exception {
+        Optional<Cliente> clienteOpt = clienteRepository.consultarClientePorCPF(cpf);
+
+        Cliente cliente = clienteOpt.orElseThrow(() -> new Exception("TODO Tratar Exception"));
+
+        ClienteDTO clienteDTO = new ClienteDTO();
+        clienteDTO.setNome(cliente.getNome());
+        return clienteDTO;
     }
 
     public void cadastrarCliente(ClienteDTO clienteDTO){
