@@ -2,7 +2,7 @@ package br.com.alfac.food.core.application.item.services;
 
 import br.com.alfac.food.core.application.item.ports.ItemRepository;
 import br.com.alfac.food.core.application.item.ports.ItemService;
-import br.com.alfac.food.core.domain.item.entities.Item;
+import br.com.alfac.food.core.domain.item.Item;
 
 public class ItemServiceImpl implements ItemService {
 

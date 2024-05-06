@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.alfac.food.core.application.pedido.ports.PedidoRepository;
 import br.com.alfac.food.core.application.pedido.ports.PedidoService;
-import br.com.alfac.food.core.domain.pedido.entities.Pedido;
+import br.com.alfac.food.core.domain.pedido.Pedido;
 
 public class PedidoServiceImpl implements PedidoService {
 

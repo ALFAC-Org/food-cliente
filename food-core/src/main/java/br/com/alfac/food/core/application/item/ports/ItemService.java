@@ -1,6 +1,6 @@
 package br.com.alfac.food.core.application.item.ports;
 
-import br.com.alfac.food.core.domain.item.entities.Item;
+import br.com.alfac.food.core.domain.item.Item;
 
 public interface ItemService {
     
