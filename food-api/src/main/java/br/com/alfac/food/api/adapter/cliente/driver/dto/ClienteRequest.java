@@ -1,4 +1,4 @@
-package br.com.alfac.food.api.dto;
+package br.com.alfac.food.api.adapter.cliente.driver.dto;
 
 
 import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;

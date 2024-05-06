@@ -1,6 +1,5 @@
 package br.com.alfac.food.api.adapter.cliente.driver.controller;
 
-import br.com.alfac.food.api.dto.ClienteRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.alfac.food.api.adapter.cliente.driver.dto.ClienteRequest;
 import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
 import br.com.alfac.food.core.application.cliente.ports.ClienteService;
 import br.com.alfac.food.core.domain.pedido.Pedido;

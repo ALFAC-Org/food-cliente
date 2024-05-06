@@ -1,5 +1,6 @@
 package br.com.alfac.food.core.domain.pedido;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.alfac.food.core.domain.base.AggregateRoot;
@@ -24,6 +25,13 @@ public class Pedido implements AggregateRoot {
 
     public void setCombos(List<Combo> combos) {
         this.combos = combos;
+    }
+
+    public void adicionaCombo(Combo combo) {
+        if(combos == null){
+            combos = new ArrayList<>();
+        }
+        this.combos.add(combo);
     }
     
 }

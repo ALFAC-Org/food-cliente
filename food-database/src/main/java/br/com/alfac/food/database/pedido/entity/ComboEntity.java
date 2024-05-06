@@ -9,6 +9,10 @@ import java.util.List;
 @Entity
 @Table(name = "combo")
 public class ComboEntity implements Serializable {
+    
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private long id;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<ItemComboEntity> itens;
