@@ -1,43 +1,42 @@
 package br.com.alfac.food.core.domain.pedido;
 
-import java.util.Optional;
-
 public class Combo {
-    private Optional<Lanche> lanche;
-    private Optional<Acompanhamento> acompanhamento;
-    private Optional<Bebida> bebida;
-    private Optional<Sobremesa> sobremesa;
+    private Lanche lanche;
+    private Acompanhamento acompanhamento;
+    private Bebida bebida;
+    private Sobremesa sobremesa;
 
-    public Optional<Lanche> getLanche() {
+    public Lanche getLanche() {
         return lanche;
     }
 
-    public void setLanche(Optional<Lanche> lanche) {
+    public void setLanche(Lanche lanche) {
         this.lanche = lanche;
     }
 
-    public Optional<Acompanhamento> getAcompanhamento() {
+    public Acompanhamento getAcompanhamento() {
         return acompanhamento;
     }
 
-    public void setAcompanhamento(Optional<Acompanhamento> acompanhamento) {
+    public void setAcompanhamento(Acompanhamento acompanhamento) {
         this.acompanhamento = acompanhamento;
     }
 
-    public Optional<Bebida> getBebida() {
+    public Bebida getBebida() {
         return bebida;
     }
 
-    public void setBebida(Optional<Bebida> bebida) {
+    public void setBebida(Bebida bebida) {
         this.bebida = bebida;
     }
 
-    public Optional<Sobremesa> getSobremesa() {
+    public Sobremesa getSobremesa() {
         return sobremesa;
     }
 
-    public void setSobremesa(Optional<Sobremesa> sobremesa) {
+    public void setSobremesa(Sobremesa sobremesa) {
         this.sobremesa = sobremesa;
     }
+
 
 }
