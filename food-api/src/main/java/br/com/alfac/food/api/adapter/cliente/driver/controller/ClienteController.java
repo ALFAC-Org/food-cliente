@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/v1/clientes")
 public class ClienteController {
 
-    private ClienteService clienteService;
+    private final ClienteService clienteService;
 
-    public ClienteController(ClienteService clienteService) {
+    public ClienteController(final ClienteService clienteService) {
         this.clienteService = clienteService;
     }
 
@@ -41,9 +41,16 @@ public class ClienteController {
         return clienteService.consultarClientePorCpf(cpf);
     }
 
+    @Operation(summary = "Cadastrar Cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Cliente cadastrado"),
+            @ApiResponse(responseCode = "404", description = "Erro ao cadastrar cliente", content = {
+                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Pedido.class))
+            })})
     @PostMapping
     public void cadastrarCliente(@RequestBody ClienteRequest clienteRequest) {
         ClienteDTO clienteDTO = clienteRequest.toDTO();
+
         clienteService.cadastrarCliente(clienteDTO);
     }
 

@@ -4,6 +4,7 @@ import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
 import br.com.alfac.food.core.application.cliente.ports.ClienteRepository;
 import br.com.alfac.food.core.application.cliente.ports.ClienteService;
 import br.com.alfac.food.core.domain.cliente.Cliente;
+import br.com.alfac.food.core.domain.cliente.vo.CPF;
 
 import java.util.Optional;
 
@@ -22,12 +23,18 @@ public class ClienteServiceImpl implements ClienteService {
 
         ClienteDTO clienteDTO = new ClienteDTO();
         clienteDTO.setNome(cliente.getNome());
+        clienteDTO.setEmail(cliente.getEmail());
+
         return clienteDTO;
     }
 
-    public void cadastrarCliente(ClienteDTO clienteDTO){
-        //Converte ClienteDTO para Cliente
-        Cliente cliente = null;
+    public void cadastrarCliente(ClienteDTO clienteDTO) {
+        Cliente cliente = new Cliente();
+        CPF cpf = new CPF(clienteDTO.getCpf());
+
+        cliente.setNome(clienteDTO.getNome());
+        cliente.setCpf(cpf);
+        cliente.setEmail(clienteDTO.getEmail());
 
         clienteRepository.cadastrarCliente(cliente);
     }

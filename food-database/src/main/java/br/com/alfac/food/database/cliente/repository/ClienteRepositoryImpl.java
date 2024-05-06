@@ -33,22 +33,24 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
             cliente.setCpf(new CPF(clienteEntity.getCpf()));
             cliente.setNome(clienteEntity.getNome());
+            cliente.setEmail(clienteEntity.getEmail());
 
             clienteOpt = Optional.of(cliente);
-
         }
 
         return clienteOpt;
-
-
     }
 
     @Override
     public void cadastrarCliente(Cliente cliente){
-        //Converte o Cliente para ClienteEntity
-        ClienteEntity clienteEntity = null;
+        ClienteEntity clienteEntity = new ClienteEntity();
+
+        clienteEntity.setNome(cliente.getNome());
+        clienteEntity.setCpf(cliente.getCpf().getNumero());
+        clienteEntity.setEmail(cliente.getEmail());
 
         //Chama o SpringClienteRepository passando o ClienteEntity para persistencia
+        clienteEntityRepository.save(clienteEntity);
     }
 
 }
