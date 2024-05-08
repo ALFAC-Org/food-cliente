@@ -2,6 +2,7 @@ package br.com.alfac.food.api.config;
 
 import br.com.alfac.food.api.config.exception.ApiError;
 import br.com.alfac.food.api.config.exception.ApiErrorItem;
+import br.com.alfac.food.core.exception.FoodException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
@@ -18,36 +19,31 @@ import java.util.Iterator;
 @ControllerAdvice
 public class FoodExceptionHandler {
 
-    private static final Logger LOGGER_EXCEPTION = LoggerFactory.getLogger(FoodExceptionHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FoodExceptionHandler.class);
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleException(Exception ex) {
-        LOGGER_EXCEPTION.error(ex.getLocalizedMessage(), ex);
+        LOGGER.error(ex.getLocalizedMessage(), ex);
         ApiError error = new ApiError(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Erro interno no servidor",
-                "INTERNAL_SERVER_ERROR",
-                "System"
+                "Ops, ocorreu um erro interno.",
+                "INTERNAL_SERVER_ERROR"
         );
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return buildResponseEntity(error);
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ApiError> handleRuntimeException(RuntimeException ex) {
-        LOGGER_EXCEPTION.error(ex.getLocalizedMessage(), ex);
-        ApiError error = new ApiError(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                "Erro interno no servidor",
-                "INTERNAL_SERVER_ERROR",
-                "System"
-        );
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    @ExceptionHandler(FoodException.class)
+    public ResponseEntity<ApiError> handleFoodException(FoodException ex) {
+        LOGGER.error(ex.getLocalizedMessage(), ex);
+        ApiError error =ApiError.createError(ex);
+        return buildResponseEntity(error);
     }
+
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ApiError> handleConstraintViolationException(ConstraintViolationException ex) {
-        LOGGER_EXCEPTION.error(ex.getLocalizedMessage(), ex);
-        ApiError apiError = createDefaultApiValidationError();
+        LOGGER.error(ex.getLocalizedMessage(), ex);
+        ApiError apiError = ApiError.createDefaultApiValidationError();
         Iterator var4 = ex.getConstraintViolations().iterator();
 
         while (var4.hasNext()) {
@@ -62,8 +58,8 @@ public class FoodExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
     public ResponseEntity<ApiError> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
-        LOGGER_EXCEPTION.error(ex.getLocalizedMessage(), ex);
-        ApiError apiError = createDefaultApiValidationError();
+        LOGGER.error(ex.getLocalizedMessage(), ex);
+        ApiError apiError = ApiError.createDefaultApiValidationError();
 
         ex.getBindingResult().getFieldErrors().forEach(error ->
                 apiError.addArguments(new ApiErrorItem("", error.getDefaultMessage(), error.getField()))
@@ -72,14 +68,7 @@ public class FoodExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
-    private ApiError createDefaultApiValidationError() {
-        return new ApiError(
-                HttpStatus.BAD_REQUEST.value(),
-                "Requisição inválida",
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                "System"
-        );
-    }
+
 
     private ResponseEntity<ApiError> buildResponseEntity(ApiError apiError) {
         return new ResponseEntity<>(apiError, HttpStatus.valueOf(apiError.getStatus()));

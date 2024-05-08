@@ -1,31 +1,41 @@
 package br.com.alfac.food.api.config.exception;
 
+import br.com.alfac.food.core.exception.FoodException;
+import org.springframework.http.HttpStatus;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 public final class ApiError {
-    private String id;
+
+    public static final String REQUISICAO_INVALIDA = "Requisição inválida";
     private String code;
     private String message;
-    private String owner;
     private Long date;
     private List<ApiErrorItem> arguments = new ArrayList<>();
     private Integer status;
 
-    public ApiError(int status, String message, String code, String owner) {
+    public ApiError(int status, String message, String code) {
         this.status = status;
         this.message = message;
         this.code = code;
-        this.owner = owner;
         this.date = new Date().getTime();
     }
 
-    public String getId() {
-        return this.id;
+    public static ApiError createError(FoodException ex) {
+        return new ApiError(
+                HttpStatus.valueOf(ex.getFoodErros().getStatusCode()).value(),
+                ex.getMessage(),
+                ex.getFoodErros().getErrorCode()
+        );
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public static ApiError createDefaultApiValidationError() {
+        return new ApiError(
+                HttpStatus.BAD_REQUEST.value(),
+                REQUISICAO_INVALIDA,
+                HttpStatus.BAD_REQUEST.getReasonPhrase()
+        );
     }
 
     public String getCode() {
@@ -42,14 +52,6 @@ public final class ApiError {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public String getOwner() {
-        return this.owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 
     public Long getDate() {
