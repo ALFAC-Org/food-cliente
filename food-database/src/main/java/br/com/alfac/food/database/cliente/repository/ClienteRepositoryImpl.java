@@ -2,8 +2,8 @@ package br.com.alfac.food.database.cliente.repository;
 
 import br.com.alfac.food.core.application.cliente.ports.ClienteRepository;
 import br.com.alfac.food.core.domain.cliente.Cliente;
-import br.com.alfac.food.core.domain.cliente.vo.CPF;
 import br.com.alfac.food.database.cliente.entity.ClienteEntity;
+import br.com.alfac.food.database.cliente.mapper.ClienteEntityMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -13,9 +13,10 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
 
     private final ClienteEntityRepository clienteEntityRepository;
-
-    public ClienteRepositoryImpl(final ClienteEntityRepository clienteEntityRepository) {
+    private final ClienteEntityMapper clienteEntityMapper;
+    public ClienteRepositoryImpl(final ClienteEntityRepository clienteEntityRepository, final ClienteEntityMapper clienteMapper) {
         this.clienteEntityRepository = clienteEntityRepository;
+        this.clienteEntityMapper = clienteMapper;
     }
 
 
@@ -29,11 +30,8 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
         if (clienteEntityOpt.isPresent()) {
             ClienteEntity clienteEntity = clienteEntityOpt.get();
-            Cliente cliente = new Cliente();
 
-            cliente.setCpf(new CPF(clienteEntity.getCpf()));
-            cliente.setNome(clienteEntity.getNome());
-            cliente.setEmail(clienteEntity.getEmail());
+            Cliente cliente = clienteEntityMapper.toDomain(clienteEntity);
 
             clienteOpt = Optional.of(cliente);
         }
@@ -43,11 +41,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public void cadastrarCliente(Cliente cliente){
-        ClienteEntity clienteEntity = new ClienteEntity();
-
-        clienteEntity.setNome(cliente.getNome());
-        clienteEntity.setCpf(cliente.getCpf().getNumero());
-        clienteEntity.setEmail(cliente.getEmail());
+        ClienteEntity clienteEntity = clienteEntityMapper.toEntity(cliente);
 
         //Chama o SpringClienteRepository passando o ClienteEntity para persistencia
         clienteEntityRepository.save(clienteEntity);
