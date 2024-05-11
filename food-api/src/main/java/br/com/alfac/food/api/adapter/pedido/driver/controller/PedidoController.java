@@ -2,9 +2,7 @@ package br.com.alfac.food.api.adapter.pedido.driver.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.alfac.food.api.adapter.pedido.driver.dto.PedidoEnvioRequest;
-import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
-import br.com.alfac.food.core.application.cliente.ports.ClienteService;
+import br.com.alfac.food.api.adapter.pedido.driver.dto.PedidoRequest;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.application.pedido.ports.PedidoService;
 import br.com.alfac.food.core.domain.pedido.Pedido;
@@ -36,14 +34,14 @@ public class PedidoController {
         return new String();
     }
 
-    @Operation(summary = "Registrar Pedido")
+    @Operation(summary = "Registrar Pedidos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Pedido registrado"),
             @ApiResponse(responseCode = "404", description = "Erro ao registrar pedido", content = {
                     @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Pedido.class))
             })})
     @PostMapping
-    public void registrarPedido(@RequestBody PedidoEnvioRequest pedidoRequest) {
+    public void registrarPedido(@RequestBody PedidoRequest pedidoRequest) {
         PedidoDTO pedidoDTO = pedidoRequest.toDTO();
 
         pedidoService.registrarPedido(pedidoDTO);

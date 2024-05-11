@@ -3,9 +3,9 @@ package br.com.alfac.food.core.application.pedido.dto;
 
 public class ComboDTO {
     private LancheDTO lanche;
-    private AcompanhamentoDTO acompanhamento;
-    private BebidaDTO bebida;
-    private SobremesaDTO sobremesa;
+    private ItemMenuDTO acompanhamento;
+    private ItemMenuDTO bebida;
+    private ItemMenuDTO sobremesa;
 
     public LancheDTO getLanche() {
         return lanche;
@@ -15,26 +15,26 @@ public class ComboDTO {
         this.lanche = lanche;
     }
 
-    public AcompanhamentoDTO getAcompanhamento() {
+    public ItemMenuDTO getAcompanhamento() {
         return acompanhamento;
     }
 
-    public void setAcompanhamento(AcompanhamentoDTO acompanhamento) {
+    public void setAcompanhamento(ItemMenuDTO acompanhamento) {
         this.acompanhamento = acompanhamento;
     }
 
-    public BebidaDTO getBebida() {
+    public ItemMenuDTO getBebida() {
         return bebida;
     }
 
-    public void setBebida(BebidaDTO bebida) {
+    public void setBebida(ItemMenuDTO bebida) {
         this.bebida = bebida;
     }
 
-    public SobremesaDTO getSobremesa() {
+    public ItemMenuDTO getSobremesa() {
         return sobremesa;
     }
-    public void setSobremesa(SobremesaDTO sobremesa) {
+    public void setSobremesa(ItemMenuDTO sobremesa) {
         this.sobremesa = sobremesa;
     }
 

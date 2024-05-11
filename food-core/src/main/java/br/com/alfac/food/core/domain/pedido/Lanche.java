@@ -6,14 +6,14 @@ import java.util.List;
 import br.com.alfac.food.core.domain.item.Item;
 
 public class Lanche extends Item {
-    private List<Complemento> complementos;
+    private List<Item> complementos;
     private String observacao;
 
-    public List<Complemento> getComplementos() {
+    public List<Item> getComplementos() {
         return complementos;
     }
 
-    public void setComplementos(List<Complemento> complementos) {
+    public void setComplementos(List<Item> complementos) {
         this.complementos = complementos;
     }
 
@@ -25,7 +25,7 @@ public class Lanche extends Item {
         this.observacao = observacao;
     }
 
-    public void adicionaComplemento(Complemento complemento) {
+    public void adicionaComplemento(Item complemento) {
         if(complementos == null){
             complementos = new ArrayList<>();
         }

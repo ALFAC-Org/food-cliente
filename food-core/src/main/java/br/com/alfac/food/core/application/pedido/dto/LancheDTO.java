@@ -2,24 +2,15 @@ package br.com.alfac.food.core.application.pedido.dto;
 
 import java.util.List;
 
-public class LancheDTO {
-    private int itemId;
-    private List<ComplementoDTO> complementos;
+public class LancheDTO extends ItemMenuDTO {
+    private List<ItemMenuDTO> complementos;
     private String observacoes;
 
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
-
-    public List<ComplementoDTO> getComplementos() {
+    public List<ItemMenuDTO> getComplementos() {
         return complementos;
     }
 
-    public void setComplementos(List<ComplementoDTO> complementos) {
+    public void setComplementos(List<ItemMenuDTO> complementos) {
         this.complementos = complementos;
     }
 

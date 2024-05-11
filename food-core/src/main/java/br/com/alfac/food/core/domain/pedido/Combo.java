@@ -1,10 +1,12 @@
 package br.com.alfac.food.core.domain.pedido;
 
+import br.com.alfac.food.core.domain.item.Item;
+
 public class Combo {
     private Lanche lanche;
-    private Acompanhamento acompanhamento;
-    private Bebida bebida;
-    private Sobremesa sobremesa;
+    private Item acompanhamento;
+    private Item bebida;
+    private Item sobremesa;
 
     public Lanche getLanche() {
         return lanche;
@@ -14,27 +16,27 @@ public class Combo {
         this.lanche = lanche;
     }
 
-    public Acompanhamento getAcompanhamento() {
+    public Item getAcompanhamento() {
         return acompanhamento;
     }
 
-    public void setAcompanhamento(Acompanhamento acompanhamento) {
+    public void setAcompanhamento(Item acompanhamento) {
         this.acompanhamento = acompanhamento;
     }
 
-    public Bebida getBebida() {
+    public Item getBebida() {
         return bebida;
     }
 
-    public void setBebida(Bebida bebida) {
+    public void setBebida(Item bebida) {
         this.bebida = bebida;
     }
 
-    public Sobremesa getSobremesa() {
+    public Item getSobremesa() {
         return sobremesa;
     }
 
-    public void setSobremesa(Sobremesa sobremesa) {
+    public void setSobremesa(Item sobremesa) {
         this.sobremesa = sobremesa;
     }
 

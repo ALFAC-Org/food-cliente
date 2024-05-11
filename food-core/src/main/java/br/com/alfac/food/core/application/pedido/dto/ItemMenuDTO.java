@@ -1,0 +1,15 @@
+package br.com.alfac.food.core.application.pedido.dto;
+
+
+public class ItemMenuDTO {
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+}
