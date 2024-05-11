@@ -1,8 +1,5 @@
 package br.com.alfac.food.api.adapter.cliente.driver.controller;
 
-import br.com.alfac.food.api.adapter.cliente.dto.ClienteRequest;
-import br.com.alfac.food.api.adapter.cliente.mapper.ClienteMapper;
-import br.com.alfac.food.core.domain.pedido.entities.Pedido;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -14,8 +11,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.alfac.food.api.adapter.cliente.dto.ClienteRequest;
+import br.com.alfac.food.api.adapter.cliente.mapper.ClienteMapper;
 import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
 import br.com.alfac.food.core.application.cliente.ports.ClienteService;
+import br.com.alfac.food.core.domain.pedido.Pedido;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
