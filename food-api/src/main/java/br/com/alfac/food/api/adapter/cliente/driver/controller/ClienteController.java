@@ -1,12 +1,16 @@
 package br.com.alfac.food.api.adapter.cliente.driver.controller;
 
-import br.com.alfac.food.api.dto.ClienteRequest;
+import br.com.alfac.food.api.adapter.cliente.dto.ClienteRequest;
+import br.com.alfac.food.api.adapter.cliente.mapper.ClienteMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
@@ -25,9 +29,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class ClienteController {
 
     private final ClienteService clienteService;
+    private final ClienteMapper clienteMapper;
 
-    public ClienteController(final ClienteService clienteService) {
+    public ClienteController(final ClienteService clienteService, final ClienteMapper clienteMapper) {
         this.clienteService = clienteService;
+        this.clienteMapper = clienteMapper;
     }
 
     @Operation(summary = "Consultar Cliente pelo CPF")
@@ -48,10 +54,10 @@ public class ClienteController {
                     @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Pedido.class))
             })})
     @PostMapping
-    public void cadastrarCliente(@RequestBody ClienteRequest clienteRequest) {
-        ClienteDTO clienteDTO = clienteRequest.toDTO();
+    public ResponseEntity<Void> cadastrarCliente(@Valid @RequestBody ClienteRequest clienteRequest) {
+        clienteService.cadastrarCliente(clienteMapper.toDTO(clienteRequest));
 
-        clienteService.cadastrarCliente(clienteDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 }
