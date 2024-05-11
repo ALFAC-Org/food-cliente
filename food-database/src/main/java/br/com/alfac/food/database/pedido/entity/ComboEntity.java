@@ -12,7 +12,7 @@ public class ComboEntity implements Serializable {
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<ItemComboEntity> itens;

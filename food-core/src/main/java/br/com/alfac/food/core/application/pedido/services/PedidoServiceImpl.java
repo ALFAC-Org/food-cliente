@@ -30,7 +30,7 @@ public class PedidoServiceImpl implements PedidoService {
             Combo combo = new Combo();
 
             if(comboDTO.getLanche() != null){
-                //combo.setLanche(findById(comboDTO.getLanche().getItemId()));
+                //combo.setLanche(pedidoRepository.findById(comboDTO.getLanche().getId()));
             }
 
             pedido.adicionaCombo(combo);

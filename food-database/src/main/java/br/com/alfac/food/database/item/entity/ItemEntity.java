@@ -1,12 +1,12 @@
-package br.com.alfac.food.database.pedido.entity;
+package br.com.alfac.food.database.item.entity;
 
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 
 @Entity
-@Table(name = "item_combo")
-public class ItemComboEntity implements Serializable {
+@Table(name = "item")
+public class ItemEntity implements Serializable {
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
