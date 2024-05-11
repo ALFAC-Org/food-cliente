@@ -1,4 +1,4 @@
-package br.com.alfac.food.api.adapter.pedido.driver.dto;
+package br.com.alfac.food.api.adapter.pedido.dto;
 
 
 public class ComboRequest {

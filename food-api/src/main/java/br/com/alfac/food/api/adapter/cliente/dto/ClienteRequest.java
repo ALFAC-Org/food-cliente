@@ -1,16 +1,24 @@
-package br.com.alfac.food.api.adapter.cliente.driver.dto;
+package br.com.alfac.food.api.adapter.cliente.dto;
 
-
-import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 public class ClienteRequest {
 
     @Schema(example = "John Doe")
+    @NotEmpty(message = "Nome é obrigatório.")
     private String nome;
 
+    @Email
+    @Schema(example = "teste@teste.com")
+    @NotEmpty(message = "Email é obrigatório.")
     private String email;
 
+    @Schema(example = "12345678910")
+    @NotEmpty(message = "CPF é obrigatório.")
+    @Size(min = 11, max = 11, message = "Tamanho mínimo e máximo do CPF são 11 caracteres")
     private String cpf;
     
     public String getNome() {
@@ -37,13 +45,4 @@ public class ClienteRequest {
         this.cpf = cpf;
     }
 
-    public ClienteDTO toDTO() {
-
-        ClienteDTO clienteDTO = new ClienteDTO();
-        clienteDTO.setNome(this.getNome());
-        clienteDTO.setEmail(this.getEmail());
-        clienteDTO.setCpf(this.getCpf());
-
-        return clienteDTO;
-    }
 }

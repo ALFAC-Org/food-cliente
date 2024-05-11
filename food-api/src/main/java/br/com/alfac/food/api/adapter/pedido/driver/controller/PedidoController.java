@@ -2,7 +2,7 @@ package br.com.alfac.food.api.adapter.pedido.driver.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.alfac.food.api.adapter.pedido.driver.dto.PedidoRequest;
+import br.com.alfac.food.api.adapter.pedido.dto.PedidoRequest;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.application.pedido.ports.PedidoService;
 import br.com.alfac.food.core.domain.pedido.Pedido;
