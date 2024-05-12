@@ -7,7 +7,7 @@ public class ItemDTO {
     private double preco;
     private String categoria;
 
-    // TODO: Precisamos do ID aqui?
+    // TODO: [Fraga] Precisamos do ID aqui?
     // public int getId() {
     //     return id;
     // }

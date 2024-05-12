@@ -15,7 +15,7 @@ public class ItemRequest {
 
     @Schema(example = "LANCHE, ACOMPANHAMENTO, BEBIDA")
     @NotEmpty(message = "Categoria é obrigatória.")
-    // TODO: Adicionar validação para aceitar apenas os valores da enum CategoriaItem
+    // TODO: [Fraga] - Adicionar validação para aceitar apenas os valores da enum CategoriaItem
     private String categoria;
     
     public String getNome() {
