@@ -12,6 +12,8 @@ public interface ItemService {
 
     public List<ItemDTO> consultarItensPorCategoria(CategoriaItem categoria) throws Exception;
 
+    public ItemDTO consultarItemPorId(String id) throws Exception;
+
     public void cadastrarItem(Item item);
     
     public void atualizarItem(Integer idItem, Item item);

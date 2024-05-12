@@ -2,6 +2,7 @@ package br.com.alfac.food.database.item.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
@@ -49,5 +50,22 @@ public class ItemRepositoryImpl implements ItemRepository {
         }
 
         return items;
+    }
+
+    @Override
+    public Optional<Item> consultarItemPorId(String id) {
+        Optional<Item> itemOpt = Optional.empty();
+
+        Optional<ItemEntity> itemEntityOpt = itemEntityRepository.findById(id);
+
+        if (itemEntityOpt.isPresent()) {
+            ItemEntity itemEntity = itemEntityOpt.get();
+
+            Item item = itemEntityMapper.toDomain(itemEntity);
+
+            itemOpt = Optional.of(item);
+        }
+
+        return itemOpt;
     }
 }

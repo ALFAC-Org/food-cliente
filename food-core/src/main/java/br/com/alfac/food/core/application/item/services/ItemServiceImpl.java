@@ -2,6 +2,7 @@ package br.com.alfac.food.core.application.item.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.application.item.ports.ItemRepository;
@@ -59,6 +60,21 @@ public class ItemServiceImpl implements ItemService {
         return itemDTOList;
     }
 
+    
+    @Override
+    public ItemDTO consultarItemPorId(String id) throws Exception {
+        Optional<Item> itemOpt = itemRepository.consultarItemPorId(id);
+
+        Item item = itemOpt.orElseThrow(() -> new FoodException(ItemErros.ITEM_NAO_ENCONTRADO));
+
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setNome(item.getNome());
+        itemDTO.setPreco(item.getPreco());
+        itemDTO.setCategoria(item.getCategoria().toString());
+
+        return itemDTO;
+    }
+
     public void cadastrarItem(Item item) {
 
     }
@@ -70,5 +86,4 @@ public class ItemServiceImpl implements ItemService {
     public void excluirItem(Integer idItem) {
 
     }
-
 }

@@ -57,6 +57,17 @@ public class ItemController {
         return itemService.consultarItensPorCategoria(categoria);
     }
 
+    @Operation(summary = "Consultar item por Id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Operação bem sucedida"),
+        @ApiResponse(responseCode = "404", description = "Nenhum item cadastrado", content = {
+            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Item.class))
+        })})
+    @GetMapping(value = "por-id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ItemDTO consultarPorId(@PathVariable String id) throws Exception {
+        return itemService.consultarItemPorId(id);
+    }
+
     @PostMapping
     public void cadastrarItem() {
 
