@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.application.item.ports.ItemRepository;
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 import br.com.alfac.food.core.domain.item.Item;
 import br.com.alfac.food.database.item.entity.ItemEntity;
 import br.com.alfac.food.database.item.mapper.ItemEntityMapper;
+import jakarta.persistence.EntityNotFoundException;
 
 @Component
 public class ItemRepositoryImpl implements ItemRepository {
@@ -67,5 +70,37 @@ public class ItemRepositoryImpl implements ItemRepository {
         }
 
         return itemOpt;
+    }
+
+    @Override
+    public Item atualizarItem(String id, ItemDTO item) {
+        ItemEntity managedItemEntity = itemEntityRepository.findById(id).orElse(null);
+
+        if (managedItemEntity != null) {
+            managedItemEntity.setNome(item.getNome());
+            // managedItemEntity.setPreco(item.getPreco());
+            // managedItemEntity.setCategoria(item.getCategoria().toString());
+            try {
+                itemEntityRepository.save(managedItemEntity);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return itemEntityMapper.toDomain(managedItemEntity);
+        } else {
+            throw new EntityNotFoundException("Item não encontrado para o id informado");
+        }
+    }
+
+    @Transactional
+    @Override
+    public Item excluirItem(String id) {
+        ItemEntity managedItemEntity = itemEntityRepository.findById(id).orElse(null);
+
+        if (managedItemEntity != null) {
+            itemEntityRepository.delete(managedItemEntity);
+            return itemEntityMapper.toDomain(managedItemEntity);
+        } else {
+            throw new EntityNotFoundException("Item não encontrado para o id informado");
+        }
     }
 }

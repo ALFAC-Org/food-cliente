@@ -79,11 +79,27 @@ public class ItemServiceImpl implements ItemService {
 
     }
 
-    public void atualizarItem(Integer idItem, Item item) {
+    @Override
+    public ItemDTO atualizarItem(Integer id, ItemDTO item) throws Exception {
+        Item itemAtualizado = itemRepository.atualizarItem(id.toString(), item);
 
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setNome(itemAtualizado.getNome());
+        itemDTO.setPreco(itemAtualizado.getPreco());
+        itemDTO.setCategoria(itemAtualizado.getCategoria().toString());
+
+        return itemDTO;
     }
 
-    public void excluirItem(Integer idItem) {
+    @Override
+    public ItemDTO excluirItem(Integer id) throws Exception {
+        Item item = itemRepository.excluirItem(id.toString());
 
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setNome(item.getNome());
+        itemDTO.setPreco(item.getPreco());
+        itemDTO.setCategoria(item.getCategoria().toString());
+
+        return itemDTO;
     }
 }

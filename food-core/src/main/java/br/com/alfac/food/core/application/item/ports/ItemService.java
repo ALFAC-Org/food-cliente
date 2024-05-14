@@ -16,8 +16,8 @@ public interface ItemService {
 
     public void cadastrarItem(Item item);
     
-    public void atualizarItem(Integer idItem, Item item);
+    public ItemDTO atualizarItem(Integer idItem, ItemDTO item) throws Exception;
     
-    public void excluirItem(Integer idItem);
+    public ItemDTO excluirItem(Integer idItem) throws Exception;
     
 }

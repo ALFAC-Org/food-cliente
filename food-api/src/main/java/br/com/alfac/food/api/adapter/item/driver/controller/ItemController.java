@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.alfac.food.api.adapter.item.dto.ItemRequest;
 import br.com.alfac.food.api.adapter.item.mapper.ItemMapper;
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.application.item.ports.ItemService;
@@ -73,11 +74,25 @@ public class ItemController {
 
     }
 
+    @Operation(summary = "Atualizar item por Id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Operação bem sucedida"),
+        @ApiResponse(responseCode = "404", description = "Nenhum item cadastrado", content = {
+            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Item.class))
+        })})
     @PutMapping("/{id}")
-    public void atualizarItem(@PathVariable Integer id, @RequestBody String entity) {
+    public ItemDTO atualizarItem(@PathVariable Integer id, @RequestBody ItemRequest entity) throws Exception {
+        return itemService.atualizarItem(id, itemMapper.toDTO(entity));
     }
 
+    @Operation(summary = "Deletar item por Id")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Operação bem sucedida"),
+        @ApiResponse(responseCode = "404", description = "Nenhum item cadastrado", content = {
+            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Item.class))
+        })})
     @DeleteMapping("/{id}")
-    public void excluirItem(@PathVariable Integer id) {
+    public ItemDTO excluirItem(@PathVariable Integer id) throws Exception {
+        return itemService.excluirItem(id);
     }
 }

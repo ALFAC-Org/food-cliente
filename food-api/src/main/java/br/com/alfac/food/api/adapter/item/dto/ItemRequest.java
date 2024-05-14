@@ -13,7 +13,7 @@ public class ItemRequest {
     @NotEmpty(message = "Preço é obrigatorio.")
     private double preco;
 
-    @Schema(example = "LANCHE, ACOMPANHAMENTO, BEBIDA")
+    @Schema(example = "LANCHE")
     @NotEmpty(message = "Categoria é obrigatória.")
     // TODO: [Fraga] - Adicionar validação para aceitar apenas os valores da enum CategoriaItem
     private String categoria;
