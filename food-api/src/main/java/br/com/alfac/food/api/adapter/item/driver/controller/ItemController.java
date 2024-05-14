@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alfac.food.api.adapter.item.dto.ItemRequest;
 import br.com.alfac.food.api.adapter.item.mapper.ItemMapper;
+import br.com.alfac.food.api.config.exception.ApiErrorItem;
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.application.item.ports.ItemService;
 import br.com.alfac.food.core.domain.item.CategoriaItem;
-import br.com.alfac.food.core.domain.item.Item;
+import br.com.alfac.food.core.exception.FoodException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -40,10 +41,10 @@ public class ItemController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Operação bem sucedida"),
         @ApiResponse(responseCode = "404", description = "Nenhum item cadastrado", content = {
-            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Item.class))
+            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiErrorItem.class))
         })})
     @GetMapping(value = "consultar-itens", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ItemDTO> consultarItens() throws Exception {
+    public List<ItemDTO> consultarItens() throws FoodException {
         return itemService.consultarItens();
     }
 
@@ -51,10 +52,10 @@ public class ItemController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Operação bem sucedida"),
         @ApiResponse(responseCode = "404", description = "Nenhum item cadastrado", content = {
-            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Item.class))
+            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiErrorItem.class))
         })})
     @GetMapping(value = "por-categoria/{categoria}/itens", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<ItemDTO> consultarItensPorCategoria(@PathVariable CategoriaItem categoria) throws Exception {
+    public List<ItemDTO> consultarItensPorCategoria(@PathVariable CategoriaItem categoria) throws FoodException {
         return itemService.consultarItensPorCategoria(categoria);
     }
 
@@ -62,10 +63,10 @@ public class ItemController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Operação bem sucedida"),
         @ApiResponse(responseCode = "404", description = "Nenhum item cadastrado", content = {
-            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Item.class))
+            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiErrorItem.class))
         })})
     @GetMapping(value = "por-id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ItemDTO consultarPorId(@PathVariable String id) throws Exception {
+    public ItemDTO consultarPorId(@PathVariable String id) throws FoodException {
         return itemService.consultarItemPorId(id);
     }
 
@@ -78,10 +79,10 @@ public class ItemController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Operação bem sucedida"),
         @ApiResponse(responseCode = "404", description = "Nenhum item cadastrado", content = {
-            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Item.class))
+            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiErrorItem.class))
         })})
     @PutMapping("/{id}")
-    public ItemDTO atualizarItem(@PathVariable Integer id, @RequestBody ItemRequest entity) throws Exception {
+    public ItemDTO atualizarItem(@PathVariable Integer id, @RequestBody ItemRequest entity) throws FoodException {
         return itemService.atualizarItem(id, itemMapper.toDTO(entity));
     }
 
@@ -89,10 +90,10 @@ public class ItemController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Operação bem sucedida"),
         @ApiResponse(responseCode = "404", description = "Nenhum item cadastrado", content = {
-            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Item.class))
+            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiErrorItem.class))
         })})
     @DeleteMapping("/{id}")
-    public ItemDTO excluirItem(@PathVariable Integer id) throws Exception {
+    public ItemDTO excluirItem(@PathVariable Integer id) throws FoodException {
         return itemService.excluirItem(id);
     }
 }

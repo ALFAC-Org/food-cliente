@@ -3,6 +3,7 @@ package br.com.alfac.food.api.adapter.item.dto;
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public class ItemRequest {
 
@@ -11,6 +12,7 @@ public class ItemRequest {
     private String nome;
 
     @Schema(example = "11.50")
+    @NotNull(message = "Preço é obrigatório.")
     private double preco;
 
     @Schema(example = "LANCHE")
