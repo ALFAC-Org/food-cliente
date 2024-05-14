@@ -2,10 +2,8 @@ package br.com.alfac.food.api.adapter.pedido.driver.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.alfac.food.api.adapter.cliente.mapper.ClienteMapper;
 import br.com.alfac.food.api.adapter.pedido.dto.PedidoRequest;
 import br.com.alfac.food.api.adapter.pedido.mapper.PedidoMapper;
-import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.application.pedido.ports.PedidoService;
 import br.com.alfac.food.core.domain.pedido.Pedido;
 import io.swagger.v3.oas.annotations.Operation;
