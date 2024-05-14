@@ -1,7 +1,7 @@
 USE pedidos;
 
 CREATE TABLE
-    IF NOT EXISTS Item (
+    IF NOT EXISTS item (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nome VARCHAR(255),
         preco DECIMAL(10, 2),
@@ -18,7 +18,7 @@ create unique index item_id_uk
     on item (id);
 
 INSERT INTO
-    Item (nome, preco, categoria)
+    item (nome, preco, categoria)
 VALUES
     ('Hamburguer', 15.00, 'LANCHE'),
     ('Hot Dog', 10.00, 'LANCHE'),

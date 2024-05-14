@@ -42,8 +42,7 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     @Override
     public List<Item> consultarItensPorCategoria(CategoriaItem categoria) {
-        // TODO:[Fraga] - Precisamos converter para string?
-        List<ItemEntity> itemEntities = itemEntityRepository.findByCategoria(categoria.toString());
+        List<ItemEntity> itemEntities = itemEntityRepository.findByCategoria(categoria);
 
         List<Item> items = new ArrayList<>();
 

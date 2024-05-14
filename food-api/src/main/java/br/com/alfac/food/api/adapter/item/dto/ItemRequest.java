@@ -1,5 +1,6 @@
 package br.com.alfac.food.api.adapter.item.dto;
 
+import br.com.alfac.food.core.domain.item.CategoriaItem;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -10,13 +11,11 @@ public class ItemRequest {
     private String nome;
 
     @Schema(example = "11.50")
-    @NotEmpty(message = "Preço é obrigatorio.")
     private double preco;
 
     @Schema(example = "LANCHE")
     @NotEmpty(message = "Categoria é obrigatória.")
-    // TODO: [Fraga] - Adicionar validação para aceitar apenas os valores da enum CategoriaItem
-    private String categoria;
+    private CategoriaItem categoria;
     
     public String getNome() {
         return nome;
@@ -34,11 +33,11 @@ public class ItemRequest {
         this.preco = preco;
     }
 
-    public String getCategoria() {
+    public CategoriaItem getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(CategoriaItem categoria) {
         this.categoria = categoria;
     }
 }

@@ -2,12 +2,16 @@ package br.com.alfac.food.database.item.entity;
 
 import java.io.Serializable;
 
+import br.com.alfac.food.core.domain.item.CategoriaItem;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "item")
@@ -20,11 +24,12 @@ public class ItemEntity implements Serializable {
     @NotEmpty(message = "Nome do item é obrigatório")
     private String nome;
 
-    @NotEmpty(message = "Preço do item é obrigatório")
+    @NotNull(message = "Preço do item é obrigatório")
     private Double preco;
 
+    @Enumerated(EnumType.STRING)
     @NotEmpty(message = "Categoria do item é obrigatório")
-    private String categoria;
+    private CategoriaItem categoria;
 
     public Long getId() {
         return id;
@@ -50,11 +55,11 @@ public class ItemEntity implements Serializable {
         this.preco = preco;
     }
 
-    public String getCategoria() {
+    public CategoriaItem getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(final String categoria) {
+    public void setCategoria(final CategoriaItem categoria) {
         this.categoria = categoria;
     }
 }
