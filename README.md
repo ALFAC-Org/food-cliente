@@ -55,15 +55,17 @@ Faça o cadastro do seu cliente. E com o id que irá retornar da response, você
 
 `POST /api/v1/clientes`
 
-    curl -X 'POST' \
-    'http://localhost:8080/api/v1/clientes' \
-    -H 'accept: */*' \
-    -H 'Content-Type: application/json' \
-    -d '{
-        "nome": "Nome do cliente",
-        "email": "email@provedor.com",
-        "cpf": "12121212121"
-      }'
+```bash
+curl -X 'POST' \
+'http://localhost:8080/api/v1/clientes' \
+-H 'accept: */*' \
+-H 'Content-Type: application/json' \
+-d '{
+    "nome": "Nome do cliente",
+    "email": "email@provedor.com",
+    "cpf": "12121212121"
+}'
+```
 
 ### Resposta
 
