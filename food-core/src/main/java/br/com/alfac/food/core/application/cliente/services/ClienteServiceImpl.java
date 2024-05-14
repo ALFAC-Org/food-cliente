@@ -1,14 +1,15 @@
 package br.com.alfac.food.core.application.cliente.services;
 
 import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
+import br.com.alfac.food.core.application.cliente.mappers.ClienteMapper;
 import br.com.alfac.food.core.application.cliente.ports.ClienteRepository;
 import br.com.alfac.food.core.application.cliente.ports.ClienteService;
 import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.core.domain.cliente.vo.CPF;
 import br.com.alfac.food.core.exception.FoodException;
-import br.com.alfac.food.core.exception.cliente.ClienteErros;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class ClienteServiceImpl implements ClienteService {
 
@@ -18,19 +19,19 @@ public class ClienteServiceImpl implements ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public ClienteDTO consultarClientePorCpf(String cpf) throws Exception {
+    public ClienteDTO consultarClientePorCpf(String cpf) throws FoodException {
         Optional<Cliente> clienteOpt = clienteRepository.consultarClientePorCPF(cpf);
 
-        Cliente cliente = clienteOpt.orElseThrow(() -> new FoodException(ClienteErros.CLIENTE_NAO_ENCONTRADO));
-
-        ClienteDTO clienteDTO = new ClienteDTO();
-        clienteDTO.setNome(cliente.getNome());
-        clienteDTO.setEmail(cliente.getEmail());
-
-        return clienteDTO;
+        return ClienteMapper.mapearParaClienteDTO(clienteOpt);
     }
 
-    public void cadastrarCliente(ClienteDTO clienteDTO) {
+    public ClienteDTO consultarClientePorId(UUID id) throws FoodException {
+        Optional<Cliente> clienteOpt = clienteRepository.consultarClientePorId(id);
+
+        return ClienteMapper.mapearParaClienteDTO(clienteOpt);
+    }
+
+    public UUID cadastrarCliente(ClienteDTO clienteDTO) {
         Cliente cliente = new Cliente();
         CPF cpf = new CPF(clienteDTO.getCpf());
 
@@ -38,7 +39,7 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setCpf(cpf);
         cliente.setEmail(clienteDTO.getEmail());
 
-        clienteRepository.cadastrarCliente(cliente);
+        return clienteRepository.cadastrarCliente(cliente).getId();
     }
 
 }

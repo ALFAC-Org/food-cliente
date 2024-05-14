@@ -4,10 +4,13 @@ import br.com.alfac.food.core.domain.base.AggregateRoot;
 import br.com.alfac.food.core.domain.base.AssertionConcern;
 import br.com.alfac.food.core.domain.cliente.vo.CPF;
 
+import java.util.UUID;
+
 public class Cliente implements AggregateRoot {
     private CPF cpf;
     private String nome;
     private String email;
+    private UUID id;
 
     public CPF getCpf() {
         return cpf;
@@ -36,5 +39,12 @@ public class Cliente implements AggregateRoot {
     public void validateEntity() {
         AssertionConcern.assertArgumentNotEmpty(nome, "O nome do cliente não pode estar vazio.");
     }
-    
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(final UUID id) {
+        this.id = id;
+    }
 }

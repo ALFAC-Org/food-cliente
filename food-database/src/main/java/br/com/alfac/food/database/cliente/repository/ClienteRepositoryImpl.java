@@ -7,6 +7,7 @@ import br.com.alfac.food.database.cliente.mapper.ClienteEntityMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Component
 public class ClienteRepositoryImpl implements ClienteRepository {
@@ -22,11 +23,32 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Override
     public Optional<Cliente> consultarClientePorCPF(String cpf){
-        //Recupera o ClienteEntity do SpringClienteRepository
-
-        Optional<Cliente> clienteOpt = Optional.empty();
 
         Optional<ClienteEntity> clienteEntityOpt = clienteEntityRepository.findByCpf(cpf);
+
+        return montarCliente(clienteEntityOpt);
+    }
+
+    @Override
+    public Optional<Cliente> consultarClientePorId(final UUID id) {
+        Optional<ClienteEntity> clienteEntityOpt = clienteEntityRepository.findByUuid(id);
+        return montarCliente(clienteEntityOpt);
+    }
+
+    @Override
+    public Cliente cadastrarCliente(Cliente cliente){
+        ClienteEntity clienteEntity = clienteEntityMapper.toEntity(cliente);
+        clienteEntity.setUuid(UUID.randomUUID());
+
+        ClienteEntity clienteCriado = clienteEntityRepository.save(clienteEntity);
+
+        return clienteEntityMapper.toDomain(clienteCriado);
+    }
+
+    private Optional<Cliente> montarCliente(Optional<ClienteEntity> clienteEntityOpt) {
+        Optional<Cliente> clienteOpt = Optional.empty();
+
+
 
         if (clienteEntityOpt.isPresent()) {
             ClienteEntity clienteEntity = clienteEntityOpt.get();
@@ -37,14 +59,6 @@ public class ClienteRepositoryImpl implements ClienteRepository {
         }
 
         return clienteOpt;
-    }
-
-    @Override
-    public void cadastrarCliente(Cliente cliente){
-        ClienteEntity clienteEntity = clienteEntityMapper.toEntity(cliente);
-
-        //Chama o SpringClienteRepository passando o ClienteEntity para persistencia
-        clienteEntityRepository.save(clienteEntity);
     }
 
 }

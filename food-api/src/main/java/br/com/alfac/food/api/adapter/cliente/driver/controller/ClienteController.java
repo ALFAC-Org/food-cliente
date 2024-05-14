@@ -1,5 +1,11 @@
 package br.com.alfac.food.api.adapter.cliente.driver.controller;
 
+import br.com.alfac.food.api.adapter.cliente.dto.ClienteRequest;
+import br.com.alfac.food.api.adapter.cliente.mapper.ClienteMapper;
+import br.com.alfac.food.api.config.exception.ApiError;
+import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
+import br.com.alfac.food.core.application.cliente.ports.ClienteService;
+import br.com.alfac.food.core.exception.FoodException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,19 +15,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import br.com.alfac.food.api.adapter.cliente.dto.ClienteRequest;
-import br.com.alfac.food.api.adapter.cliente.mapper.ClienteMapper;
-import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
-import br.com.alfac.food.core.application.cliente.ports.ClienteService;
-import br.com.alfac.food.core.domain.pedido.Pedido;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import java.util.UUID;
 
 
 @RestController
@@ -40,24 +36,35 @@ public class ClienteController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful operation"),
             @ApiResponse(responseCode = "404", description = "Examples not found", content = {
-                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Pedido.class))
+                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
             })})
     @GetMapping(value = "/por-cpf/{cpf}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ClienteDTO consultarCliente(@PathVariable String cpf) throws Exception {
-        return clienteService.consultarClientePorCpf(cpf);
+    public ResponseEntity<ClienteDTO> consultarCliente(@PathVariable String cpf) throws FoodException {
+        return new ResponseEntity<>(clienteService.consultarClientePorCpf(cpf), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Consultar Cliente pelo ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation"),
+            @ApiResponse(responseCode = "404", description = "Examples not found", content = {
+                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
+            })})
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ClienteDTO> consultarClientePorId(@PathVariable UUID id) throws FoodException {
+        return new ResponseEntity<>(clienteService.consultarClientePorId(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Cadastrar Cliente")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Cliente cadastrado"),
             @ApiResponse(responseCode = "404", description = "Erro ao cadastrar cliente", content = {
-                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Pedido.class))
+                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
             })})
     @PostMapping
-    public ResponseEntity<Void> cadastrarCliente(@Valid @RequestBody ClienteRequest clienteRequest) {
-        clienteService.cadastrarCliente(clienteMapper.toDTO(clienteRequest));
+    public ResponseEntity<UUID> cadastrarCliente(@Valid @RequestBody ClienteRequest clienteRequest) {
+        UUID uuid = clienteService.cadastrarCliente(clienteMapper.toDTO(clienteRequest));
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(uuid, HttpStatus.CREATED);
     }
 
 }

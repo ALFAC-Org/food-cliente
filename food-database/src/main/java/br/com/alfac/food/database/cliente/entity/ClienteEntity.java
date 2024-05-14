@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @Table(name = "cliente")
@@ -21,6 +22,8 @@ public class ClienteEntity implements Serializable {
 
     @NotEmpty(message = "Email do cliente é obrigatório")
     private String email;
+
+    private UUID uuid;
 
 
     public String getNome() {
@@ -53,5 +56,13 @@ public class ClienteEntity implements Serializable {
 
     public void setEmail(final String email) {
         this.email = email;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(final UUID uuid) {
+        this.uuid = uuid;
     }
 }
