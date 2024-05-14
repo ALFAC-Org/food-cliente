@@ -45,8 +45,8 @@ public class ClienteController {
 
     @Operation(summary = "Consultar Cliente pelo ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful operation"),
-            @ApiResponse(responseCode = "404", description = "Examples not found", content = {
+            @ApiResponse(responseCode = "200", description = "Retorna o cliente pelo ID informado"),
+            @ApiResponse(responseCode = "404", description = "Retorna cliente não encontrado", content = {
                     @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
             })})
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
