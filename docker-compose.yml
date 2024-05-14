@@ -13,17 +13,14 @@ services:
     networks:
       - foodapi-network
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: pedidos
-      MYSQL_USER: pedidos
-      MYSQL_PASSWORD: pedidos
+    env_file:
+      - ./config/env/.env.prod
   springboot-app:
     image: springboot-app
     networks:
       - foodapi-network
-    environment:
-      DATASOURCE_URL: jdbc:mysql://mysqldb:3306/pedidos
+    env_file:
+      - ./config/env/.env.prod
     build: .
     depends_on:
       - mysqldb
