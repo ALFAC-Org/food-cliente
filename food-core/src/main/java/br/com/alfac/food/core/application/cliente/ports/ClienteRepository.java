@@ -3,6 +3,7 @@ package br.com.alfac.food.core.application.cliente.ports;
 import br.com.alfac.food.core.domain.cliente.Cliente;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public interface ClienteRepository {
 
@@ -10,7 +11,8 @@ public interface ClienteRepository {
      * 
      */
     Optional<Cliente> consultarClientePorCPF(String cpf);
+    Optional<Cliente> consultarClientePorId(UUID id);
 
-    void cadastrarCliente(Cliente cliente);
+    Cliente cadastrarCliente(Cliente cliente);
 
 }

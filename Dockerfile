@@ -27,4 +27,4 @@ WORKDIR /app
 COPY --from=build /app/food-main/target/*.jar ./app.jar
 
 # Executa a aplicacao
-CMD ["java", "-jar", "app.jar", "--spring.profiles.active=prod"]
+CMD ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
