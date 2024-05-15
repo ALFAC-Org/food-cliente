@@ -31,7 +31,7 @@ public class ClienteServiceImpl implements ClienteService {
         return ClienteMapper.mapearParaClienteDTO(clienteOpt);
     }
 
-    public UUID cadastrarCliente(ClienteDTO clienteDTO) {
+    public ClienteDTO cadastrarCliente(ClienteDTO clienteDTO) {
         Cliente cliente = new Cliente();
         CPF cpf = new CPF(clienteDTO.getCpf());
 
@@ -39,7 +39,8 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setCpf(cpf);
         cliente.setEmail(clienteDTO.getEmail());
 
-        return clienteRepository.cadastrarCliente(cliente).getId();
+        Cliente clienteSalvo = clienteRepository.cadastrarCliente(cliente);
+        return ClienteMapper.mapearParaClienteDTO(clienteSalvo);
     }
 
 }
