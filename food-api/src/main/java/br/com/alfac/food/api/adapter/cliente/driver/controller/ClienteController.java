@@ -61,10 +61,10 @@ public class ClienteController {
                     @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
             })})
     @PostMapping
-    public ResponseEntity<UUID> cadastrarCliente(@Valid @RequestBody ClienteRequest clienteRequest) {
-        UUID uuid = clienteService.cadastrarCliente(clienteMapper.toDTO(clienteRequest));
+    public ResponseEntity<ClienteDTO> cadastrarCliente(@Valid @RequestBody ClienteRequest clienteRequest) {
+        ClienteDTO cliente = clienteService.cadastrarCliente(clienteMapper.toDTO(clienteRequest));
 
-        return new ResponseEntity<>(uuid, HttpStatus.CREATED);
+        return new ResponseEntity<>(cliente, HttpStatus.CREATED);
     }
 
 }

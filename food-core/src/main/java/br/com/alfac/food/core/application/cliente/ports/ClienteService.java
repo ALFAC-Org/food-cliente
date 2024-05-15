@@ -10,6 +10,6 @@ public interface ClienteService {
     ClienteDTO consultarClientePorCpf(String cpf) throws FoodException;
     ClienteDTO consultarClientePorId(UUID id) throws FoodException;
 
-    UUID cadastrarCliente(ClienteDTO cliente);
+    ClienteDTO cadastrarCliente(ClienteDTO cliente);
     
 }
