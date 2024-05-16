@@ -13,12 +13,12 @@ public interface ItemService {
 
     public List<ItemDTO> consultarItensPorCategoria(CategoriaItem categoria) throws FoodException;
 
-    public ItemDTO consultarItemPorId(String id) throws FoodException;
+    public ItemDTO consultarItemPorId(Long id) throws FoodException;
 
     public void cadastrarItem(Item item);
     
-    public ItemDTO atualizarItem(Integer idItem, ItemDTO item) throws FoodException;
+    public ItemDTO atualizarItem(Long idItem, ItemDTO item) throws FoodException;
     
-    public ItemDTO excluirItem(Integer idItem) throws FoodException;
+    public ItemDTO excluirItem(Long idItem) throws FoodException;
     
 }

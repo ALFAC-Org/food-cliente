@@ -62,7 +62,7 @@ public class ItemServiceImpl implements ItemService {
 
     
     @Override
-    public ItemDTO consultarItemPorId(String id) throws FoodException {
+    public ItemDTO consultarItemPorId(Long id) throws FoodException {
         Optional<Item> itemOpt = itemRepository.consultarItemPorId(id);
 
         Item item = itemOpt.orElseThrow(() -> new FoodException(ItemErros.ITEM_NAO_ENCONTRADO));
@@ -75,13 +75,14 @@ public class ItemServiceImpl implements ItemService {
         return itemDTO;
     }
 
+    @Override
     public void cadastrarItem(Item item) {
 
     }
 
     @Override
-    public ItemDTO atualizarItem(Integer id, ItemDTO item) throws FoodException {
-        Item itemAtualizado = itemRepository.atualizarItem(id.toString(), item);
+    public ItemDTO atualizarItem(Long id, ItemDTO item) throws FoodException {
+        Item itemAtualizado = itemRepository.atualizarItem(id, item);
 
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setNome(itemAtualizado.getNome());
@@ -92,8 +93,8 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDTO excluirItem(Integer id) throws FoodException {
-        Item item = itemRepository.excluirItem(id.toString());
+    public ItemDTO excluirItem(Long id) throws FoodException {
+        Item item = itemRepository.excluirItem(id);
 
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setNome(item.getNome());

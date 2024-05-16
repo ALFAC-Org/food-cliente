@@ -55,7 +55,7 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public Optional<Item> consultarItemPorId(String id) {
+    public Optional<Item> consultarItemPorId(Long id) {
         Optional<Item> itemOpt = Optional.empty();
 
         Optional<ItemEntity> itemEntityOpt = itemEntityRepository.findById(id);
@@ -72,7 +72,7 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public Item atualizarItem(String id, ItemDTO item) {
+    public Item atualizarItem(Long id, ItemDTO item) {
         ItemEntity managedItemEntity = itemEntityRepository.findById(id).orElse(null);
 
         if (managedItemEntity != null) {
@@ -92,7 +92,7 @@ public class ItemRepositoryImpl implements ItemRepository {
 
     @Transactional
     @Override
-    public Item excluirItem(String id) {
+    public Item excluirItem(Long id) {
         ItemEntity managedItemEntity = itemEntityRepository.findById(id).orElse(null);
 
         if (managedItemEntity != null) {

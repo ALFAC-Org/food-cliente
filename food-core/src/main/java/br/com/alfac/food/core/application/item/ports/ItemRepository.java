@@ -13,9 +13,9 @@ public interface ItemRepository {
 
     List<Item> consultarItensPorCategoria(CategoriaItem categoria);
 
-    Optional<Item> consultarItemPorId(String id);
+    Optional<Item> consultarItemPorId(Long id);
 
-    Item atualizarItem(String id, ItemDTO item);
+    Item atualizarItem(Long id, ItemDTO item);
 
-    Item excluirItem(String id);
+    Item excluirItem(Long id);
 }

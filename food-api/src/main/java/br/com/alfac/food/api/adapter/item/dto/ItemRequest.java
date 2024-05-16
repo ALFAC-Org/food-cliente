@@ -13,7 +13,7 @@ public class ItemRequest {
 
     @Schema(example = "11.50")
     @NotNull(message = "Preço é obrigatório.")
-    private double preco;
+    private Double preco;
 
     @Schema(example = "LANCHE")
     @NotEmpty(message = "Categoria é obrigatória.")

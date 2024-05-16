@@ -9,7 +9,7 @@ import br.com.alfac.food.core.domain.item.CategoriaItem;
 import br.com.alfac.food.database.item.entity.ItemEntity;
 
 @Repository
-public interface ItemEntityRepository extends JpaRepository<ItemEntity, String> {
+public interface ItemEntityRepository extends JpaRepository<ItemEntity, Long> {
 
     List<ItemEntity> findByCategoria(CategoriaItem categoria);
 }
