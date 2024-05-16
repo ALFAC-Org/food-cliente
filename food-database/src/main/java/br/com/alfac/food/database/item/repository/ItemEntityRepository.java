@@ -1,12 +1,17 @@
 package br.com.alfac.food.database.item.repository;
 
-import br.com.alfac.food.database.item.entity.ItemEntity;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import br.com.alfac.food.core.domain.item.CategoriaItem;
+import br.com.alfac.food.database.item.entity.ItemEntity;
+
 @Repository
 public interface ItemEntityRepository extends JpaRepository<ItemEntity, Long> {
-
-
+    List<ItemEntity> findByCategoria(CategoriaItem categoria);
+    Optional<ItemEntity> findByUuid(UUID id);
 }
