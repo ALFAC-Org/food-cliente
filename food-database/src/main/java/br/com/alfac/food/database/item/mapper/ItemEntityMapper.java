@@ -9,8 +9,11 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ItemEntityMapper {
 
+    @Mapping(target = "id", source = "id", ignore = true)
+    @Mapping(target = "uuid", source = "id")
     ItemEntity toEntity(Item item);
 
+    @Mapping(target = "id", source = "uuid")
     Item toDomain(ItemEntity Item);
 
 }

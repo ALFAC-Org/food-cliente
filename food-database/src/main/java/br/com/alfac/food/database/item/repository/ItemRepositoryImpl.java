@@ -3,6 +3,7 @@ package br.com.alfac.food.database.item.repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,10 +56,10 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     @Override
-    public Optional<Item> consultarItemPorId(Long id) {
+    public Optional<Item> consultarItemPorId(UUID id) {
         Optional<Item> itemOpt = Optional.empty();
 
-        Optional<ItemEntity> itemEntityOpt = itemEntityRepository.findById(id);
+        Optional<ItemEntity> itemEntityOpt = itemEntityRepository.findByUuid(id);
 
         if (itemEntityOpt.isPresent()) {
             ItemEntity itemEntity = itemEntityOpt.get();
@@ -77,13 +78,11 @@ public class ItemRepositoryImpl implements ItemRepository {
 
         if (managedItemEntity != null) {
             managedItemEntity.setNome(item.getNome());
-            // managedItemEntity.setPreco(item.getPreco());
-            // managedItemEntity.setCategoria(item.getCategoria().toString());
-            try {
-                itemEntityRepository.save(managedItemEntity);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            managedItemEntity.setPreco(item.getPreco());
+            managedItemEntity.setCategoria(item.getCategoria());
+
+            itemEntityRepository.save(managedItemEntity);
+           
             return itemEntityMapper.toDomain(managedItemEntity);
         } else {
             throw new EntityNotFoundException("Item não encontrado para o id informado");

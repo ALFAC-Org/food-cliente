@@ -1,20 +1,23 @@
 package br.com.alfac.food.core.application.item.dto;
 
+import java.util.UUID;
+
+import br.com.alfac.food.core.domain.item.CategoriaItem;
+
 
 public class ItemDTO {
-    // private int id;
+    private UUID id;
     private String nome;
-    private double preco;
-    private String categoria;
+    private Double preco;
+    private CategoriaItem categoria;
 
-    // TODO: [Fraga] Precisamos do ID aqui?
-    // public int getId() {
-    //     return id;
-    // }
+    public UUID getId() {
+        return id;
+    }
 
-    // public void setId(int id) {
-    //     this.id = id;
-    // }
+    public void setId(final UUID id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -28,15 +31,15 @@ public class ItemDTO {
         return preco;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 
-    public String getCategoria() {
+    public CategoriaItem getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(CategoriaItem categoria) {
         this.categoria = categoria;
     }
 }

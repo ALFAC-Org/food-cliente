@@ -1,6 +1,7 @@
 package br.com.alfac.food.api.adapter.item.driver.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,7 +67,7 @@ public class ItemController {
             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
         })})
     @GetMapping(value = "por-id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ItemDTO consultarPorId(@PathVariable Long id) throws FoodException {
+    public ItemDTO consultarPorId(@PathVariable UUID id) throws FoodException {
         return itemService.consultarItemPorId(id);
     }
 

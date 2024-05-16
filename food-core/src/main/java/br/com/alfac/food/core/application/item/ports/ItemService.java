@@ -1,6 +1,7 @@
 package br.com.alfac.food.core.application.item.ports;
 
 import java.util.List;
+import java.util.UUID;
 
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.domain.item.CategoriaItem;
@@ -13,7 +14,7 @@ public interface ItemService {
 
     public List<ItemDTO> consultarItensPorCategoria(CategoriaItem categoria) throws FoodException;
 
-    public ItemDTO consultarItemPorId(Long id) throws FoodException;
+    public ItemDTO consultarItemPorId(UUID id) throws FoodException;
 
     public void cadastrarItem(Item item);
     

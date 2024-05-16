@@ -3,6 +3,7 @@ USE pedidos;
 CREATE TABLE
     IF NOT EXISTS item (
         id INT AUTO_INCREMENT PRIMARY KEY,
+        uuid BINARY(16) NOT NULL default(UNHEX(REPLACE(UUID(), '-', ''))),
         nome VARCHAR(255),
         preco DECIMAL(10, 2),
         categoria ENUM (
@@ -13,6 +14,8 @@ CREATE TABLE
             'SOBREMESA'
         )
     );
+
+create unique index item_uuid_uindex on item (uuid);
 
 create unique index item_id_uk
     on item (id);

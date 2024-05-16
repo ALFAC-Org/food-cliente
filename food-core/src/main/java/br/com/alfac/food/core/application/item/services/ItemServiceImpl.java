@@ -1,10 +1,11 @@
 package br.com.alfac.food.core.application.item.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
+import br.com.alfac.food.core.application.item.mappers.ItemMapper;
 import br.com.alfac.food.core.application.item.ports.ItemRepository;
 import br.com.alfac.food.core.application.item.ports.ItemService;
 import br.com.alfac.food.core.domain.item.CategoriaItem;
@@ -24,20 +25,7 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDTO> consultarItens() throws FoodException {
         List<Item> itemList = itemRepository.consultarItens();
 
-        if (itemList == null || itemList.isEmpty()) {
-            throw new FoodException(ItemErros.ITEM_NAO_ENCONTRADO);
-        }
-
-        List<ItemDTO> itemDTOList = new ArrayList<>();
-        for (Item item : itemList) {
-            ItemDTO itemDTO = new ItemDTO();
-            itemDTO.setNome(item.getNome());
-            itemDTO.setPreco(item.getPreco());
-            itemDTO.setCategoria(item.getCategoria().toString());
-            itemDTOList.add(itemDTO);
-        }
-
-        return itemDTOList;
+        return ItemMapper.mapearParaItemDTOList(itemList);  
     }
 
     @Override
@@ -45,34 +33,19 @@ public class ItemServiceImpl implements ItemService {
         List<Item> itemList = itemRepository.consultarItensPorCategoria(categoria);
 
         if (itemList == null || itemList.isEmpty()) {
-            throw new FoodException(ItemErros.ITEM_NAO_ENCONTRADO);
+            throw new FoodException(ItemErros.CATEGORIA_SEM_ITENS);
         }
 
-        List<ItemDTO> itemDTOList = new ArrayList<>();
-        for (Item item : itemList) {
-            ItemDTO itemDTO = new ItemDTO();
-            itemDTO.setNome(item.getNome());
-            itemDTO.setPreco(item.getPreco());
-            itemDTO.setCategoria(item.getCategoria().toString());
-            itemDTOList.add(itemDTO);
-        }
-
-        return itemDTOList;
+        return ItemMapper.mapearParaItemDTOList(itemList);  
     }
-
     
     @Override
-    public ItemDTO consultarItemPorId(Long id) throws FoodException {
+    public ItemDTO consultarItemPorId(UUID id) throws FoodException {
         Optional<Item> itemOpt = itemRepository.consultarItemPorId(id);
 
         Item item = itemOpt.orElseThrow(() -> new FoodException(ItemErros.ITEM_NAO_ENCONTRADO));
 
-        ItemDTO itemDTO = new ItemDTO();
-        itemDTO.setNome(item.getNome());
-        itemDTO.setPreco(item.getPreco());
-        itemDTO.setCategoria(item.getCategoria().toString());
-
-        return itemDTO;
+        return ItemMapper.mapearParaItemDTO(item);
     }
 
     @Override
@@ -84,21 +57,19 @@ public class ItemServiceImpl implements ItemService {
     public ItemDTO atualizarItem(Long id, ItemDTO item) throws FoodException {
         Item itemAtualizado = itemRepository.atualizarItem(id, item);
 
-        ItemDTO itemDTO = new ItemDTO();
-        itemDTO.setNome(itemAtualizado.getNome());
-        itemDTO.setPreco(itemAtualizado.getPreco());
-        itemDTO.setCategoria(itemAtualizado.getCategoria().toString());
-
-        return itemDTO;
+        return ItemMapper.mapearParaItemDTO(itemAtualizado);
     }
 
     @Override
     public ItemDTO excluirItem(Long id) throws FoodException {
         Item item = itemRepository.excluirItem(id);
+
+        // TODO: Implementar lógica de exclusão logica X logica fisica - Validar se temos referencia em algum lugar
+
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setNome(item.getNome());
         itemDTO.setPreco(item.getPreco());
-        itemDTO.setCategoria(item.getCategoria().toString());
+        itemDTO.setCategoria(item.getCategoria());
 
         return itemDTO;
     }
