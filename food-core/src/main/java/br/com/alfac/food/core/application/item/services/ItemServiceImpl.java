@@ -95,7 +95,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDTO excluirItem(Long id) throws FoodException {
         Item item = itemRepository.excluirItem(id);
-
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setNome(item.getNome());
         itemDTO.setPreco(item.getPreco());

@@ -20,5 +20,4 @@ public interface ItemService {
     public ItemDTO atualizarItem(Long idItem, ItemDTO item) throws FoodException;
     
     public ItemDTO excluirItem(Long idItem) throws FoodException;
-    
 }
