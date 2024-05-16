@@ -53,7 +53,7 @@ Faça o cadastro do seu cliente. E com o id que irá retornar da response, você
 
 ### Requisição
 
-`POST /api/v1/clientes`
+`POST http://localhost:8080/api/v1/clientes`
 
 ```bash
 curl -X 'POST' \
@@ -69,8 +69,50 @@ curl -X 'POST' \
 
 ### Resposta
 
-    connection: keep-alive 
-    content-length: 0 
-    date: Tue,14 May 2024 01:50:27 GMT 
-    keep-alive: timeout=60 
+```bash
+{
+  "nome": "Nome do cliente",
+  "cpf": null,
+  "email": "email@provedor.com",
+  "id": "92190798-aa89-4d7d-91f2-1e155688cbcd"
+}
+```
 
+## Roadmap
+
+- [x] Cadastro do Cliente
+- [x] Identificação do Cliente
+- [x] Criar, editar e remover produtos (itens);
+- [ ] Buscar produtos por categoria;
+- [ ] Fake checkout (apenas enviar os produtos escolhidos para a fila. O checkout é a finalização do pedido);
+- [ ] Listar os pedidos;
+
+## Entregas
+
+- **28/05/2024** - **<span style="color:red">AGUARDANDO</span>**
+
+## Membros
+
+**Leonardo Fraga**
+- *RM354771*
+- *[rm354771@fiap.com.br](mailto:rm354771@fiap.com.br)*
+- [@LeonardoFraga](https://github.com/LeonardoFraga)
+
+**Carlos Henrique Carvalho de Santana**
+- *RM355339*
+- *[rm355339@fiap.com.br](mailto:rm355339@fiap.com.br)*
+- [@carlohcs](https://github.com/carlohcs)
+
+**Leonardo Alves Campos**
+- *RM355568*
+- [rm355568@fiap.com.br](mailto:rm355568@fiap.com.br)
+- [@lcalves](https://github.com/lcalves)
+
+**Andre Musolino**
+- *RM355582*
+- *[rm355582@fiap.com.br](mailto:rm355582@fiap.com.br)*
+- [@amusolino](https://github.com/amusolino)
+
+**Ardiles Guerra**
+- *RM355674*
+- *[rm355674@fiap.com.br](mailto:rm355674@fiap.com.br)*
