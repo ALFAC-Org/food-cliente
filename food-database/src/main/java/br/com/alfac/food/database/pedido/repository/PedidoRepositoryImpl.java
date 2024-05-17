@@ -1,16 +1,16 @@
 package br.com.alfac.food.database.pedido.repository;
 
 import br.com.alfac.food.core.application.pedido.ports.PedidoRepository;
-import br.com.alfac.food.core.domain.pedido.Combo;
 import br.com.alfac.food.core.domain.pedido.Pedido;
-import br.com.alfac.food.database.pedido.entity.ComboEntity;
-import br.com.alfac.food.database.pedido.entity.ItemComboEntity;
+import br.com.alfac.food.database.item.entity.ItemEntity;
 import br.com.alfac.food.database.pedido.entity.PedidoEntity;
 import br.com.alfac.food.database.pedido.mapper.PedidoEntityMapper;
+import jakarta.transaction.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 @Component
 public class PedidoRepositoryImpl implements PedidoRepository {
@@ -25,14 +25,24 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     }
 
     @Override
+    public List<Pedido> listarPedidos(){
+        List<PedidoEntity> pedidoEntities = pedidoEntityRepository.findAll();
+
+        List<Pedido> pedidos = new ArrayList<>();
+
+        for (PedidoEntity pedidoEntity : pedidoEntities) {
+            Pedido pedido = pedidoEntityMapper.toDomain(pedidoEntity);
+            pedidos.add(pedido);
+        }
+
+        return pedidos;
+    }
+
+    @Override
+    //@Transactional
     public void registrarPedido(Pedido pedido){
 
-        PedidoEntity pedidoEntity = new PedidoEntity();
-
-        for (Combo combo: pedido.getCombos())
-        {
-
-        }
+        PedidoEntity pedidoEntity = pedidoEntityMapper.toEntity(pedido);
 
         pedidoEntityRepository.save(pedidoEntity);
     }

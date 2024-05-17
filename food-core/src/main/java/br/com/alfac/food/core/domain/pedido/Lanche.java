@@ -7,7 +7,7 @@ import br.com.alfac.food.core.domain.item.Item;
 
 public class Lanche extends Item {
     private List<Item> complementos;
-    private String observacao;
+    private String observacoes;
 
     public List<Item> getComplementos() {
         return complementos;
@@ -17,12 +17,12 @@ public class Lanche extends Item {
         this.complementos = complementos;
     }
 
-    public String getObservacao() {
-        return observacao;
+    public String getObservacoes() {
+        return observacoes;
     }
     
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
+    public void setObservacoes(String observacao) {
+        this.observacoes = observacao;
     }
 
     public void adicionaComplemento(Item complemento) {

@@ -14,7 +14,25 @@ public class ComboEntity implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_combo")
+    @NotEmpty(message = "Obrigatório 1 ou mais itens")
     private List<ItemComboEntity> itens;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<ItemComboEntity> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemComboEntity> itens) {
+        this.itens = itens;
+    }
 
 }

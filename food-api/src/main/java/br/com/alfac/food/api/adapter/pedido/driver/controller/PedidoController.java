@@ -4,8 +4,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.alfac.food.api.adapter.pedido.dto.PedidoRequest;
 import br.com.alfac.food.api.adapter.pedido.mapper.PedidoMapper;
+import br.com.alfac.food.api.config.exception.ApiError;
+import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.application.pedido.ports.PedidoService;
 import br.com.alfac.food.core.domain.pedido.Pedido;
+import br.com.alfac.food.core.exception.FoodException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,6 +16,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
+
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,18 +38,18 @@ public class PedidoController {
     }
 
     @GetMapping
-    public String listarPedidos() {
-        return new String();
+    public List<Pedido> listarPedidos() {
+        return pedidoService.listarPedidos();
     }
 
     @Operation(summary = "Registrar Pedidos")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Pedido registrado"),
             @ApiResponse(responseCode = "422", description = "Erro ao registrar pedido", content = {
-                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = Pedido.class))
+                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
             })})
     @PostMapping
-    public void registrarPedido(@RequestBody PedidoRequest pedidoRequest) {
+    public void registrarPedido(@RequestBody PedidoRequest pedidoRequest) throws FoodException {
         pedidoService.registrarPedido(pedidoMapper.toDTO(pedidoRequest));
     }
 

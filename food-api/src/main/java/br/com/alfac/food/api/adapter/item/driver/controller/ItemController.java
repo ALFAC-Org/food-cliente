@@ -67,7 +67,7 @@ public class ItemController {
             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
         })})
     @GetMapping(value = "por-id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ItemDTO consultarPorId(@PathVariable UUID id) throws FoodException {
+    public ItemDTO consultarPorId(@PathVariable Long id) throws FoodException {
         return itemService.consultarItemPorId(id);
     }
 
