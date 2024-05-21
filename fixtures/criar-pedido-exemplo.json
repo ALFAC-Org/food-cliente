@@ -1,0 +1,25 @@
+{
+  "clienteId": "0503f20b-1701-11ef-b59f-0242ac120002",
+  "combos": [
+    {
+      "lanche": {
+        "id": 15,
+        "complementos": [
+          {
+             "id": 6
+          }
+        ],
+        "observacoes": "Capricha no queijo!"
+      },
+      "acompanhamento": {
+        "id": 8
+      },
+      "bebida": {
+        "id": 11
+      },
+      "sobremesa": {
+        "id": 14
+      }
+    }
+  ]
+}

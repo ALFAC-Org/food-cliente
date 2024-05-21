@@ -14,6 +14,16 @@ Fluxo completo no MIRO:
 
 ---
 
+## Tabela de conteúdos
+- [Tecnologia](#tecnologia)
+- [Requisitos](#requisitos)
+- [Executar a aplicação](#executar-a-aplicação)
+- Realização do pedido
+  - [1. Se identificando](#1-se-identificando)
+  - [2. Montando o `payload` com os itens seu pedido](#2-montando-o-payload-com-os-itens-seu-pedido)
+  - [3. Registrando o seu pedido](#3-registrando-o-seu-pedido)
+---
+
 ## Tecnologia
 
 - Java 17 - _backend_
@@ -32,26 +42,29 @@ Fluxo completo no MIRO:
 
 # Realização do pedido
 
-Uma vez a aplicação rodando, é necessário acessar a página no navegador: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+Uma vez a aplicação rodando, é necessário acessar o `Swagger` da aplicação pelo navegador: [http://localhost:8080/api-docs](http://localhost:8080/api-docs) ou [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 O fluxo deve ser feito na sequência:
 
-1. Identificação do cliente
-2. Escolha do lanche
-3. Escolha de acompanhamento
-4. Escolha de bebida
-5. Escolha de  sobremesa
-6. Fecha pedido
-7. Faz pagamento
-8. Recebe ticket de pedido
-9. Recebe pedido
-10. Pedido finalizado
+1. Se identificando
+2. Montando o `payload` com os itens seu pedido, contendo:
+  - Lanche
+  - Acompanhamento
+  - Bebida
+  - Sobremesa
+3. Registrando o seu pedido
+4. Realizando o pagamento
+5. Pedido sendo finalizado
 
-## 1. Identificação do cliente
+## 1. Se identificando
 
-Faça o cadastro do seu cliente. E com o id que irá retornar da response, você irá utilizá-lo nas etapas seguintes.
+Seguindo o cenário feliz, faça o cadastro do seu cliente. E com o id que irá retornar da `response`, você irá utilizá-lo nas etapas seguintes.
 
-### Requisição
+### Via Swagger
+
+[http://localhost:8080/swagger-ui/index.html#/cliente-controller/cadastrarCliente](http://localhost:8080/swagger-ui/index.html#/cliente-controller/cadastrarCliente)
+
+### Via Terminal
 
 `POST http://localhost:8080/api/v1/clientes`
 
@@ -78,12 +91,176 @@ curl -X 'POST' \
 }
 ```
 
+Com isso, você terá seu cliente cadastrado.
+
+## 2. Montando o `payload` com os itens seu pedido
+
+Você precisa escolher os itens que deseja. Para consultar os itens disponíveis:
+
+### Via Swagger
+
+[http://localhost:8080/swagger-ui/index.html#/item-controller/consultarItensPorCategoria_1](http://localhost:8080/swagger-ui/index.html#/item-controller/consultarItensPorCategoria_1)
+
+### Via Terminal
+
+Onde `CATEGORIA`:
+
+- `LANCHE`;
+- `COMPLEMENTO`;
+- `ACOMPANHAMENTO`;
+- `BEBIDA`;
+- `SOBREMESA`;
+
+`POST http://localhost:8080/api/v1/itens/por-categoria/{CATEGORIA}/itens`
+
+Exemplo (pega todos os produtos (itens) disponíveis na categoria de LANCHE):
+
+```bash
+
+curl -X 'GET' \
+  'http://localhost:8080/api/v1/itens/por-categoria/LANCHE/itens' \
+  -H 'accept: application/json'
+```
+
+### Resposta
+
+```json
+[
+  {
+    "id": "d649a7fd-16f5-11ef-b59f-0242ac120002",
+    "nome": "Hamburguer",
+    "preco": 15,
+    "categoria": "LANCHE"
+  },
+  {
+    "id": "d649aad0-16f5-11ef-b59f-0242ac120002",
+    "nome": "Hot Dog",
+    "preco": 10,
+    "categoria": "LANCHE"
+  },
+  ...
+]
+```
+
+No fim, após escolher todos os itens, monte um objeto com a seguinte estrutura:
+
+```json
+{
+  "clienteId": "0503f20b-1701-11ef-b59f-0242ac120002",
+  "combos": [
+    {
+      "lanche": {
+        "id": 15,
+        "complementos": [
+          {
+             "id": 6
+          }
+        ],
+        "observacoes": "Capricha no queijo!"
+      },
+      "acompanhamento": {
+        "id": 8
+      },
+      "bebida": {
+        "id": 11
+      },
+      "sobremesa": {
+        "id": 14
+      }
+    }
+  ]
+}
+```
+
+O `payload` anterior contempla:
+
+```
+Cliente
+id: 0503f20b-1701-11ef-b59f-0242ac120002
+Nome: Marcos Hernandes
+
+Lanche
+id: 15
+Nome: Hamburguer
+
+Complemento
+id: 6
+Nome: Queijo extra
+
+Acompanhamento
+id: 8
+Nome: Batata Frita
+
+Bebida
+id: 11
+Nome: Refrigerante
+
+Sobremesa
+id: 14
+Nome: Sorvete
+```
+
+Basta então, registrar o pedido, como na próxima etapa.
+
+## 3. Registrando o seu pedido
+
+Envie o `payload` para o pedido ser registrado:
+
+
+### Via Swagger
+
+[http://localhost:8080/swagger-ui/index.html#/pedido-controller/registrarPedido](http://localhost:8080/swagger-ui/index.html#/pedido-controller/registrarPedido)
+
+### Via Terminal
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8081/api/v1/pedidos' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "clienteId": "0503f20b-1701-11ef-b59f-0242ac120002",
+  "combos": [
+    {
+      "lanche": {
+        "id": 15,
+        "complementos": [
+          {
+            "id": 6
+          }
+        ],
+        "observacoes": "Capricha no queijo!"
+      },
+      "acompanhamento": {
+        "id": 8
+      },
+      "bebida": {
+        "id": 11
+      },
+      "sobremesa": {
+        "id": 14
+      }
+    }
+  ]
+}'
+```
+
+### Resposta
+
+```json
+TODO
+```
+
+
+
+
+
 ## Roadmap
 
 - [x] Cadastro do Cliente
 - [x] Identificação do Cliente
 - [x] Criar, editar e remover produtos (itens);
-- [ ] Buscar produtos por categoria;
+- [x] Buscar produtos por categoria;
 - [ ] Fake checkout (apenas enviar os produtos escolhidos para a fila. O checkout é a finalização do pedido);
 - [ ] Listar os pedidos;
 
