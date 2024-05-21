@@ -30,8 +30,14 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     }
 
     @Override
-    public Optional<Cliente> consultarClientePorId(final UUID id) {
+    public Optional<Cliente> consultarClientePorUuId(final UUID id) {
         Optional<ClienteEntity> clienteEntityOpt = clienteEntityRepository.findByUuid(id);
+        return montarCliente(clienteEntityOpt);
+    }
+
+    @Override
+    public Optional<Cliente> consultarClientePorId(final Long id) {
+        Optional<ClienteEntity> clienteEntityOpt = clienteEntityRepository.findById(id);
         return montarCliente(clienteEntityOpt);
     }
 

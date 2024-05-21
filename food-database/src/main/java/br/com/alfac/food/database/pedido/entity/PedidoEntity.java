@@ -17,9 +17,9 @@ public class PedidoEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @OneToOne
-    @JoinColumn(name = "id_cliente")
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private ClienteEntity cliente;
     
     @Enumerated(EnumType.STRING)

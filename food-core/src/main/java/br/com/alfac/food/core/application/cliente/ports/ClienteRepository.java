@@ -11,7 +11,8 @@ public interface ClienteRepository {
      * 
      */
     Optional<Cliente> consultarClientePorCPF(String cpf);
-    Optional<Cliente> consultarClientePorId(UUID id);
+    Optional<Cliente> consultarClientePorUuId(UUID id);
+    Optional<Cliente> consultarClientePorId(Long id);
 
     Cliente cadastrarCliente(Cliente cliente);
 

@@ -10,6 +10,5 @@ public interface PedidoService {
     
     public List<Pedido> listarPedidos();
     
-    public void registrarPedido(PedidoDTO pedidoDTO) throws FoodException;
-    
+    PedidoDTO registrarPedido(PedidoDTO pedidoDTO) throws FoodException;
 }
