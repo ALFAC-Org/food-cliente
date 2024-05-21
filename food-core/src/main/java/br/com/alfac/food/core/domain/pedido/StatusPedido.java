@@ -1,6 +1,6 @@
 package br.com.alfac.food.core.domain.pedido;
 
-public enum StatusPedido{
+public enum StatusPedido {
     RECEBIDO,
     EM_PREPARACAO,
     PRONTO,

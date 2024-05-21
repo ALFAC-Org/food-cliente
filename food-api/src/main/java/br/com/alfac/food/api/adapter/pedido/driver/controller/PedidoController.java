@@ -50,7 +50,7 @@ public class PedidoController {
                             "combos": [
                                 {
                                     "lanche": {
-                                        "id": 15,
+                                        "id": 1,
                                         "complementos": [
                                             {
                                                 "id": 6
