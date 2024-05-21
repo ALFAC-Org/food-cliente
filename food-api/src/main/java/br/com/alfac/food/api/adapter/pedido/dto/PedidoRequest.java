@@ -1,16 +1,17 @@
 package br.com.alfac.food.api.adapter.pedido.dto;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PedidoRequest {
-    private Long clienteId;
+    private UUID clienteId;
     private List<ComboRequest> combos;
 
-    public Long getClienteId() {
+    public UUID getClienteId() {
         return clienteId;
     }
 
-    public void setClienteId(Long clienteId) {
+    public void setClienteId(UUID clienteId) {
         this.clienteId = clienteId;
     }
 

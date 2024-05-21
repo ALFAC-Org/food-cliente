@@ -14,7 +14,7 @@ public interface ItemService {
 
     public List<ItemDTO> consultarItensPorCategoria(CategoriaItem categoria) throws FoodException;
 
-    public ItemDTO consultarItemPorId(UUID id) throws FoodException;
+    public ItemDTO consultarItemPorId(Long id) throws FoodException;
 
     public void cadastrarItem(Item item);
     

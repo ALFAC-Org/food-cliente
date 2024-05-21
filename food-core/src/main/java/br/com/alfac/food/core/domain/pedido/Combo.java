@@ -1,5 +1,8 @@
 package br.com.alfac.food.core.domain.pedido;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.alfac.food.core.domain.item.Item;
 
 public class Combo {
@@ -40,5 +43,21 @@ public class Combo {
         this.sobremesa = sobremesa;
     }
 
+    public List<Item> getItens() {
+        List<Item> itens = new ArrayList<>();
+        if (lanche != null) {
+            itens.add(lanche);
+        }
+        if (acompanhamento != null) {
+            itens.add(acompanhamento);
+        }
+        if (bebida != null) {
+            itens.add(bebida);
+        }
+        if (sobremesa != null) {
+            itens.add(sobremesa);
+        }
+        return itens;
+    }
 
 }

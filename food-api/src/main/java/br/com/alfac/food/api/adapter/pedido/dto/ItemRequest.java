@@ -1,13 +1,16 @@
 package br.com.alfac.food.api.adapter.pedido.dto;
 
-public class ItemRequest {
-    private int id;
+import io.swagger.v3.oas.annotations.media.Schema;
 
-    public int getId() {
+public class ItemRequest {
+    @Schema(example = "15")
+    private Long id;
+    
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

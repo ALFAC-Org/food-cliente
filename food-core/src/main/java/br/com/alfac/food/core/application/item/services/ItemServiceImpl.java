@@ -40,7 +40,7 @@ public class ItemServiceImpl implements ItemService {
     }
     
     @Override
-    public ItemDTO consultarItemPorId(UUID id) throws FoodException {
+    public ItemDTO consultarItemPorId(Long id) throws FoodException {
         Optional<Item> itemOpt = itemRepository.consultarItemPorId(id);
 
         Item item = itemOpt.orElseThrow(() -> new FoodException(ItemErros.ITEM_NAO_ENCONTRADO));

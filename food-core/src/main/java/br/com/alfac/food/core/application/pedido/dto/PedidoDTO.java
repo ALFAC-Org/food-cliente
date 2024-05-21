@@ -1,10 +1,11 @@
 package br.com.alfac.food.core.application.pedido.dto;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PedidoDTO {
     private List<ComboDTO> combos;
-    private Long clienteId;
+    private UUID clienteId;
 
     public List<ComboDTO> getCombos() {
         return combos;
@@ -14,11 +15,11 @@ public class PedidoDTO {
         this.combos = combos;
     }
 
-    public Long getClienteId() {
+    public UUID getClienteId() {
         return clienteId;
     }
 
-    public void setClienteId(Long clienteId) {
+    public void setClienteId(UUID clienteId) {
         this.clienteId = clienteId;
     }
     

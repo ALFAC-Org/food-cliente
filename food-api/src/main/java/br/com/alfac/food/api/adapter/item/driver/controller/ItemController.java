@@ -1,7 +1,6 @@
 package br.com.alfac.food.api.adapter.item.driver.controller;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,9 +24,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/v1/itens")
+@Tag(name = "Item", description = "Métodos para manipulação de itens (LANCHE, COMPLEMENTO, ACOMPANHAMENTO, BEBIDA, SOBREMESA...)")
 public class ItemController {
 
     private final ItemService itemService;
@@ -38,7 +39,7 @@ public class ItemController {
         this.itemMapper = itemMapper;
     }
 
-    @Operation(summary = "Consultar todos os Itens")
+    @Operation(summary = "Consultar todos os itens")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Operação bem sucedida"),
         @ApiResponse(responseCode = "404", description = "Nenhum item cadastrado", content = {
@@ -67,16 +68,17 @@ public class ItemController {
             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
         })})
     @GetMapping(value = "por-id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ItemDTO consultarPorId(@PathVariable UUID id) throws FoodException {
+    public ItemDTO consultarPorId(@PathVariable Long id) throws FoodException {
         return itemService.consultarItemPorId(id);
     }
 
     @PostMapping
+    @Operation(summary = "TODO: Cadastrar um item")
     public void cadastrarItem() {
 
     }
 
-    @Operation(summary = "Atualizar item por Id")
+    @Operation(summary = "Atualizar item por id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Operação bem sucedida"),
         @ApiResponse(responseCode = "404", description = "Nenhum item cadastrado", content = {
@@ -87,7 +89,7 @@ public class ItemController {
         return itemService.atualizarItem(id, itemMapper.toDTO(itemRequest));
     }
 
-    @Operation(summary = "Deletar item por Id")
+    @Operation(summary = "Deletar item por id")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Operação bem sucedida"),
         @ApiResponse(responseCode = "404", description = "Nenhum item cadastrado", content = {

@@ -1,21 +1,19 @@
 package br.com.alfac.food.core.application.item.dto;
 
-import java.util.UUID;
-
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 
 
 public class ItemDTO {
-    private UUID id;
+    private Long id;
     private String nome;
     private Double preco;
     private CategoriaItem categoria;
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(final UUID id) {
+    public void setId(final Long id) {
         this.id = id;
     }
 

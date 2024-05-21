@@ -13,7 +13,8 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI api() {
         Info info = new Info();
-        info.title("API Controle Pedidos");
+        info.title("API - Aplicação Fast Food - ALFAC");
+        info.description("API para manipulação de pedidos, itens e clientes");
         info.version("0.2");
 
         return new OpenAPI().info(info);

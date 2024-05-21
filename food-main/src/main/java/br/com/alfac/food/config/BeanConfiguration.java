@@ -21,8 +21,8 @@ public class BeanConfiguration {
         return new ClienteServiceImpl(clienteRepository);
     }
     @Bean
-    public PedidoService pedidoService(PedidoRepository pedidoRepository) {
-        return new PedidoServiceImpl(pedidoRepository);
+    public PedidoService pedidoService(PedidoRepository pedidoRepository, ClienteRepository clienteRepository, ItemRepository itemRepository) {
+        return new PedidoServiceImpl(pedidoRepository, clienteRepository, itemRepository);
     }
     @Bean
     public ItemService itemService(ItemRepository itemRepository) {

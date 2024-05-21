@@ -5,13 +5,12 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.util.List;
 
 import br.com.alfac.food.database.item.entity.ItemEntity;
 
 @Entity
-@Table(name = "item_combo")
-public class ItemComboEntity implements Serializable {
+@Table(name = "item_combo_complemento")
+public class ItemComboComplementoEntity implements Serializable {
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -19,17 +18,11 @@ public class ItemComboEntity implements Serializable {
     
     @OneToOne
     @JoinColumn(name = "id_item")
-    @NotNull(message = "Item é obrigatório")
+    @NotEmpty(message = "Item é obrigatório")
     private ItemEntity item;
-    
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id_item_combo")
-    private List<ItemComboComplementoEntity> complementos;
 
     @NotNull(message = "Preço do item é obrigatório")
     private Double preco;
-
-    private String observacoes;
 
     public Long getId() {
         return id;
@@ -53,22 +46,6 @@ public class ItemComboEntity implements Serializable {
 
     public void setPreco(Double preco) {
         this.preco = preco;
-    }
-
-    public List<ItemComboComplementoEntity> getComplementos() {
-        return complementos;
-    }
-
-    public void setComplementos(List<ItemComboComplementoEntity> complementos) {
-        this.complementos = complementos;
-    }
-
-    public String getObservacoes() {
-        return observacoes;
-    }
-
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
-    }    
+    }  
     
 }

@@ -1,7 +1,6 @@
 package br.com.alfac.food.database.item.entity;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 import jakarta.persistence.Entity;
@@ -31,16 +30,6 @@ public class ItemEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Categoria do item é obrigatório")
     private CategoriaItem categoria;
-
-    private UUID uuid;
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(final UUID uuid) {
-        this.uuid = uuid;
-    }
 
     public Long getId() {
         return id;
