@@ -2,7 +2,6 @@ package br.com.alfac.food.core.domain.pedido;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import br.com.alfac.food.core.domain.base.AggregateRoot;
 import br.com.alfac.food.core.domain.cliente.Cliente;

@@ -2,7 +2,6 @@ package br.com.alfac.food.database.pedido.repository;
 
 import br.com.alfac.food.core.application.pedido.ports.PedidoRepository;
 import br.com.alfac.food.core.domain.pedido.Pedido;
-import br.com.alfac.food.database.item.entity.ItemEntity;
 import br.com.alfac.food.database.pedido.entity.PedidoEntity;
 import br.com.alfac.food.database.pedido.mapper.PedidoEntityMapper;
 import jakarta.transaction.Transactional;
@@ -39,7 +38,7 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     }
 
     @Override
-    //@Transactional
+    @Transactional
     public void registrarPedido(Pedido pedido){
 
         PedidoEntity pedidoEntity = pedidoEntityMapper.toEntity(pedido);

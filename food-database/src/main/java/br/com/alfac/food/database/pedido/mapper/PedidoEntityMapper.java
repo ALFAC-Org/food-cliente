@@ -16,9 +16,12 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", uses = {ClienteEntityMapper.class})
 public interface PedidoEntityMapper {
+
+    ItemComboEntityMapper itemComboEntityMapper = Mappers.getMapper(ItemComboEntityMapper.class);
 
     @Mapping(target = "combos", source = "combos", qualifiedByName = "combosToEntityParser")
     PedidoEntity toEntity(Pedido pedido);
@@ -35,15 +38,12 @@ public interface PedidoEntityMapper {
             ComboEntity comboEntity = new ComboEntity();
 
             for(Item item : combo.getItens()){
-                ItemEntity itemEntity = new ItemEntity();
-                itemEntity.setId(item.getId());
-
-                ItemComboEntity itemComboEntity = new ItemComboEntity();
-                itemComboEntity.setItem(itemEntity);
-                itemComboEntity.setPreco(item.getPreco());
+                ItemComboEntity itemComboEntity = null;
 
                 if(item instanceof Lanche){
-                    itemComboEntity.setObservacoes(((Lanche) item).getObservacoes());
+                    itemComboEntity = itemComboEntityMapper.lancheToEntity((Lanche) item);
+                } else {
+                    itemComboEntity = itemComboEntityMapper.itemToEntity(item);
                 }
 
                 itensComboEntities.add(itemComboEntity);
@@ -54,7 +54,6 @@ public interface PedidoEntityMapper {
         }
         return combosEntities;
     }
-    
 
     @Named("combosToDomainParser")
     default List<Combo> combosToDomain(List<ComboEntity> combos) {

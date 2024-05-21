@@ -1,5 +1,7 @@
 package br.com.alfac.food.core.domain.base;
 
+import java.util.Collection;
+
 public class AssertionConcern {
 
     public static void assertArgumentTrue(boolean assertion, String message) {
@@ -16,6 +18,12 @@ public class AssertionConcern {
 
     public static void assertArgumentNotNull(Object object, String message) {
         if (object == null) {
+            throw new DomainException(message);
+        }
+    }
+
+    public static void assertCollectionNotEmpty(Collection object, String message) {
+        if (object == null || object.isEmpty()) {
             throw new DomainException(message);
         }
     }

@@ -1,9 +1,12 @@
 package br.com.alfac.food.core.domain.pedido;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import br.com.alfac.food.core.domain.item.CategoriaItem;
 import br.com.alfac.food.core.domain.item.Item;
+import br.com.alfac.food.core.utils.CollectionsUtils;
 
 public class Combo {
     private Lanche lanche;
