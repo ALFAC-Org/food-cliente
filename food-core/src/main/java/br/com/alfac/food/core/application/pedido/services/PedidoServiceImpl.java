@@ -42,6 +42,11 @@ public class PedidoServiceImpl implements PedidoService {
         return PedidoMapper.mapearParaListaPedidoDTO(pedidos);
     }
 
+    public PedidoDTO consultarPedidoPorId(Long id) throws FoodException {
+        Optional<Pedido> pedidoOpt = pedidoRepository.consultarPedidoPorId(id);
+        return PedidoMapper.mapearParaPedidoDTO(pedidoOpt);
+    }
+
     public PedidoDTO registrarPedido(PedidoDTO pedidoDTO) throws FoodException {
         Pedido pedido = new Pedido();
 
@@ -96,7 +101,7 @@ public class PedidoServiceImpl implements PedidoService {
 
         Pedido pedidoSalvo = pedidoRepository.registrarPedido(pedido);
 
-        return PedidoMapper.mapearParaPedidoDTO(pedidoSalvo);
+        return consultarPedidoPorId(pedidoSalvo.getId());
     }
 
 }

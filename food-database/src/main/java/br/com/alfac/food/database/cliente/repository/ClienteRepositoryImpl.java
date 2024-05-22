@@ -54,8 +54,6 @@ public class ClienteRepositoryImpl implements ClienteRepository {
     private Optional<Cliente> montarCliente(Optional<ClienteEntity> clienteEntityOpt) {
         Optional<Cliente> clienteOpt = Optional.empty();
 
-
-
         if (clienteEntityOpt.isPresent()) {
             ClienteEntity clienteEntity = clienteEntityOpt.get();
 

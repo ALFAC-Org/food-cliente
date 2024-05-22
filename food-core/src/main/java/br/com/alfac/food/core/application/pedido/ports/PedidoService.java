@@ -9,5 +9,7 @@ public interface PedidoService {
     
     public List<PedidoDTO> listarPedidos();
     
+    public PedidoDTO consultarPedidoPorId(Long id) throws FoodException;
+    
     PedidoDTO registrarPedido(PedidoDTO pedidoDTO) throws FoodException;
 }

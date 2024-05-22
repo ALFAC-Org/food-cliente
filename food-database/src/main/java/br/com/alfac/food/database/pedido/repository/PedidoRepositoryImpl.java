@@ -1,13 +1,16 @@
 package br.com.alfac.food.database.pedido.repository;
 
 import br.com.alfac.food.core.application.pedido.ports.PedidoRepository;
+import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.core.domain.pedido.Pedido;
+import br.com.alfac.food.database.cliente.entity.ClienteEntity;
 import br.com.alfac.food.database.pedido.entity.PedidoEntity;
 import br.com.alfac.food.database.pedido.mapper.PedidoEntityMapper;
 import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
@@ -38,14 +41,31 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     }
 
     @Override
+    public Optional<Pedido> consultarPedidoPorId(Long id) {
+        Optional<PedidoEntity> pedidoEntityOpt = pedidoEntityRepository.findById(id);
+        return montarPedido(pedidoEntityOpt);
+    }
+
+    @Override
     public Pedido registrarPedido(Pedido pedido) {
         PedidoEntity pedidoEntity = pedidoEntityMapper.toEntity(pedido);
 
         PedidoEntity pedidoCriado = pedidoEntityRepository.save(pedidoEntity);
 
-        PedidoEntity pedidoSalvo = pedidoEntityRepository.findById(pedidoCriado.getId()).get();
+        return pedidoEntityMapper.toDomain(pedidoCriado);
+    }
 
-        return pedidoEntityMapper.toDomain(pedidoSalvo);
+    private Optional<Pedido> montarPedido(Optional<PedidoEntity> pedidoEntityOpt) {
+        Optional<Pedido> pedidoOpt = Optional.empty();
+
+        if (pedidoEntityOpt.isPresent()) {
+            PedidoEntity pedidoEntity = pedidoEntityOpt.get();
+
+            Pedido pedido = pedidoEntityMapper.toDomain(pedidoEntity);
+
+            pedidoOpt = Optional.of(pedido);
+        }
+        return pedidoOpt;
     }
 
 }
