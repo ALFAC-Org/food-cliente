@@ -1,15 +1,8 @@
 package br.com.alfac.food.core.application.pedido.mappers;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-// import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
-import br.com.alfac.food.core.application.pedido.dto.ComboDTO;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
-// import br.com.alfac.food.core.domain.cliente.Cliente;
-// import br.com.alfac.food.core.domain.item.Item;
-// import br.com.alfac.food.core.domain.pedido.Combo;
 import br.com.alfac.food.core.domain.pedido.Pedido;
 import br.com.alfac.food.core.exception.FoodException;
 import br.com.alfac.food.core.exception.cliente.ClienteErros;

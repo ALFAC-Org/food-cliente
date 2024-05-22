@@ -29,7 +29,7 @@ public class ClienteEntity implements Serializable {
 
     private UUID uuid;
 
-    @OneToMany(mappedBy = "cliente") // Remove the semicolon at the end of this line
+    @OneToMany(mappedBy = "cliente")
     private Set<PedidoEntity> pedidos;
 
     public String getNome() {

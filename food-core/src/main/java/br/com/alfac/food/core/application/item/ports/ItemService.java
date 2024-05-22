@@ -1,7 +1,6 @@
 package br.com.alfac.food.core.application.item.ports;
 
 import java.util.List;
-// import java.util.UUID;
 
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.domain.item.CategoriaItem;

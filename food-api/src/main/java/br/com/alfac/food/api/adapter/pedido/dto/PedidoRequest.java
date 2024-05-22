@@ -1,7 +1,6 @@
 package br.com.alfac.food.api.adapter.pedido.dto;
 
 import java.util.List;
-// import java.util.UUID;
 
 public class PedidoRequest {
     private Long clienteId;

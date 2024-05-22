@@ -1,7 +1,6 @@
 package br.com.alfac.food.core.application.pedido.dto;
 
 import java.util.List;
-// import java.util.UUID;
 
 public class PedidoDTO {
     private List<ComboDTO> combos;
