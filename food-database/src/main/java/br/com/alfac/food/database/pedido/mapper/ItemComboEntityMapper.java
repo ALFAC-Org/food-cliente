@@ -1,16 +1,5 @@
 package br.com.alfac.food.database.pedido.mapper;
 
-import br.com.alfac.food.database.cliente.mapper.ClienteEntityMapper;
-import br.com.alfac.food.database.item.entity.ItemEntity;
-import br.com.alfac.food.core.domain.item.Item;
-import br.com.alfac.food.core.domain.pedido.Combo;
-import br.com.alfac.food.core.domain.pedido.Lanche;
-import br.com.alfac.food.core.domain.pedido.Pedido;
-import br.com.alfac.food.database.pedido.entity.ComboEntity;
-import br.com.alfac.food.database.pedido.entity.ItemComboComplementoEntity;
-import br.com.alfac.food.database.pedido.entity.ItemComboEntity;
-import br.com.alfac.food.database.pedido.entity.PedidoEntity;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +7,11 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
+
+import br.com.alfac.food.core.domain.item.Item;
+import br.com.alfac.food.core.domain.pedido.Lanche;
+import br.com.alfac.food.database.pedido.entity.ItemComboComplementoEntity;
+import br.com.alfac.food.database.pedido.entity.ItemComboEntity;
 
 @Mapper(componentModel = "spring")
 public interface ItemComboEntityMapper {
@@ -36,6 +30,17 @@ public interface ItemComboEntityMapper {
     @Mapping(target = "complementos", source = "complementos", qualifiedByName = "itemComboToEntityParser")
     ItemComboEntity lancheToEntity(Lanche lanche);
 
+    @Mapping(target = "id", source = "item.id")
+    @Mapping(target = "nome", source = "item.nome")
+    @Mapping(target = "categoria", source = "item.categoria")
+    Item toItemDomain(ItemComboEntity item);
+
+    @Mapping(target = "id", source = "item.id")
+    @Mapping(target = "nome", source = "item.nome")
+    @Mapping(target = "categoria", source = "item.categoria")
+    @Mapping(target = "complementos", source = "complementos", qualifiedByName = "itemComboToDomainParser")
+    Lanche toLancheDomain(ItemComboEntity item); 
+
     @Named("itemComboToEntityParser")
     default List<ItemComboComplementoEntity> itemComboToEntityParser(List<Item> complementos) {
         List<ItemComboComplementoEntity> complementosEntities = null;
@@ -46,6 +51,18 @@ public interface ItemComboEntityMapper {
             }
         }
         return complementosEntities;
+    }
+
+    @Named("itemComboToDomainParser")
+    default List<Item> itemComboToDomainParser(List<ItemComboComplementoEntity> complementosEntities) {
+        List<Item> complementos = null;
+        if(complementosEntities != null){
+            complementos = new ArrayList<>(); 
+            for(ItemComboComplementoEntity complementoEntity : complementosEntities){
+                complementos.add(itemComboComplementoEntityMapper.toDomain(complementoEntity));
+            }
+        }
+        return complementos;
     }
 
 }

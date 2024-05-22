@@ -45,7 +45,7 @@ public class ItemController {
         @ApiResponse(responseCode = "404", description = "Nenhum item cadastrado", content = {
             @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
         })})
-    @GetMapping(value = "consultar-itens", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<ItemDTO> consultarItens() throws FoodException {
         return itemService.consultarItens();
     }

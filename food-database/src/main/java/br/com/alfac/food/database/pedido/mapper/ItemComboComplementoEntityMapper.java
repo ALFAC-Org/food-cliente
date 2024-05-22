@@ -13,5 +13,10 @@ public interface ItemComboComplementoEntityMapper {
     @Mapping(target = "id", source = "id", ignore = true)
     ItemComboComplementoEntity toEntity(Item item);
 
+    @Mapping(target = "id", source = "item.id")
+    @Mapping(target = "nome", source = "item.nome")
+    @Mapping(target = "categoria", source = "item.categoria")
+    Item toDomain(ItemComboComplementoEntity item);
+
 }
     

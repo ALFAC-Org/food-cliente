@@ -43,7 +43,7 @@ public class PedidoController {
     }
 
     @GetMapping
-    public List<Pedido> listarPedidos() {
+    public List<PedidoDTO> listarPedidos() {
         return pedidoService.listarPedidos();
     }
 

@@ -38,13 +38,14 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     }
 
     @Override
-    @Transactional
     public Pedido registrarPedido(Pedido pedido) {
         PedidoEntity pedidoEntity = pedidoEntityMapper.toEntity(pedido);
 
         PedidoEntity pedidoCriado = pedidoEntityRepository.save(pedidoEntity);
 
-        return pedidoEntityMapper.toDomain(pedidoCriado);
+        PedidoEntity pedidoSalvo = pedidoEntityRepository.findById(pedidoCriado.getId()).get();
+
+        return pedidoEntityMapper.toDomain(pedidoSalvo);
     }
 
 }

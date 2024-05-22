@@ -4,9 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import br.com.alfac.food.core.application.cliente.ports.ClienteRepository;
+import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.application.item.ports.ItemRepository;
 import br.com.alfac.food.core.application.pedido.dto.ComboDTO;
-import br.com.alfac.food.core.application.pedido.dto.ItemMenuDTO;
 import br.com.alfac.food.core.application.pedido.dto.LancheDTO;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.application.pedido.mappers.PedidoMapper;
@@ -37,8 +37,9 @@ public class PedidoServiceImpl implements PedidoService {
         this.itemRepository = itemRepository;
     }
 
-    public List<Pedido> listarPedidos() {
-        return pedidoRepository.listarPedidos();
+    public List<PedidoDTO> listarPedidos() {
+        List<Pedido> pedidos = pedidoRepository.listarPedidos();
+        return PedidoMapper.mapearParaListaPedidoDTO(pedidos);
     }
 
     public PedidoDTO registrarPedido(PedidoDTO pedidoDTO) throws FoodException {
@@ -64,7 +65,7 @@ public class PedidoServiceImpl implements PedidoService {
                 lanche.setObservacoes(lancheDTO.getObservacoes());
 
                 if (CollectionsUtils.naoVazio(lancheDTO.getComplementos())) {
-                    for (ItemMenuDTO complementoDTO : lancheDTO.getComplementos()) {
+                    for (ItemDTO complementoDTO : lancheDTO.getComplementos()) {
                         Optional<Item> complemento = itemRepository.consultarItemPorId(complementoDTO.getId());
                         lanche.adicionaComplemento(complemento.get());
                     }
@@ -84,6 +85,8 @@ public class PedidoServiceImpl implements PedidoService {
                 Optional<Item> item = itemRepository.consultarItemPorId(comboDTO.getSobremesa().getId());
                 combo.setSobremesa(item.get());
             }
+
+            combo.validarItens();
 
             pedido.adicionaCombo(combo);
         }

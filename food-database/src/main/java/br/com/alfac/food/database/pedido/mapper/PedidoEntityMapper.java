@@ -2,6 +2,7 @@ package br.com.alfac.food.database.pedido.mapper;
 
 import br.com.alfac.food.database.cliente.mapper.ClienteEntityMapper;
 import br.com.alfac.food.database.item.entity.ItemEntity;
+import br.com.alfac.food.core.domain.item.CategoriaItem;
 import br.com.alfac.food.core.domain.item.Item;
 import br.com.alfac.food.core.domain.pedido.Combo;
 import br.com.alfac.food.core.domain.pedido.Lanche;
@@ -56,8 +57,30 @@ public interface PedidoEntityMapper {
     }
 
     @Named("combosToDomainParser")
-    default List<Combo> combosToDomain(List<ComboEntity> combos) {
-        return new ArrayList<>();
+    default List<Combo> combosToDomain(List<ComboEntity> combosEntities) {
+        List<Combo> combos = new ArrayList<>();
+
+        for(ComboEntity comboEntity : combosEntities){
+            Combo combo = new Combo();
+
+            for(ItemComboEntity itemEntity : comboEntity.getItens()){
+                if(CategoriaItem.LANCHE.equals(itemEntity.getItem().getCategoria())){
+                    combo.setLanche(itemComboEntityMapper.toLancheDomain(itemEntity));
+                }
+                if(CategoriaItem.ACOMPANHAMENTO.equals(itemEntity.getItem().getCategoria())){
+                    combo.setAcompanhamento(itemComboEntityMapper.toItemDomain(itemEntity));
+                }
+                if(CategoriaItem.BEBIDA.equals(itemEntity.getItem().getCategoria())){
+                    combo.setBebida(itemComboEntityMapper.toItemDomain(itemEntity));
+                }
+                if(CategoriaItem.SOBREMESA.equals(itemEntity.getItem().getCategoria())){
+                    combo.setSobremesa(itemComboEntityMapper.toItemDomain(itemEntity));
+                }
+            }
+            combos.add(combo);
+        }
+
+        return combos;
     }
 
 }

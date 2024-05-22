@@ -1,7 +1,6 @@
 package br.com.alfac.food.core.domain.pedido;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import br.com.alfac.food.core.domain.item.CategoriaItem;
@@ -61,6 +60,41 @@ public class Combo {
             itens.add(sobremesa);
         }
         return itens;
+    }
+
+    public void validarItens() {
+
+        if(CollectionsUtils.vazio(getItens())){
+            //erro combo sem itens
+        }
+
+        if (lanche != null) {
+            if(CategoriaItem.LANCHE.equals(lanche.getCategoria()) == false){
+                //erro
+            }
+            if(lanche.getComplementos() != null){
+                for(Item complemento : lanche.getComplementos()){
+                    if(CategoriaItem.COMPLEMENTO.equals(complemento.getCategoria()) == false){
+                        //erro
+                    }
+                }
+            }
+        }
+        if (acompanhamento != null) {
+            if(CategoriaItem.ACOMPANHAMENTO.equals(acompanhamento.getCategoria()) == false){
+                //erro
+            }
+        }
+        if (bebida != null) {
+            if(CategoriaItem.BEBIDA.equals(bebida.getCategoria()) == false){
+                //erro
+            }
+        }
+        if (sobremesa != null) {
+            if(CategoriaItem.SOBREMESA.equals(sobremesa.getCategoria()) == false){
+                //erro
+            }
+        }
     }
 
 }

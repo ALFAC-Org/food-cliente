@@ -25,7 +25,7 @@ public class ItemDTO {
         this.nome = nome;
     }
 
-    public double getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
