@@ -1,13 +1,13 @@
 package br.com.alfac.food.core.application.cliente.dto;
 
-
 import java.util.UUID;
 
 public class ClienteDTO {
     private String nome;
     private String cpf;
     private String email;
-    private UUID id;
+    private Long id;
+    private UUID uuid;
 
     public String getNome() {
         return nome;
@@ -33,11 +33,19 @@ public class ClienteDTO {
         this.email = email;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(final UUID id) {
+    public void setId(final Long id) {
         this.id = id;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuId(final UUID uuid) {
+        this.uuid = uuid;
     }
 }

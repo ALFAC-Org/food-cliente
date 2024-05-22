@@ -6,6 +6,10 @@ import jakarta.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.UUID;
 
+import java.util.Set;
+
+import br.com.alfac.food.database.pedido.entity.PedidoEntity;
+
 @Entity
 @Table(name = "cliente")
 public class ClienteEntity implements Serializable {
@@ -25,6 +29,8 @@ public class ClienteEntity implements Serializable {
 
     private UUID uuid;
 
+    @OneToMany(mappedBy = "cliente")
+    private Set<PedidoEntity> pedidos;
 
     public String getNome() {
         return nome;

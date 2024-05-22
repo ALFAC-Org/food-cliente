@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS item_combo (
 
 CREATE TABLE IF NOT EXISTS item_combo_complemento (
     id int auto_increment  primary key,
-    id_item_combo int NOT NULL,
+    id_item_combo int NULL,
     id_item int NOT NULL,
     preco decimal(10,2) NOT NULL
 );

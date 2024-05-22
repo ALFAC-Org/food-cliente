@@ -9,11 +9,8 @@ import org.mapstruct.Mapping;
 public interface ClienteEntityMapper {
 
     @Mapping(target = "cpf", source = "cpf.numero")
-    @Mapping(target = "id", source = "id", ignore = true)
-    @Mapping(target = "uuid", source = "id")
     ClienteEntity toEntity(Cliente cliente);
 
     @Mapping(target = "cpf.numero", source = "cpf")
-    @Mapping(target = "id", source = "uuid")
     Cliente toDomain(ClienteEntity cliente);
 }

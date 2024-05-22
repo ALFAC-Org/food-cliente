@@ -8,6 +8,6 @@ public interface PedidoRepository {
 
     List<Pedido> listarPedidos();
 
-    void registrarPedido(Pedido pedido);
+    Pedido registrarPedido(Pedido pedido);
 
 }

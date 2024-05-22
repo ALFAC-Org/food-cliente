@@ -88,6 +88,7 @@ curl -X 'POST' \
   "cpf": null,
   "email": "email@provedor.com",
   "id": "92190798-aa89-4d7d-91f2-1e155688cbcd"
+  "uuid": null
 }
 ```
 
@@ -146,7 +147,7 @@ No fim, após escolher todos os itens, monte um objeto com a seguinte estrutura:
 
 ```json
 {
-  "clienteId": "0503f20b-1701-11ef-b59f-0242ac120002",
+  "clienteId": 1,
   "combos": [
     {
       "lanche": {
@@ -176,8 +177,8 @@ O `payload` anterior contempla:
 
 ```
 Cliente
-id: 0503f20b-1701-11ef-b59f-0242ac120002
-Nome: Marcos Hernandes
+id: 1
+Nome: Joaquim Da Silva
 
 Lanche
 id: 15
@@ -219,7 +220,7 @@ curl -X 'POST' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "clienteId": "0503f20b-1701-11ef-b59f-0242ac120002",
+  "clienteId": 1,
   "combos": [
     {
       "lanche": {
@@ -248,7 +249,9 @@ curl -X 'POST' \
 ### Resposta
 
 ```json
-TODO
+{
+  "id": 2
+}
 ```
 
 
@@ -261,8 +264,8 @@ TODO
 - [x] Identificação do Cliente
 - [x] Criar, editar e remover produtos (itens);
 - [x] Buscar produtos por categoria;
+- [x] Listar os pedidos;
 - [ ] Fake checkout (apenas enviar os produtos escolhidos para a fila. O checkout é a finalização do pedido);
-- [ ] Listar os pedidos;
 
 ## Entregas
 

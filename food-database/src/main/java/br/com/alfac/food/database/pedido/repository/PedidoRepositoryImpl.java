@@ -2,7 +2,6 @@ package br.com.alfac.food.database.pedido.repository;
 
 import br.com.alfac.food.core.application.pedido.ports.PedidoRepository;
 import br.com.alfac.food.core.domain.pedido.Pedido;
-import br.com.alfac.food.database.item.entity.ItemEntity;
 import br.com.alfac.food.database.pedido.entity.PedidoEntity;
 import br.com.alfac.food.database.pedido.mapper.PedidoEntityMapper;
 import jakarta.transaction.Transactional;
@@ -15,17 +14,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class PedidoRepositoryImpl implements PedidoRepository {
 
-
     private final PedidoEntityRepository pedidoEntityRepository;
     private final PedidoEntityMapper pedidoEntityMapper;
 
-    public PedidoRepositoryImpl(final PedidoEntityRepository pedidoEntityRepository, final PedidoEntityMapper pedidoMapper) {
+    public PedidoRepositoryImpl(final PedidoEntityRepository pedidoEntityRepository,
+            final PedidoEntityMapper pedidoMapper) {
         this.pedidoEntityRepository = pedidoEntityRepository;
         this.pedidoEntityMapper = pedidoMapper;
     }
 
     @Override
-    public List<Pedido> listarPedidos(){
+    public List<Pedido> listarPedidos() {
         List<PedidoEntity> pedidoEntities = pedidoEntityRepository.findAll();
 
         List<Pedido> pedidos = new ArrayList<>();
@@ -39,12 +38,13 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     }
 
     @Override
-    //@Transactional
-    public void registrarPedido(Pedido pedido){
-
+    @Transactional
+    public Pedido registrarPedido(Pedido pedido) {
         PedidoEntity pedidoEntity = pedidoEntityMapper.toEntity(pedido);
 
-        pedidoEntityRepository.save(pedidoEntity);
+        PedidoEntity pedidoCriado = pedidoEntityRepository.save(pedidoEntity);
+
+        return pedidoEntityMapper.toDomain(pedidoCriado);
     }
 
 }

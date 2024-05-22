@@ -18,7 +18,7 @@ public class ItemComboComplementoEntity implements Serializable {
     
     @OneToOne
     @JoinColumn(name = "id_item")
-    @NotEmpty(message = "Item é obrigatório")
+    @NotNull(message = "Item é obrigatório")
     private ItemEntity item;
 
     @NotNull(message = "Preço do item é obrigatório")

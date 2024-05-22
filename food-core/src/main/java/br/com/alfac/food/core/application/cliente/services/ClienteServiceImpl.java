@@ -26,7 +26,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     public ClienteDTO consultarClientePorId(UUID id) throws FoodException {
-        Optional<Cliente> clienteOpt = clienteRepository.consultarClientePorId(id);
+        Optional<Cliente> clienteOpt = clienteRepository.consultarClientePorUuId(id);
 
         return ClienteMapper.mapearParaClienteDTO(clienteOpt);
     }

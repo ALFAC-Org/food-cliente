@@ -1,0 +1,38 @@
+erDiagram
+    Pedido {
+        int id PK
+        binary uuid
+        int id_cliente FK
+        varchar status_pedido
+        datetime data_cadastro
+    }
+    Cliente {
+        int id PK
+    }
+    Combo {
+        int id PK
+        int id_pedido FK
+    }
+    Item {
+        int id PK
+    }
+    Item_Combo {
+        int id PK
+        int id_combo FK
+        int id_item FK
+        decimal preco
+        varchar observacoes
+    }
+    Item_Combo_Complemento {
+        int id PK
+        int id_item_combo FK
+        int id_item FK
+        decimal preco
+    }
+
+    Pedido ||--o{ Combo : "possui"
+    Combo ||--o{ Item_Combo : "contém"
+    Item_Combo ||--o{ Item_Combo_Complemento : "contém"
+    Pedido ||--o{ Cliente : "possui"
+    Item_Combo }o--|| Item : "referencia"
+    Item_Combo_Complemento }o--|| Item : "referencia"
