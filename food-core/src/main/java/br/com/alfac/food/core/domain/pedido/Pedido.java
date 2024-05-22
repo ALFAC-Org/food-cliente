@@ -12,7 +12,6 @@ public class Pedido implements AggregateRoot {
     private StatusPedido status;
     private List<Combo> combos;
 
-
     public Cliente getCliente() {
         return cliente;
     }

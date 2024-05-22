@@ -9,6 +9,7 @@ import br.com.alfac.food.core.application.pedido.dto.ComboDTO;
 import br.com.alfac.food.core.application.pedido.dto.ItemMenuDTO;
 import br.com.alfac.food.core.application.pedido.dto.LancheDTO;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
+import br.com.alfac.food.core.application.pedido.mappers.PedidoMapper;
 import br.com.alfac.food.core.application.pedido.ports.PedidoRepository;
 import br.com.alfac.food.core.application.pedido.ports.PedidoService;
 import br.com.alfac.food.core.domain.cliente.Cliente;
@@ -40,7 +41,7 @@ public class PedidoServiceImpl implements PedidoService {
         return pedidoRepository.listarPedidos();
     }
 
-    public void registrarPedido(PedidoDTO pedidoDTO) throws FoodException {
+    public PedidoDTO registrarPedido(PedidoDTO pedidoDTO) throws FoodException {
         Pedido pedido = new Pedido();
 
         if (pedidoDTO.getClienteId() != null) {
@@ -90,7 +91,9 @@ public class PedidoServiceImpl implements PedidoService {
         // Define status inicial do pedido
         pedido.setStatus(StatusPedido.RECEBIDO);
 
-        pedidoRepository.registrarPedido(pedido);
+        Pedido pedidoSalvo = pedidoRepository.registrarPedido(pedido);
+
+        return PedidoMapper.mapearParaPedidoDTO(pedidoSalvo);
     }
 
 }
