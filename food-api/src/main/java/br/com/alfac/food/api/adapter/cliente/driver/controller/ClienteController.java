@@ -44,15 +44,26 @@ public class ClienteController {
         return new ResponseEntity<>(clienteService.consultarClientePorCpf(cpf), HttpStatus.OK);
     }
 
-    @Operation(summary = "Consultar cliente pelo ID")
+    @Operation(summary = "Consultar cliente pelo id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Retorna o cliente pelo ID informado"),
+            @ApiResponse(responseCode = "200", description = "Retorna o cliente pelo id informado"),
             @ApiResponse(responseCode = "404", description = "Retorna cliente não encontrado", content = {
                     @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
             })})
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ClienteDTO> consultarClientePorId(@PathVariable UUID id) throws FoodException {
+    public ResponseEntity<ClienteDTO> consultarClientePorId(@PathVariable Long id) throws FoodException {
         return new ResponseEntity<>(clienteService.consultarClientePorId(id), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Consultar cliente pelo uuid")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna o cliente pelo uuid informado"),
+            @ApiResponse(responseCode = "404", description = "Retorna cliente não encontrado", content = {
+                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
+            })})
+    @GetMapping(value = "/por-uuid/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ClienteDTO> consultarClientePorUuid(@PathVariable UUID uuid) throws FoodException {
+        return new ResponseEntity<>(clienteService.consultarClientePorUuid(uuid), HttpStatus.OK);
     }
 
     @Operation(summary = "Cadastrar cliente")
