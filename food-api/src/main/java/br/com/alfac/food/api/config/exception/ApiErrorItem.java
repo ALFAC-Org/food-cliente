@@ -15,6 +15,11 @@ public class ApiErrorItem {
         this.owner = owner;
         this.date = new Date().getTime();
     }
+    public ApiErrorItem(String code, String message) {
+        this.code = code;
+        this.message = message;
+        this.date = new Date().getTime();
+    }
 
     public String getCode() {
         return code;

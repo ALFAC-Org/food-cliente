@@ -10,7 +10,7 @@ import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.domain.pedido.Combo;
 import br.com.alfac.food.core.domain.pedido.Pedido;
 import br.com.alfac.food.core.exception.FoodException;
-import br.com.alfac.food.core.exception.cliente.ClienteErros;
+import br.com.alfac.food.core.exception.cliente.ClienteError;
 
 public final class PedidoMapper {
 
@@ -48,7 +48,7 @@ public final class PedidoMapper {
 
     public static PedidoDTO mapearParaPedidoDTO(Optional<Pedido> pedidoOpt) throws FoodException {
 
-        Pedido pedido = pedidoOpt.orElseThrow(() -> new FoodException(ClienteErros.CLIENTE_NAO_ENCONTRADO));
+        Pedido pedido = pedidoOpt.orElseThrow(() -> new FoodException(ClienteError.CLIENTE_NAO_ENCONTRADO));
 
         return mapearParaPedidoDTO(pedido);
     }

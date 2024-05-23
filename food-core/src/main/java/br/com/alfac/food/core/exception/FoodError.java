@@ -1,7 +1,7 @@
 package br.com.alfac.food.core.exception;
 
 
-public interface FoodErros {
+public interface FoodError {
 
     String getErrorCode();
 

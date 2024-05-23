@@ -10,7 +10,7 @@ import br.com.alfac.food.core.application.item.ports.ItemService;
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 import br.com.alfac.food.core.domain.item.Item;
 import br.com.alfac.food.core.exception.FoodException;
-import br.com.alfac.food.core.exception.item.ItemErros;
+import br.com.alfac.food.core.exception.item.ItemError;
 
 public class ItemServiceImpl implements ItemService {
 
@@ -32,7 +32,7 @@ public class ItemServiceImpl implements ItemService {
         List<Item> itemList = itemRepository.consultarItensPorCategoria(categoria);
 
         if (itemList == null || itemList.isEmpty()) {
-            throw new FoodException(ItemErros.CATEGORIA_SEM_ITENS);
+            throw new FoodException(ItemError.CATEGORIA_SEM_ITENS);
         }
 
         return ItemMapper.mapearParaItemDTOList(itemList);  
@@ -42,7 +42,7 @@ public class ItemServiceImpl implements ItemService {
     public ItemDTO consultarItemPorId(Long id) throws FoodException {
         Optional<Item> itemOpt = itemRepository.consultarItemPorId(id);
 
-        Item item = itemOpt.orElseThrow(() -> new FoodException(ItemErros.ITEM_NAO_ENCONTRADO));
+        Item item = itemOpt.orElseThrow(() -> new FoodException(ItemError.ITEM_NAO_ENCONTRADO));
 
         return ItemMapper.mapearParaItemDTO(item);
     }
