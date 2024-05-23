@@ -266,9 +266,9 @@ curl -X 'POST' \
 - [x] Buscar produtos por categoria;
 - [x] Listar os pedidos;
 - [x] Listar pedido por id;
+- [x] Cadastrar item;
 - [ ] Fake checkout (apenas enviar os produtos escolhidos para a fila. O checkout é a finalização do pedido);
 - [ ] Atualizar status do pedido - combobox;
-- [ ] Cadastrar item;
 - [ ] Validação dos itens do combo;
 - [ ] Dockerfile/docker-compose no docker-hub.
 

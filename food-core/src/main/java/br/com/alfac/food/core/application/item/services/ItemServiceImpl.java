@@ -24,7 +24,7 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDTO> consultarItens() throws FoodException {
         List<Item> itemList = itemRepository.consultarItens();
 
-        return ItemMapper.mapearParaItemDTOList(itemList);  
+        return ItemMapper.mapearParaItemDTOList(itemList);
     }
 
     @Override
@@ -35,9 +35,9 @@ public class ItemServiceImpl implements ItemService {
             throw new FoodException(ItemErros.CATEGORIA_SEM_ITENS);
         }
 
-        return ItemMapper.mapearParaItemDTOList(itemList);  
+        return ItemMapper.mapearParaItemDTOList(itemList);
     }
-    
+
     @Override
     public ItemDTO consultarItemPorId(Long id) throws FoodException {
         Optional<Item> itemOpt = itemRepository.consultarItemPorId(id);
@@ -50,7 +50,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDTO cadastrarItem(ItemDTO itemDTO) throws FoodException {
         Item item = new Item();
-        
+
         item.setNome(itemDTO.getNome());
         item.setPreco(itemDTO.getPreco());
         item.setCategoria(itemDTO.getCategoria());
