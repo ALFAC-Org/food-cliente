@@ -29,6 +29,7 @@ public final class PedidoMapper {
         PedidoDTO pedidoDTO = new PedidoDTO();
         pedidoDTO.setId(pedido.getId());
         pedidoDTO.setClienteId(pedido.getId());
+        pedidoDTO.setStatusPedido(pedido.getStatus());
 
         List<ComboDTO> combosDTO = new ArrayList<>();
         for(Combo combo : pedido.getCombos()){

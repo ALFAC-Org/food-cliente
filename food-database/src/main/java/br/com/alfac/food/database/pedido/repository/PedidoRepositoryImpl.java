@@ -1,12 +1,10 @@
 package br.com.alfac.food.database.pedido.repository;
 
 import br.com.alfac.food.core.application.pedido.ports.PedidoRepository;
-import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.core.domain.pedido.Pedido;
-import br.com.alfac.food.database.cliente.entity.ClienteEntity;
+import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.database.pedido.entity.PedidoEntity;
 import br.com.alfac.food.database.pedido.mapper.PedidoEntityMapper;
-import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +64,22 @@ public class PedidoRepositoryImpl implements PedidoRepository {
             pedidoOpt = Optional.of(pedido);
         }
         return pedidoOpt;
+    }
+
+    @Override
+    public Pedido atualizarStatusPedido(Long id, StatusPedido statusPedido) {
+        Optional<PedidoEntity> pedidoEntityOpt = pedidoEntityRepository.findById(id);
+
+        if (pedidoEntityOpt.isPresent()) {
+            PedidoEntity pedidoEntity = pedidoEntityOpt.get();
+            pedidoEntity.setStatus(statusPedido);
+
+            PedidoEntity pedidoAtualizado = pedidoEntityRepository.save(pedidoEntity);
+
+            return pedidoEntityMapper.toDomain(pedidoAtualizado);
+        }
+
+        return null;
     }
 
 }

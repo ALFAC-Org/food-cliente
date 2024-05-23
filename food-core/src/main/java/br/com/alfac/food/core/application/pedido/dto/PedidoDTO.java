@@ -2,10 +2,13 @@ package br.com.alfac.food.core.application.pedido.dto;
 
 import java.util.List;
 
+import br.com.alfac.food.core.domain.pedido.StatusPedido;
+
 public class PedidoDTO {
     private List<ComboDTO> combos;
     private Long clienteId;
     private Long id;
+    private StatusPedido statusPedido;
     // private UUID clienteUuId;
 
     public Long getId() {
@@ -38,5 +41,13 @@ public class PedidoDTO {
 
     public void setClienteId(Long clienteId) {
         this.clienteId = clienteId;
+    }
+
+    public StatusPedido getStatusPedido() {
+        return statusPedido;
+    }
+
+    public void setStatusPedido(StatusPedido statusPedido) {
+        this.statusPedido = statusPedido;
     }
 }

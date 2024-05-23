@@ -20,6 +20,7 @@ import br.com.alfac.food.core.domain.pedido.Pedido;
 import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.core.exception.FoodException;
 import br.com.alfac.food.core.exception.item.ItemErros;
+import br.com.alfac.food.core.exception.pedido.PedidoErros;
 import br.com.alfac.food.core.utils.CollectionsUtils;
 
 public class PedidoServiceImpl implements PedidoService {
@@ -104,4 +105,18 @@ public class PedidoServiceImpl implements PedidoService {
         return consultarPedidoPorId(pedidoSalvo.getId());
     }
 
+    public PedidoDTO atualizarStatusPedido(Long id, StatusPedido statusPedido) throws FoodException {
+        Optional<Pedido> pedidoOpt = pedidoRepository.consultarPedidoPorId(id);
+
+        if (pedidoOpt.isEmpty()) {
+            throw new FoodException(PedidoErros.PEDIDO_NAO_ENCONTRADO);
+        }
+
+        Pedido pedido = pedidoOpt.get();
+        pedido.setStatus(statusPedido);
+
+        Pedido pedidoAtualizado = pedidoRepository.atualizarStatusPedido(pedido.getId(), statusPedido);
+
+        return PedidoMapper.mapearParaPedidoDTO(pedidoAtualizado);
+    }
 }
