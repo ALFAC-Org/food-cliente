@@ -48,8 +48,16 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void cadastrarItem(Item item) {
+    public ItemDTO cadastrarItem(ItemDTO itemDTO) throws FoodException {
+        Item item = new Item();
+        
+        item.setNome(itemDTO.getNome());
+        item.setPreco(itemDTO.getPreco());
+        item.setCategoria(itemDTO.getCategoria());
 
+        Item itemCriado = itemRepository.cadastrarItem(item);
+
+        return ItemMapper.mapearParaItemDTO(itemCriado);
     }
 
     @Override
@@ -62,8 +70,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDTO excluirItem(Long id) throws FoodException {
         Item item = itemRepository.excluirItem(id);
-
-        // TODO: Implementar lógica de exclusão logica X logica fisica - Validar se temos referencia em algum lugar
 
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setNome(item.getNome());

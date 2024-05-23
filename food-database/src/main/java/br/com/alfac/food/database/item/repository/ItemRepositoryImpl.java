@@ -88,6 +88,15 @@ public class ItemRepositoryImpl implements ItemRepository {
         }
     }
 
+    @Override
+    public Item cadastrarItem(Item item) {
+        ItemEntity itemEntity = itemEntityMapper.toEntity(item);
+
+        ItemEntity itemCriado = itemEntityRepository.save(itemEntity);
+
+        return itemEntityMapper.toDomain(itemCriado);
+    }
+
     @Transactional
     @Override
     public Item excluirItem(Long id) {

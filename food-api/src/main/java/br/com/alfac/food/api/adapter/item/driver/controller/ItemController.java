@@ -72,10 +72,15 @@ public class ItemController {
         return itemService.consultarItemPorId(id);
     }
 
+    @Operation(summary = "Cadastrar item")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Item cadastrado com sucesso"),
+        @ApiResponse(responseCode = "400", description = "Erro no cadastro do item", content = {
+            @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
+        })})
     @PostMapping
-    @Operation(summary = "TODO: Cadastrar um item")
-    public void cadastrarItem() {
-
+    public ItemDTO cadastrarItem( @RequestBody ItemRequest itemRequest) throws FoodException {
+        return itemService.cadastrarItem(itemMapper.toDTO(itemRequest));
     }
 
     @Operation(summary = "Atualizar item por id")
