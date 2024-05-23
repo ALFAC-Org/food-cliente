@@ -15,6 +15,8 @@ public interface ItemRepository {
 
     Optional<Item> consultarItemPorId(Long id);
 
+    Item cadastrarItem(Item item);
+
     Item atualizarItem(Long id, ItemDTO item);
 
     Item excluirItem(Long id);

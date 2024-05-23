@@ -81,11 +81,20 @@ public class ItemRepositoryImpl implements ItemRepository {
             managedItemEntity.setCategoria(item.getCategoria());
 
             itemEntityRepository.save(managedItemEntity);
-           
+
             return itemEntityMapper.toDomain(managedItemEntity);
         } else {
             throw new EntityNotFoundException("Item não encontrado para o id informado");
         }
+    }
+
+    @Override
+    public Item cadastrarItem(Item item) {
+        ItemEntity itemEntity = itemEntityMapper.toEntity(item);
+
+        ItemEntity itemCriado = itemEntityRepository.save(itemEntity);
+
+        return itemEntityMapper.toDomain(itemCriado);
     }
 
     @Transactional

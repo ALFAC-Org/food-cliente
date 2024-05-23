@@ -4,7 +4,6 @@ import java.util.List;
 
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.domain.item.CategoriaItem;
-import br.com.alfac.food.core.domain.item.Item;
 import br.com.alfac.food.core.exception.FoodException;
 
 public interface ItemService {
@@ -15,7 +14,7 @@ public interface ItemService {
 
     public ItemDTO consultarItemPorId(Long id) throws FoodException;
 
-    public void cadastrarItem(Item item);
+    public ItemDTO cadastrarItem(ItemDTO item) throws FoodException;
     
     public ItemDTO atualizarItem(Long idItem, ItemDTO item) throws FoodException;
     
