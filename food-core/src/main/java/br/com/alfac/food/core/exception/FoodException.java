@@ -1,31 +1,58 @@
 package br.com.alfac.food.core.exception;
 
+import java.util.List;
+
 public class FoodException extends Exception {
 
-    private final FoodErros foodErros;
+    private final FoodError foodError;
+    private final List<FoodError> foodErrors;
 
-    public FoodException(FoodErros foodErros) {
-        super(foodErros.getErrorMessage());
-        this.foodErros = foodErros;
+    public FoodException(final List<FoodError> foodErrors) {
+        super(getMessages(foodErrors));
+        this.foodErrors = foodErrors;
+        this.foodError = null;
     }
 
-    public FoodException(FoodErros foodErros, Throwable e) {
-        super(foodErros.getErrorMessage(), e);
-        this.foodErros = foodErros;
+    public FoodException(FoodError foodError) {
+        super(foodError.getErrorMessage());
+        this.foodError = foodError;
+        this.foodErrors = null;
     }
 
-    public FoodException(FoodErros foodErros, Object... args) {
-        super(String.format(foodErros.getErrorMessage(), args));
-        this.foodErros = foodErros;
+    public FoodException(final List<FoodError> foodErrors, Throwable e) {
+        super(getMessages(foodErrors), e);
+        this.foodErrors = foodErrors;
+        this.foodError = null;
+    }
+    public FoodException(FoodError foodError, Throwable e) {
+        super(foodError.getErrorMessage(), e);
+        this.foodError = foodError;
+        this.foodErrors = null;
     }
 
-    public FoodException(FoodErros foodErros, Throwable e,  Object... args) {
-        super(String.format(foodErros.getErrorMessage(), args), e);
-        this.foodErros = foodErros;
+
+    public FoodException(FoodError foodError, Object... args) {
+        super(String.format(foodError.getErrorMessage(), args));
+        this.foodError = foodError;
+        this.foodErrors = null;
     }
 
-    public FoodErros getFoodErros() {
-        return foodErros;
+    public FoodException(FoodError foodError, Throwable e, Object... args) {
+        super(String.format(foodError.getErrorMessage(), args), e);
+        this.foodError = foodError;
+        this.foodErrors = null;
     }
 
+    public FoodError getFoodErros() {
+        return foodError;
+    }
+
+    public List<FoodError> getFoodErrors() {
+        return foodErrors;
+    }
+
+    private static String getMessages(final List<FoodError> foodErrors) {
+        List<String> mensagensDeErro = foodErrors.stream().map(FoodError::getErrorMessage).toList();
+        return String.join(",", mensagensDeErro);
+    }
 }
