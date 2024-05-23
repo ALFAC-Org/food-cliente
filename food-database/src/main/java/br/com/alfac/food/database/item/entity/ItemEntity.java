@@ -16,9 +16,9 @@ import jakarta.validation.constraints.NotNull;
 @Entity
 @Table(name = "item")
 public class ItemEntity implements Serializable {
-    
+
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotEmpty(message = "Nome do item é obrigatório")

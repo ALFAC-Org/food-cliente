@@ -18,11 +18,11 @@ public class ItemRequest {
     @Schema(example = "LANCHE")
     @NotEmpty(message = "Categoria é obrigatória.")
     private CategoriaItem categoria;
-    
+
     public String getNome() {
         return nome;
     }
-    
+
     public void setNome(String nome) {
         this.nome = nome;
     }
