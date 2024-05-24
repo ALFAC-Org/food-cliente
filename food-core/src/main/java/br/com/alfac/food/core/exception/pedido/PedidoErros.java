@@ -7,6 +7,7 @@ import br.com.alfac.food.core.exception.StatusCode;
 public class PedidoErros extends FoodErrosImpl {
     public static final FoodError PEDIDO_NAO_ENCONTRADO = new PedidoErros("001", "Pedido não encontrado", StatusCode.NOT_FOUND);
     public static final FoodError STATUS_PEDIDO_JA_FINALIZADO = new PedidoErros("002", "Status do pedido já finalizado não permite alteração.");
+    public static final FoodError PEDIDO_NAO_PAGO = new PedidoErros("003", "Pedido não pago.");
 
     private static final String APP_PREFIX = "PEDIDO";
 

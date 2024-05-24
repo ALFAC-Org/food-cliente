@@ -1,6 +1,7 @@
 package br.com.alfac.food.core.domain.pedido;
 
 public enum StatusPedido {
+    AGUARDANDO_PAGAMENTO("Aguardando Pagamento"),
     RECEBIDO("Recebido"),
     EM_PREPARACAO("Em preparação"),
     PRONTO("Pronto"),
@@ -14,6 +15,7 @@ public enum StatusPedido {
     }
 
     static {
+        AGUARDANDO_PAGAMENTO.proximoStatus = RECEBIDO;
         RECEBIDO.proximoStatus = EM_PREPARACAO;
         EM_PREPARACAO.proximoStatus = PRONTO;
         PRONTO.proximoStatus = FINALIZADO;

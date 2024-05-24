@@ -25,9 +25,9 @@ import java.util.Optional;
 
 public class PedidoServiceImpl implements PedidoService {
 
-    private PedidoRepository pedidoRepository;
-    private ClienteRepository clienteRepository;
-    private ItemRepository itemRepository;
+    private final PedidoRepository pedidoRepository;
+    private final ClienteRepository clienteRepository;
+    private final ItemRepository itemRepository;
 
     public PedidoServiceImpl(
             final PedidoRepository pedidoRepository,
@@ -71,7 +71,7 @@ public class PedidoServiceImpl implements PedidoService {
         }
 
         // Define status inicial do pedido
-        pedido.setStatus(StatusPedido.RECEBIDO);
+        pedido.setStatus(StatusPedido.AGUARDANDO_PAGAMENTO);
 
         Pedido pedidoSalvo = pedidoRepository.registrarPedido(pedido);
 
@@ -97,6 +97,7 @@ public class PedidoServiceImpl implements PedidoService {
             Lanche lanche = new Lanche();
             lanche.setId(item.getId());
             lanche.setPreco(item.getPreco());
+            lanche.setCategoria(item.getCategoria());
             lanche.setObservacoes(lancheDTO.getObservacoes());
 
             if (CollectionsUtils.naoVazio(lancheDTO.getComplementos())) {
@@ -118,6 +119,11 @@ public class PedidoServiceImpl implements PedidoService {
         }
 
         Pedido pedido = pedidoOpt.get();
+
+        if (StatusPedido.AGUARDANDO_PAGAMENTO.equals(pedido.getStatus())) {
+            throw new FoodException(PedidoErros.PEDIDO_NAO_PAGO);
+        }
+
         pedido.atualizarStatus();
 
         Pedido pedidoAtualizado = pedidoRepository.atualizarStatusPedido(pedido.getId(), pedido.getStatus());

@@ -75,7 +75,7 @@ public class Combo {
         List<FoodError> erros = new ArrayList<>(getErrosLance(lanche));
         erros.add(getErro(acompanhamento, CategoriaItem.ACOMPANHAMENTO, ItemError.CATEGORIA_ITEM_ACOMPANHAMENTO_INVALIDA));
         erros.add(getErro(bebida, CategoriaItem.BEBIDA, ItemError.CATEGORIA_ITEM_BEBIDA_INVALIDA));
-        erros.add(getErro(bebida, CategoriaItem.SOBREMESA, ItemError.CATEGORIA_ITEM_SOBREMESA_INVALIDA));
+        erros.add(getErro(sobremesa, CategoriaItem.SOBREMESA, ItemError.CATEGORIA_ITEM_SOBREMESA_INVALIDA));
 
         erros.removeIf(Objects::isNull);
 
