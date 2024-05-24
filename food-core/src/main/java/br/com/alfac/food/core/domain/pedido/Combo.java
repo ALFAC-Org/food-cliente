@@ -2,9 +2,14 @@ package br.com.alfac.food.core.domain.pedido;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 import br.com.alfac.food.core.domain.item.Item;
+import br.com.alfac.food.core.exception.FoodError;
+import br.com.alfac.food.core.exception.FoodException;
+import br.com.alfac.food.core.exception.combo.ComboError;
+import br.com.alfac.food.core.exception.item.ItemError;
 import br.com.alfac.food.core.utils.CollectionsUtils;
 
 public class Combo {
@@ -61,40 +66,49 @@ public class Combo {
         }
         return itens;
     }
+    public void validarItens() throws FoodException {
 
-    public void validarItens() {
-
-        if(CollectionsUtils.vazio(getItens())){
-            //erro combo sem itens
+        if (CollectionsUtils.vazio(getItens())) {
+            throw new FoodException(ComboError.COMBO_VAZIO);
         }
 
+        List<FoodError> erros = new ArrayList<>(getErrosLance(lanche));
+        erros.add(getErro(acompanhamento, CategoriaItem.ACOMPANHAMENTO, ItemError.CATEGORIA_ITEM_ACOMPANHAMENTO_INVALIDA));
+        erros.add(getErro(bebida, CategoriaItem.BEBIDA, ItemError.CATEGORIA_ITEM_BEBIDA_INVALIDA));
+        erros.add(getErro(bebida, CategoriaItem.SOBREMESA, ItemError.CATEGORIA_ITEM_SOBREMESA_INVALIDA));
+
+        erros.removeIf(Objects::isNull);
+
+        if (CollectionsUtils.naoVazio(erros)) {
+            throw new FoodException(erros);
+        }
+    }
+
+    private FoodError getErro(final Item itemValidacao, final CategoriaItem categoriaItemEsperada, final FoodError error) {
+
+        if (Objects.nonNull(itemValidacao) && categoriaItemNaoPermitida(categoriaItemEsperada, itemValidacao.getCategoria())) {
+            return error;
+        }
+
+        return null;
+    }
+
+    private List<FoodError> getErrosLance(final Lanche lanche) {
+        List<FoodError> erros = new ArrayList<>();
         if (lanche != null) {
-            if(CategoriaItem.LANCHE.equals(lanche.getCategoria()) == false){
-                //erro
+            if (categoriaItemNaoPermitida(CategoriaItem.LANCHE, lanche.getCategoria())) {
+                erros.add(ItemError.CATEGORIA_ITEM_LANCHE_INVALIDA);
             }
-            if(lanche.getComplementos() != null){
-                for(Item complemento : lanche.getComplementos()){
-                    if(CategoriaItem.COMPLEMENTO.equals(complemento.getCategoria()) == false){
-                        //erro
-                    }
-                }
+            if (CollectionsUtils.naoVazio(lanche.getComplementos())) {
+                lanche.getComplementos().forEach(complemento -> erros.add(getErro(complemento, CategoriaItem.COMPLEMENTO, ItemError.CATEGORIA_ITEM_COMPLEMENTO_INVALIDA)));
             }
         }
-        if (acompanhamento != null) {
-            if(CategoriaItem.ACOMPANHAMENTO.equals(acompanhamento.getCategoria()) == false){
-                //erro
-            }
-        }
-        if (bebida != null) {
-            if(CategoriaItem.BEBIDA.equals(bebida.getCategoria()) == false){
-                //erro
-            }
-        }
-        if (sobremesa != null) {
-            if(CategoriaItem.SOBREMESA.equals(sobremesa.getCategoria()) == false){
-                //erro
-            }
-        }
+
+        return erros;
+    }
+
+    private boolean categoriaItemNaoPermitida(CategoriaItem categoriaEsperada, CategoriaItem categoriaItem) {
+        return !categoriaEsperada.equals(categoriaItem);
     }
 
 }

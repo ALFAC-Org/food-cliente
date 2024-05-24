@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
 public final class ApiError {
 
     public static final String REQUISICAO_INVALIDA = "Requisição inválida";
@@ -23,11 +25,20 @@ public final class ApiError {
     }
 
     public static ApiError createError(FoodException ex) {
-        return new ApiError(
-                HttpStatus.valueOf(ex.getFoodErros().getStatusCode()).value(),
-                ex.getMessage(),
-                ex.getFoodErros().getErrorCode()
-        );
+
+        if (Objects.nonNull(ex.getFoodErros())) {
+            return new ApiError(
+                    HttpStatus.valueOf(ex.getFoodErros().getStatusCode()).value(),
+                    ex.getMessage(),
+                    ex.getFoodErros().getErrorCode()
+            );
+        } else {
+            ApiError apiError = ApiError.createDefaultApiValidationError();
+            ex.getFoodErrors().forEach(foodError -> apiError.getArguments().add(new ApiErrorItem( foodError.getErrorCode(), foodError.getErrorMessage())));
+            return apiError;
+        }
+
+
     }
 
     public static ApiError createDefaultApiValidationError() {

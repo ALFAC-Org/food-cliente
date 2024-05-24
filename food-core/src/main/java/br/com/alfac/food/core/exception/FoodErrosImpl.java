@@ -1,6 +1,6 @@
 package br.com.alfac.food.core.exception;
 
-public abstract class FoodErrosImpl implements FoodErros {
+public abstract class FoodErrosImpl implements FoodError {
 
 
 
