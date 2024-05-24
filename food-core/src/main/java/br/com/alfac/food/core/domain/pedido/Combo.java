@@ -72,7 +72,7 @@ public class Combo {
             throw new FoodException(ComboError.COMBO_VAZIO);
         }
 
-        List<FoodError> erros = new ArrayList<>(getErrosLance(lanche));
+        List<FoodError> erros = new ArrayList<>(getErrosLanche(lanche));
         erros.add(getErro(acompanhamento, CategoriaItem.ACOMPANHAMENTO, ItemError.CATEGORIA_ITEM_ACOMPANHAMENTO_INVALIDA));
         erros.add(getErro(bebida, CategoriaItem.BEBIDA, ItemError.CATEGORIA_ITEM_BEBIDA_INVALIDA));
         erros.add(getErro(sobremesa, CategoriaItem.SOBREMESA, ItemError.CATEGORIA_ITEM_SOBREMESA_INVALIDA));
@@ -93,7 +93,7 @@ public class Combo {
         return null;
     }
 
-    private List<FoodError> getErrosLance(final Lanche lanche) {
+    private List<FoodError> getErrosLanche(final Lanche lanche) {
         List<FoodError> erros = new ArrayList<>();
         if (lanche != null) {
             if (categoriaItemNaoPermitida(CategoriaItem.LANCHE, lanche.getCategoria())) {
