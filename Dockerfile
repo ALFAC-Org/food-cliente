@@ -12,7 +12,7 @@ COPY food-main ./food-main
 COPY food-api ./food-api
 COPY food-core ./food-core
 COPY food-database ./food-database
-
+COPY food-client ./food-client
 
 # Compila o aplicativo com o Maven
 RUN mvn clean install -U
