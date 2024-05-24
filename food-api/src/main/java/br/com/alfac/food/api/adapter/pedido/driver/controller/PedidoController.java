@@ -96,8 +96,8 @@ public class PedidoController {
         return new ResponseEntity<>(pedido, HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Atualizar pedido por pedido")
-    @PutMapping(value = "{id}/atualizar-status", produces = MediaType.APPLICATION_JSON_VALUE, consumes = "application/json")
+    @Operation(summary = "Atualizar status do pedido (de modo sequencial)")
+    @PutMapping(value = "{id}/atualizar-status", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PedidoDTO> atualizarStatusPedido(@PathVariable Long id) throws FoodException {
 
         PedidoDTO pedido = pedidoService.atualizarStatusPedido(id);
