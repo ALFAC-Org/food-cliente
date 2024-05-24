@@ -131,4 +131,12 @@ public class PedidoServiceImpl implements PedidoService {
 
         return PedidoMapper.mapearParaPedidoDTO(pedidoAtualizado);
     }
+
+    @Override
+    public List<PedidoDTO> listarPedidosPorStatus(final StatusPedido status)  {
+
+        List<Pedido> pedidos = pedidoRepository.listarPedidosPorStatus(status);
+
+        return PedidoMapper.mapearParaListaPedidoDTO(pedidos);
+    }
 }

@@ -1,10 +1,12 @@
 package br.com.alfac.food.api.adapter.pedido.driver.controller;
 
 import br.com.alfac.food.api.adapter.pedido.dto.PedidoRequest;
+import br.com.alfac.food.api.adapter.pedido.dto.PedidosResponse;
 import br.com.alfac.food.api.adapter.pedido.mapper.PedidoMapper;
 import br.com.alfac.food.api.config.exception.ApiError;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.application.pedido.ports.PedidoService;
+import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.core.exception.FoodException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -80,7 +82,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "201", description = "Pedido registrado"),
             @ApiResponse(responseCode = "422", description = "Erro ao registrar pedido", content = {
                     @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
-            }) })
+            })})
     @PostMapping
     public ResponseEntity<PedidoDTO> registrarPedido(@RequestBody PedidoRequest pedidoRequest) throws FoodException {
         PedidoDTO pedido = pedidoService.registrarPedido(pedidoMapper.toDTO(pedidoRequest));
@@ -95,5 +97,12 @@ public class PedidoController {
         PedidoDTO pedido = pedidoService.atualizarStatusPedido(id);
 
         return new ResponseEntity<>(pedido, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Consultar pedidos por status")
+    @GetMapping(value = "/status/{status}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<PedidosResponse> consultarPedidoPorStatus(@PathVariable StatusPedido status) {
+        List<PedidoDTO> pedidoDTOS = pedidoService.listarPedidosPorStatus(status);
+        return new ResponseEntity<>(new PedidosResponse(pedidoDTOS), HttpStatus.OK);
     }
 }

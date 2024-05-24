@@ -5,12 +5,10 @@ import br.com.alfac.food.core.domain.pedido.Pedido;
 import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.database.pedido.entity.PedidoEntity;
 import br.com.alfac.food.database.pedido.mapper.PedidoEntityMapper;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class PedidoRepositoryImpl implements PedidoRepository {
@@ -19,7 +17,7 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     private final PedidoEntityMapper pedidoEntityMapper;
 
     public PedidoRepositoryImpl(final PedidoEntityRepository pedidoEntityRepository,
-            final PedidoEntityMapper pedidoMapper) {
+                                final PedidoEntityMapper pedidoMapper) {
         this.pedidoEntityRepository = pedidoEntityRepository;
         this.pedidoEntityMapper = pedidoMapper;
     }
@@ -27,15 +25,7 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     @Override
     public List<Pedido> listarPedidos() {
         List<PedidoEntity> pedidoEntities = pedidoEntityRepository.findAll();
-
-        List<Pedido> pedidos = new ArrayList<>();
-
-        for (PedidoEntity pedidoEntity : pedidoEntities) {
-            Pedido pedido = pedidoEntityMapper.toDomain(pedidoEntity);
-            pedidos.add(pedido);
-        }
-
-        return pedidos;
+        return  pedidoEntityMapper.toDomain(pedidoEntities);
     }
 
     @Override
@@ -80,6 +70,13 @@ public class PedidoRepositoryImpl implements PedidoRepository {
         }
 
         return null;
+    }
+
+    @Override
+    public List<Pedido> listarPedidosPorStatus(final StatusPedido status) {
+        List<PedidoEntity> pedidos = pedidoEntityRepository.findAllByStatus(status);
+
+        return  pedidoEntityMapper.toDomain(pedidos);
     }
 
 }

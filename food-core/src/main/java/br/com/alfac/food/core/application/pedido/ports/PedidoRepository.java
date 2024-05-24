@@ -16,4 +16,5 @@ public interface PedidoRepository {
 
     Pedido atualizarStatusPedido(Long id, StatusPedido statusPedido);
 
+    List<Pedido> listarPedidosPorStatus(StatusPedido status);
 }

@@ -29,6 +29,8 @@ public interface PedidoEntityMapper {
     @Mapping(target = "combos", source = "combos", qualifiedByName = "combosToDomainParser")
     Pedido toDomain(PedidoEntity pedido);
 
+    List<Pedido> toDomain(List<PedidoEntity> pedido);
+
     @Named("combosToEntityParser")
     default List<ComboEntity> combosToEntity(List<Combo> combos) {
         List<ComboEntity> combosEntities = new ArrayList<>();
