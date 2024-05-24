@@ -21,6 +21,7 @@ import br.com.alfac.food.core.domain.item.CategoriaItem;
 import br.com.alfac.food.core.exception.FoodException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -29,7 +30,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api/v1/itens")
 @Tag(name = "Item", description = "Métodos para manipulação de itens (LANCHE, COMPLEMENTO, ACOMPANHAMENTO, BEBIDA, SOBREMESA...)")
-public class ItemController {
+public class ItemController implements ItemControllerExamples {
 
     private final ItemService itemService;
     private final ItemMapper itemMapper;
@@ -72,12 +73,7 @@ public class ItemController {
         return itemService.consultarItemPorId(id);
     }
 
-    @Operation(summary = "Cadastrar item")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Item cadastrado com sucesso"),
-            @ApiResponse(responseCode = "400", description = "Erro no cadastro do item", content = {
-                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
-            }) })
+    @Override
     @PostMapping
     public ItemDTO cadastrarItem(@RequestBody ItemRequest itemRequest) throws FoodException {
         return itemService.cadastrarItem(itemMapper.toDTO(itemRequest));

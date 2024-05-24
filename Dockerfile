@@ -15,7 +15,7 @@ COPY food-database ./food-database
 
 
 # Compila o aplicativo com o Maven
-RUN mvn clean package
+RUN mvn clean install -U
 
 # Crie uma imagem baseada na JDK para executar a aplicacao
 FROM openjdk:17
