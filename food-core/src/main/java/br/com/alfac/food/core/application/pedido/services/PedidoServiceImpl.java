@@ -110,7 +110,7 @@ public class PedidoServiceImpl implements PedidoService {
         return null;
     }
 
-    public PedidoDTO atualizarStatusPedido(Long id, StatusPedido statusPedido) throws FoodException {
+    public PedidoDTO atualizarStatusPedido(Long id) throws FoodException {
         Optional<Pedido> pedidoOpt = pedidoRepository.consultarPedidoPorId(id);
 
         if (pedidoOpt.isEmpty()) {
@@ -118,9 +118,9 @@ public class PedidoServiceImpl implements PedidoService {
         }
 
         Pedido pedido = pedidoOpt.get();
-        pedido.setStatus(statusPedido);
+        pedido.atualizarStatus();
 
-        Pedido pedidoAtualizado = pedidoRepository.atualizarStatusPedido(pedido.getId(), statusPedido);
+        Pedido pedidoAtualizado = pedidoRepository.atualizarStatusPedido(pedido.getId(), pedido.getStatus());
 
         return PedidoMapper.mapearParaPedidoDTO(pedidoAtualizado);
     }

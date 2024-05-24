@@ -5,12 +5,23 @@ import java.util.List;
 
 import br.com.alfac.food.core.domain.base.AggregateRoot;
 import br.com.alfac.food.core.domain.cliente.Cliente;
+import br.com.alfac.food.core.exception.FoodException;
+import br.com.alfac.food.core.exception.pedido.PedidoErros;
 
 public class Pedido implements AggregateRoot {
     private Long id;
     private Cliente cliente;
     private StatusPedido status;
     private List<Combo> combos;
+
+    public void atualizarStatus() throws FoodException {
+
+        if (StatusPedido.FINALIZADO.equals(this.status)) {
+            throw new FoodException(PedidoErros.STATUS_PEDIDO_JA_FINALIZADO);
+        }
+
+        this.status = this.status.getProximoStatus();
+    }
 
     public Cliente getCliente() {
         return cliente;

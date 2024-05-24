@@ -97,11 +97,10 @@ public class PedidoController {
     }
 
     @Operation(summary = "Atualizar pedido por pedido")
-    @PutMapping(value = "{id}/status", produces = MediaType.APPLICATION_JSON_VALUE, consumes = "application/json")
-    public ResponseEntity<PedidoDTO> atualizarStatusPedido(@PathVariable Long id,
-            @RequestBody StatusPedido statusPedido) throws FoodException {
+    @PutMapping(value = "{id}/atualizar-status", produces = MediaType.APPLICATION_JSON_VALUE, consumes = "application/json")
+    public ResponseEntity<PedidoDTO> atualizarStatusPedido(@PathVariable Long id) throws FoodException {
 
-        PedidoDTO pedido = pedidoService.atualizarStatusPedido(id, statusPedido);
+        PedidoDTO pedido = pedidoService.atualizarStatusPedido(id);
 
         return new ResponseEntity<>(pedido, HttpStatus.OK);
     }
