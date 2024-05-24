@@ -98,6 +98,7 @@ public class PedidoServiceImpl implements PedidoService {
             lanche.setId(item.getId());
             lanche.setPreco(item.getPreco());
             lanche.setObservacoes(lancheDTO.getObservacoes());
+            lanche.setCategoria(item.getCategoria());
 
             if (CollectionsUtils.naoVazio(lancheDTO.getComplementos())) {
                 for (ItemDTO complementoDTO : lancheDTO.getComplementos()) {
