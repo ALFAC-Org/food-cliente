@@ -31,7 +31,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api/v1/itens")
 @Tag(name = "Item", description = "Métodos para manipulação de itens (LANCHE, COMPLEMENTO, ACOMPANHAMENTO, BEBIDA, SOBREMESA...)")
-public class ItemController {
+public class ItemController implements BaseItemController {
 
     private final ItemService itemService;
     private final ItemMapper itemMapper;
