@@ -19,9 +19,15 @@ Fluxo completo no MIRO:
 - [Requisitos](#requisitos)
 - [Executar a aplicação](#executar-a-aplicação)
 - Realização do pedido
-  - [1. Se identificando](#1-se-identificando)
+  - [1. Se identificando (opcional)](#1-se-identificando-opcional)
   - [2. Montando o `payload` com os itens seu pedido](#2-montando-o-payload-com-os-itens-seu-pedido)
   - [3. Registrando o seu pedido](#3-registrando-o-seu-pedido)
+- Pagamento do pedido
+  - [4. Realizando o pagamento](#4-realizando-o-pagamento)
+- Movendo pedido na fila
+  - [5. Avançando o status do pedido (fila)](#5-avançando-o-status-do-pedido-fila)
+- Encerramento do fluxo
+  - [6. Pedido sendo finalizado](#6-pedido-sendo-finalizado)
 ---
 
 ## Tecnologia
@@ -38,7 +44,9 @@ Fluxo completo no MIRO:
 
 ## Executar a aplicação
 
-    docker-compose up
+```
+docker-compose up
+```
 
 # Realização do pedido
 
@@ -54,9 +62,13 @@ O fluxo deve ser feito na sequência:
   - Sobremesa
 3. Registrando o seu pedido
 4. Realizando o pagamento
-5. Pedido sendo finalizado
+5. Avançando o status do pedido (fila)
+6. Pedido sendo finalizado
 
-## 1. Se identificando
+## 1. Se identificando (opcional)
+
+<details>
+  <summary>Passo a passo</summary>
 
 Seguindo o cenário feliz, faça o cadastro do seu cliente. E com o id que irá retornar da `response`, você irá utilizá-lo nas etapas seguintes.
 
@@ -93,8 +105,12 @@ curl -X 'POST' \
 ```
 
 Com isso, você terá seu cliente cadastrado.
+</details>
 
 ## 2. Montando o `payload` com os itens seu pedido
+
+<details>
+  <summary>Passo a passo</summary>
 
 Você precisa escolher os itens que deseja. Para consultar os itens disponíveis:
 
@@ -203,7 +219,12 @@ Nome: Sorvete
 
 Basta então, registrar o pedido, como na próxima etapa.
 
+</details>
+
 ## 3. Registrando o seu pedido
+
+<details>
+  <summary>Passo a passo</summary>
 
 Envie o `payload` para o pedido ser registrado:
 
@@ -216,7 +237,7 @@ Envie o `payload` para o pedido ser registrado:
 
 ```bash
 curl -X 'POST' \
-  'http://localhost:8081/api/v1/pedidos' \
+  'http://localhost:8080/api/v1/pedidos' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -253,10 +274,204 @@ curl -X 'POST' \
   "id": 2
 }
 ```
+</details>
+
+## 4. Realizando o pagamento
+
+<details>
+  <summary>Passo a passo</summary>
+
+Todo pedido realizado começa com status de `Aguardando Pagamento`.
+
+Sendo assim, precisamos realizar o `pagamento` deste pedido.
+
+### Via Swagger
+
+[http://localhost:8080/swagger-ui/index.html#/Pagamento/pagar](http://localhost:8080/swagger-ui/index.html#/Pagamento/pagar)
+
+### Via Terminal
+
+```bash
+curl -X 'POST' \
+  'http://localhost:8081/api/v1/pagamento' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "idPedido": 1
+}'
+```
+
+### Via Terminal
+
+```bash
+curl -X 'PUT' \
+  'http://localhost:8080/api/v1/pedidos/4/atualizar-status' \
+  -H 'accept: application/json'
+```
+
+### Resposta
+
+```json
+{
+  "idPedido": 1,
+  "realizado": true,
+  "statusPedido": "RECEBIDO"
+}
+```
+
+Após o pagamento, é necessário avançar o status do pedido na fila. Veja o tópico a seguir.
+
+</details>
+
+## 5. Avançando o status do pedido (fila)
+
+<details>
+  <summary>Passo a passo</summary>
+
+Havendo a confirmação do pagamento, precisamos executar a API que irá atualizar o status e mover o pedido no fluxo.
+
+Fluxo da alteração dos status:
+
+- Uma vez que o pedido é realizado: `Aguardando Pagamento`;
+  - Executa a API para pagar: `Recebido`;
+    - Executa a API para atualizar status: `Em preparação`;
+      - Executa a API para atualizar status: `Pronto`;
+        - Executa a API para atualizar status: `Finalizado`;
+          - Executa a API para atualizar status: recebe a mensagem `Status do pedido já finalizado não permite alteração.`;
+
+### Via Swagger
+
+[http://localhost:8080/swagger-ui/index.html#/Pedido/atualizarStatusPedido](http://localhost:8080/swagger-ui/index.html#/Pedido/atualizarStatusPedido)
+
+### Via Terminal
+
+```bash
+curl -X 'GET' \
+  'http://localhost:8081/api/v1/pedidos/status/FINALIZADO' \
+  -H 'accept: application/json'
+```
+
+### Resposta
+
+```json
+{
+  "pedidos": [
+    {
+      "combos": [
+        {
+          "lanche": {
+            "id": 1,
+            "nome": "Hamburguer",
+            "preco": 15,
+            "categoria": "LANCHE",
+            "complementos": [
+              {
+                "id": 6,
+                "nome": "Queijo Extra",
+                "preco": 2,
+                "categoria": "COMPLEMENTO"
+              }
+            ],
+            "observacoes": "Capricha no queijo!"
+          },
+          "acompanhamento": {
+            "id": 8,
+            "nome": "Batata Frita",
+            "preco": 5,
+            "categoria": "ACOMPANHAMENTO"
+          },
+          "bebida": {
+            "id": 11,
+            "nome": "Refrigerante",
+            "preco": 4,
+            "categoria": "BEBIDA"
+          },
+          "sobremesa": {
+            "id": 14,
+            "nome": "Sorvete",
+            "preco": 5,
+            "categoria": "SOBREMESA"
+          }
+        }
+      ],
+      "clienteId": 1,
+      "id": 1,
+      "statusPedido": "FINALIZADO"
+    },
+    {
+      "combos": [
+        {
+          "lanche": {
+            "id": 1,
+            "nome": "Hamburguer",
+            "preco": 15,
+            "categoria": "LANCHE",
+            "complementos": [
+              {
+                "id": 6,
+                "nome": "Queijo Extra",
+                "preco": 2,
+                "categoria": "COMPLEMENTO"
+              }
+            ],
+            "observacoes": "Capricha no queijo!"
+          },
+          "acompanhamento": {
+            "id": 8,
+            "nome": "Batata Frita",
+            "preco": 5,
+            "categoria": "ACOMPANHAMENTO"
+          },
+          "bebida": {
+            "id": 11,
+            "nome": "Refrigerante",
+            "preco": 4,
+            "categoria": "BEBIDA"
+          },
+          "sobremesa": {
+            "id": 14,
+            "nome": "Sorvete",
+            "preco": 5,
+            "categoria": "SOBREMESA"
+          }
+        }
+      ],
+      "clienteId": 14,
+      "id": 14,
+      "statusPedido": "FINALIZADO"
+    }
+  ]
+}
+```
+
+A atualização deve ser feita até que se chegue ao status de `FINALIZADO`.
+
+</details>
+
+## 6. Pedido sendo finalizado
+
+<details>
+  <summary>Passo a passo</summary>
+
+Uma vez que o pedido chegou ao status de `FINALIZADO`, consideramos que o cliente recebeu o mesmo e que assim, podemos verificar todos os itens finalizados.
+
+Para isso, podemos listar os pedidos finalizados:
+
+## Via Swagger
 
 
 
+### Via Terminal
 
+```bash
+curl -X 'GET' \
+  'http://localhost:8080/api/v1/pedidos/status/FINALIZADO' \
+  -H 'accept: application/json'
+```
+
+Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz com seu lance :)
+
+</details>
 
 ## Roadmap
 
@@ -269,12 +484,12 @@ curl -X 'POST' \
 - [x] Cadastrar item;
 - [x] Atualizar status do pedido - combobox;
 - [x] Validação dos itens do combo;
-- [ ] Fake checkout (apenas enviar os produtos escolhidos para a fila. O checkout é a finalização do pedido);
+- [x] Fake checkout (apenas enviar os produtos escolhidos para a fila. O checkout é a finalização do pedido);
 - [ ] Dockerfile/docker-compose no docker-hub.
 
 ## Entregas
 
-- **28/05/2024** - **<span style="color:red">AGUARDANDO</span>**
+- FASE 1 - **28/05/2024** - **<span style="color:red">AGUARDANDO</span>**
 
 ## Membros
 
