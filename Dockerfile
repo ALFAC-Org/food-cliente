@@ -18,7 +18,7 @@ COPY food-client ./food-client
 RUN mvn clean install -U
 
 # Crie uma imagem baseada na JDK para executar a aplicacao
-FROM openjdk:17
+FROM openjdk:17-slim
 
 # Define o WORKDIR no container
 WORKDIR /app
