@@ -47,7 +47,7 @@ Uma vez a aplicação rodando, é necessário acessar o `Swagger` da aplicação
 O fluxo deve ser feito na sequência:
 
 1. Se identificando
-2. Montando o `payload` com os itens seu pedido, contendo:
+2. Montando o `payload` do seu pedido, contendo ao menos um dos itens a seguir:
   - Lanche
   - Acompanhamento
   - Bebida
@@ -94,7 +94,7 @@ curl -X 'POST' \
 
 Com isso, você terá seu cliente cadastrado.
 
-## 2. Montando o `payload` com os itens seu pedido
+## 2. Montando o `payload` com os itens do seu pedido
 
 Você precisa escolher os itens que deseja. Para consultar os itens disponíveis:
 
