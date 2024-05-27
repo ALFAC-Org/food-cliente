@@ -1,28 +1,27 @@
 # Aplicação Fast Food - ALFAC
 
-Esta é uma aplicação que tem por objetivo, fornecer uma plataforma de pedidos de fast food. A plataforma permite aos clientes seguir o fluxo comum de um pedido: escolher o lanche com seu complemento, acompanhamento, bebida e sobremesa. 
+Esta é uma aplicação que tem por objetivo, fornecer uma plataforma de pedidos de fast food. A plataforma permite aos clientes seguir o fluxo comum de um pedido: escolher o lanche com seu complemento, acompanhamento, bebida e sobremesa.
 
 Ao final, o cliente irá realizar o pagamento deste pedido, através de um QR Code e por fim, receber seu pedido.
 
 Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na imagem a seguir:
 
-![Fluxo básico da aplicação](docs/basic-flow.jpg)
+![Fluxo básico da aplicação](docs/flow.png)
 
-## Fluxo completo no MIRO:
+## Fluxo completo no MIRO
+
 - Brain Storming
 - Event Storming
 - Fluxo Vertical
 - Linguagem Ubíqua
 
-[https://miro.com/app/board/](https://miro.com/app/board/uXjVKZNCxxM=/?share_link_id=127959473892)
-
----
+[https://miro.com/app/board/uXjVKZNCxxM](https://miro.com/app/board/uXjVKZNCxxM=/?share_link_id=127959473892)
 
 ## Tabela de conteúdos
 - [Tecnologia](#tecnologia)
 - [Requisitos](#requisitos)
-- [Executar a aplicação](#executar-a-aplicação)
-- Realização do pedido
+- [Executando a aplicação](#executando-a-aplicação)
+- [Realizando o pedido](#realizando-o-pedido)
   - [1. Se identificando (opcional)](#1-se-identificando-opcional)
   - [2. Montando o `payload` com os itens seu pedido](#2-montando-o-payload-com-os-itens-seu-pedido)
   - [3. Registrando o seu pedido](#3-registrando-o-seu-pedido)
@@ -32,7 +31,6 @@ Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na ima
   - [5. Avançando o status do pedido (fila)](#5-avançando-o-status-do-pedido-fila)
 - Encerramento do fluxo
   - [6. Pedido sendo finalizado](#6-pedido-sendo-finalizado)
----
 
 ## Tecnologia
 
@@ -46,19 +44,19 @@ Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na ima
 
 - Docker
 
-## Executar a aplicação
+## Executando a aplicação
 
 ```
 docker-compose up
 ```
 
-# Realização do pedido
+# Realizando o pedido
 
 Uma vez a aplicação rodando, é necessário acessar o `Swagger` da aplicação pelo navegador: [http://localhost:8080/api-docs](http://localhost:8080/api-docs) ou [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 O fluxo deve ser feito na sequência:
 
-1. Se identificando
+1. Se identificando (opcional)
 2. Montando o `payload` do seu pedido, contendo ao menos um dos itens a seguir:
   - Lanche
   - Acompanhamento
@@ -78,7 +76,7 @@ Seguindo o cenário feliz, faça o cadastro do seu cliente. E com o id que irá 
 
 ### Via Swagger
 
-[http://localhost:8080/swagger-ui/index.html#/cliente-controller/cadastrarCliente](http://localhost:8080/swagger-ui/index.html#/cliente-controller/cadastrarCliente)
+[http://localhost:8080/swagger-ui/index.html#/Cliente/cadastrarCliente](http://localhost:8080/swagger-ui/index.html#/Cliente/cadastrarCliente)
 
 ### Via Terminal
 
@@ -116,13 +114,7 @@ Com isso, você terá seu cliente cadastrado.
 <details>
   <summary>Passo a passo</summary>
 
-Você precisa escolher os itens que deseja. Para consultar os itens disponíveis:
-
-### Via Swagger
-
-[http://localhost:8080/swagger-ui/index.html#/item-controller/consultarItensPorCategoria_1](http://localhost:8080/swagger-ui/index.html#/item-controller/consultarItensPorCategoria_1)
-
-### Via Terminal
+Você precisa escolher os itens que deseja.
 
 Onde `CATEGORIA`:
 
@@ -132,7 +124,13 @@ Onde `CATEGORIA`:
 - `BEBIDA`;
 - `SOBREMESA`;
 
-`POST http://localhost:8080/api/v1/itens/por-categoria/{CATEGORIA}/itens`
+Para consultar os itens disponíveis:
+
+### Via Swagger
+
+[http://localhost:8080/swagger-ui/index.html#/Item/consultarItensPorCategoria](http://localhost:8080/swagger-ui/index.html#/Item/consultarItensPorCategoria)
+
+### Via Terminal
 
 Exemplo (pega todos os produtos (itens) disponíveis na categoria de LANCHE):
 
@@ -221,7 +219,7 @@ id: 14
 Nome: Sorvete
 ```
 
-Basta então, registrar o pedido, como na próxima etapa.
+Basta então registrar o pedido, como na próxima etapa.
 
 </details>
 
@@ -232,10 +230,9 @@ Basta então, registrar o pedido, como na próxima etapa.
 
 Envie o `payload` para o pedido ser registrado:
 
-
 ### Via Swagger
 
-[http://localhost:8080/swagger-ui/index.html#/pedido-controller/registrarPedido](http://localhost:8080/swagger-ui/index.html#/pedido-controller/registrarPedido)
+[http://localhost:8080/swagger-ui/index.html#/Pedido/registrarPedido](http://localhost:8080/swagger-ui/index.html#/Pedido/registrarPedido)
 
 ### Via Terminal
 
@@ -305,14 +302,6 @@ curl -X 'POST' \
 }'
 ```
 
-### Via Terminal
-
-```bash
-curl -X 'PUT' \
-  'http://localhost:8080/api/v1/pedidos/4/atualizar-status' \
-  -H 'accept: application/json'
-```
-
 ### Resposta
 
 ```json
@@ -350,8 +339,8 @@ Fluxo da alteração dos status:
 ### Via Terminal
 
 ```bash
-curl -X 'GET' \
-  'http://localhost:8081/api/v1/pedidos/status/FINALIZADO' \
+curl -X 'PUT' \
+  'http://localhost:8080/api/v1/pedidos/1/atualizar-status' \
   -H 'accept: application/json'
 ```
 
@@ -463,6 +452,7 @@ Para isso, podemos listar os pedidos finalizados:
 
 ## Via Swagger
 
+[http://localhost:8080/swagger-ui/index.html#/Pedido/listarPedidos](http://localhost:8080/swagger-ui/index.html#/Pedido/listarPedidos)
 
 
 ### Via Terminal
@@ -473,7 +463,7 @@ curl -X 'GET' \
   -H 'accept: application/json'
 ```
 
-Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz com seu lance :)
+Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz com seu lance :) .
 
 </details>
 
@@ -497,26 +487,10 @@ Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz
 
 ## Membros
 
-**Leonardo Fraga**
-- *RM354771*
-- *[rm354771@fiap.com.br](mailto:rm354771@fiap.com.br)*
-- [@LeonardoFraga](https://github.com/LeonardoFraga)
-
-**Carlos Henrique Carvalho de Santana**
-- *RM355339*
-- *[rm355339@fiap.com.br](mailto:rm355339@fiap.com.br)*
-- [@carlohcs](https://github.com/carlohcs)
-
-**Leonardo Alves Campos**
-- *RM355568*
-- [rm355568@fiap.com.br](mailto:rm355568@fiap.com.br)
-- [@lcalves](https://github.com/lcalves)
-
-**Andre Musolino**
-- *RM355582*
-- *[rm355582@fiap.com.br](mailto:rm355582@fiap.com.br)*
-- [@amusolino](https://github.com/amusolino)
-
-**Ardiles Guerra**
-- *RM355674*
-- *[rm355674@fiap.com.br](mailto:rm355674@fiap.com.br)*
+|Membro| Informações |
+|--|--|
+| Leonardo Fraga | - *RM354771* <br />- *[rm354771@fiap.com.br](mailto:rm354771@fiap.com.br)* <br />- [@LeonardoFraga](https://github.com/LeonardoFraga) |
+| Carlos Henrique Carvalho de Santana | - *RM355339* <br />-  *[rm355339@fiap.com.br](mailto:rm355339@fiap.com.br)* <br />- [@carlohcs](https://github.com/carlohcs) |
+| Leonardo Alves Campos | - *RM355568* <br />- [rm355568@fiap.com.br](mailto:rm355568@fiap.com.br) <br />- [@lcalves](https://github.com/lcalves) |
+| Andre Musolino | -  *RM355582* <br />- *[rm355582@fiap.com.br](mailto:rm355582@fiap.com.br)* <br />- [@amusolino](https://github.com/amusolino) |
+| Ardiles Guerra | -  *RM355674* <br />- *[rm355674@fiap.com.br](mailto:rm355674@fiap.com.br)* |
