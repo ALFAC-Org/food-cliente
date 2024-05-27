@@ -8,9 +8,13 @@ Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na ima
 
 ![Fluxo básico da aplicação](docs/basic-flow.jpg)
 
-Fluxo completo no MIRO:
+## Fluxo completo no MIRO:
+- Brain Storming
+- Event Storming
+- Fluxo Vertical
+- Linguagem Ubíqua
 
-[https://miro.com/app/board/uXjVKZNCxxM=/](https://miro.com/app/board/uXjVKZNCxxM=/)
+[https://miro.com/app/board/](https://miro.com/app/board/uXjVKZNCxxM=/?share_link_id=127959473892)
 
 ---
 
