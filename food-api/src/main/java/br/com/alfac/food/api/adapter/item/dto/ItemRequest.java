@@ -16,7 +16,7 @@ public class ItemRequest {
     private Double preco;
 
     @Schema(example = "LANCHE")
-    @NotEmpty(message = "Categoria é obrigatória.")
+    @NotNull(message = "Categoria é obrigatória.")
     private CategoriaItem categoria;
 
     public String getNome() {
