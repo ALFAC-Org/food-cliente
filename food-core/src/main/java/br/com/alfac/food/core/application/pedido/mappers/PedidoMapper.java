@@ -1,16 +1,16 @@
 package br.com.alfac.food.core.application.pedido.mappers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import br.com.alfac.food.core.application.pedido.dto.ComboDTO;
 import br.com.alfac.food.core.application.pedido.dto.LancheDTO;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.domain.pedido.Combo;
 import br.com.alfac.food.core.domain.pedido.Pedido;
 import br.com.alfac.food.core.exception.FoodException;
-import br.com.alfac.food.core.exception.cliente.ClienteErros;
+import br.com.alfac.food.core.exception.pedido.PedidoErros;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public final class PedidoMapper {
 
@@ -26,9 +26,11 @@ public final class PedidoMapper {
     }
 
     public static PedidoDTO mapearParaPedidoDTO(Pedido pedido) {
+        pedido.calcularValorTotal();
         PedidoDTO pedidoDTO = new PedidoDTO();
         pedidoDTO.setId(pedido.getId());
         pedidoDTO.setClienteId(pedido.getCliente().getId());
+        pedidoDTO.setStatusPedido(pedido.getStatus());
 
         List<ComboDTO> combosDTO = new ArrayList<>();
         for(Combo combo : pedido.getCombos()){
@@ -37,10 +39,10 @@ public final class PedidoMapper {
             comboDTO.setAcompanhamento(ItemPedidoMapper.mapearParaItemDTO(combo.getAcompanhamento()));
             comboDTO.setBebida(ItemPedidoMapper.mapearParaItemDTO(combo.getBebida()));
             comboDTO.setSobremesa(ItemPedidoMapper.mapearParaItemDTO(combo.getSobremesa()));
-            
+            comboDTO.setValorTotal(combo.getTotal());
             combosDTO.add(comboDTO);
         }
-
+        pedidoDTO.setValorTotal(pedido.getValorTotal());
         pedidoDTO.setCombos(combosDTO);
 
         return pedidoDTO;
@@ -48,7 +50,7 @@ public final class PedidoMapper {
 
     public static PedidoDTO mapearParaPedidoDTO(Optional<Pedido> pedidoOpt) throws FoodException {
 
-        Pedido pedido = pedidoOpt.orElseThrow(() -> new FoodException(ClienteErros.CLIENTE_NAO_ENCONTRADO));
+        Pedido pedido = pedidoOpt.orElseThrow(() -> new FoodException(PedidoErros.PEDIDO_NAO_ENCONTRADO));
 
         return mapearParaPedidoDTO(pedido);
     }

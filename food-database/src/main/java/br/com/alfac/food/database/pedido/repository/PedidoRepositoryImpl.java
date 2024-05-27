@@ -1,18 +1,15 @@
 package br.com.alfac.food.database.pedido.repository;
 
 import br.com.alfac.food.core.application.pedido.ports.PedidoRepository;
-import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.core.domain.pedido.Pedido;
-import br.com.alfac.food.database.cliente.entity.ClienteEntity;
+import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.database.pedido.entity.PedidoEntity;
 import br.com.alfac.food.database.pedido.mapper.PedidoEntityMapper;
-import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class PedidoRepositoryImpl implements PedidoRepository {
@@ -21,7 +18,7 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     private final PedidoEntityMapper pedidoEntityMapper;
 
     public PedidoRepositoryImpl(final PedidoEntityRepository pedidoEntityRepository,
-            final PedidoEntityMapper pedidoMapper) {
+                                final PedidoEntityMapper pedidoMapper) {
         this.pedidoEntityRepository = pedidoEntityRepository;
         this.pedidoEntityMapper = pedidoMapper;
     }
@@ -29,15 +26,7 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     @Override
     public List<Pedido> listarPedidos() {
         List<PedidoEntity> pedidoEntities = pedidoEntityRepository.findAll();
-
-        List<Pedido> pedidos = new ArrayList<>();
-
-        for (PedidoEntity pedidoEntity : pedidoEntities) {
-            Pedido pedido = pedidoEntityMapper.toDomain(pedidoEntity);
-            pedidos.add(pedido);
-        }
-
-        return pedidos;
+        return  pedidoEntityMapper.toDomain(pedidoEntities);
     }
 
     @Override
@@ -47,6 +36,7 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     }
 
     @Override
+    @Transactional
     public Pedido registrarPedido(Pedido pedido) {
         PedidoEntity pedidoEntity = pedidoEntityMapper.toEntity(pedido);
 
@@ -66,6 +56,29 @@ public class PedidoRepositoryImpl implements PedidoRepository {
             pedidoOpt = Optional.of(pedido);
         }
         return pedidoOpt;
+    }
+
+    @Override
+    public Pedido atualizarStatusPedido(Long id, StatusPedido statusPedido) {
+        Optional<PedidoEntity> pedidoEntityOpt = pedidoEntityRepository.findById(id);
+
+        if (pedidoEntityOpt.isPresent()) {
+            PedidoEntity pedidoEntity = pedidoEntityOpt.get();
+            pedidoEntity.setStatus(statusPedido);
+
+            PedidoEntity pedidoAtualizado = pedidoEntityRepository.save(pedidoEntity);
+
+            return pedidoEntityMapper.toDomain(pedidoAtualizado);
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Pedido> listarPedidosPorStatus(final StatusPedido status) {
+        List<PedidoEntity> pedidos = pedidoEntityRepository.findAllByStatus(status);
+
+        return  pedidoEntityMapper.toDomain(pedidos);
     }
 
 }

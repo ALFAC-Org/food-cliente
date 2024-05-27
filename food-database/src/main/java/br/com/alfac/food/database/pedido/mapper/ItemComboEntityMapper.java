@@ -21,11 +21,19 @@ public interface ItemComboEntityMapper {
 
     @Mapping(target = "item.id", source = "id")
     @Mapping(target = "id", source = "id", ignore = true)
+    @Mapping(target = "item.nome", source = "nome")
+    @Mapping(target = "item.categoria", source = "categoria")
+    @Mapping(target = "item.preco", source = "preco")
+    @Mapping(target = "preco", source = "preco")
     @Mapping(target = "complementos", ignore = true)
     @Mapping(target = "observacoes", ignore = true)
     ItemComboEntity itemToEntity(Item item);
 
     @Mapping(target = "item.id", source = "id")
+    @Mapping(target = "item.nome", source = "nome")
+    @Mapping(target = "item.categoria", source = "categoria")
+    @Mapping(target = "item.preco", source = "preco")
+    @Mapping(target = "preco", source = "preco")
     @Mapping(target = "id", source = "id", ignore = true)
     @Mapping(target = "complementos", source = "complementos", qualifiedByName = "itemComboToEntityParser")
     ItemComboEntity lancheToEntity(Lanche lanche);

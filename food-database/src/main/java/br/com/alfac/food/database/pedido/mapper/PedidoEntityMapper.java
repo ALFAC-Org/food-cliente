@@ -1,7 +1,6 @@
 package br.com.alfac.food.database.pedido.mapper;
 
 import br.com.alfac.food.database.cliente.mapper.ClienteEntityMapper;
-import br.com.alfac.food.database.item.entity.ItemEntity;
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 import br.com.alfac.food.core.domain.item.Item;
 import br.com.alfac.food.core.domain.pedido.Combo;
@@ -29,6 +28,8 @@ public interface PedidoEntityMapper {
 
     @Mapping(target = "combos", source = "combos", qualifiedByName = "combosToDomainParser")
     Pedido toDomain(PedidoEntity pedido);
+
+    List<Pedido> toDomain(List<PedidoEntity> pedido);
 
     @Named("combosToEntityParser")
     default List<ComboEntity> combosToEntity(List<Combo> combos) {

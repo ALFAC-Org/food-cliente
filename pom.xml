@@ -6,6 +6,7 @@
 
     <modules>
         <module>food-main</module>
+        <module>food-client</module>
         <module>food-core</module>
         <module>food-database</module>
         <module>food-api</module>
@@ -36,6 +37,10 @@
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
     </dependencies>
 

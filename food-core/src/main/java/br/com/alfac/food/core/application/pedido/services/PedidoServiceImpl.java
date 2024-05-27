@@ -1,8 +1,5 @@
 package br.com.alfac.food.core.application.pedido.services;
 
-import java.util.List;
-import java.util.Optional;
-
 import br.com.alfac.food.core.application.cliente.ports.ClienteRepository;
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.application.item.ports.ItemRepository;
@@ -14,19 +11,23 @@ import br.com.alfac.food.core.application.pedido.ports.PedidoRepository;
 import br.com.alfac.food.core.application.pedido.ports.PedidoService;
 import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.core.domain.item.Item;
-import br.com.alfac.food.core.domain.pedido.Combo;
-import br.com.alfac.food.core.domain.pedido.Lanche;
-import br.com.alfac.food.core.domain.pedido.Pedido;
-import br.com.alfac.food.core.domain.pedido.StatusPedido;
+import br.com.alfac.food.core.domain.pedido.*;
 import br.com.alfac.food.core.exception.FoodException;
-import br.com.alfac.food.core.exception.item.ItemErros;
+import br.com.alfac.food.core.exception.cliente.ClienteError;
+import br.com.alfac.food.core.exception.combo.ComboError;
+import br.com.alfac.food.core.exception.item.ItemError;
+import br.com.alfac.food.core.exception.pedido.PedidoErros;
 import br.com.alfac.food.core.utils.CollectionsUtils;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class PedidoServiceImpl implements PedidoService {
 
-    private PedidoRepository pedidoRepository;
-    private ClienteRepository clienteRepository;
-    private ItemRepository itemRepository;
+    private final PedidoRepository pedidoRepository;
+    private final ClienteRepository clienteRepository;
+    private final ItemRepository itemRepository;
 
     public PedidoServiceImpl(
             final PedidoRepository pedidoRepository,
@@ -51,57 +52,92 @@ public class PedidoServiceImpl implements PedidoService {
         Pedido pedido = new Pedido();
 
         if (pedidoDTO.getClienteId() != null) {
-            Optional<Cliente> cliente = clienteRepository.consultarClientePorId(pedidoDTO.getClienteId());
-            pedido.setCliente(cliente.get());
+            Cliente cliente = clienteRepository.consultarClientePorId(pedidoDTO.getClienteId()).orElseThrow(() -> new FoodException(ClienteError.CLIENTE_NAO_EXISTENTE));
+            pedido.setCliente(cliente);
+        }
+        if (CollectionsUtils.vazio(pedidoDTO.getCombos())) {
+            throw new FoodException(ComboError.COMBO_VAZIO);
         }
 
         for (ComboDTO comboDTO : pedidoDTO.getCombos()) {
-            Combo combo = new Combo();
-
-            if (comboDTO.getLanche() != null) {
-                LancheDTO lancheDTO = comboDTO.getLanche();
-
-                Item item = itemRepository.consultarItemPorId(lancheDTO.getId())
-                        .orElseThrow(() -> new FoodException(ItemErros.ITEM_NAO_ENCONTRADO));
-
-                Lanche lanche = new Lanche();
-                lanche.setId(item.getId());
-                lanche.setPreco(item.getPreco());
-                lanche.setObservacoes(lancheDTO.getObservacoes());
-
-                if (CollectionsUtils.naoVazio(lancheDTO.getComplementos())) {
-                    for (ItemDTO complementoDTO : lancheDTO.getComplementos()) {
-                        Optional<Item> complemento = itemRepository.consultarItemPorId(complementoDTO.getId());
-                        lanche.adicionaComplemento(complemento.get());
-                    }
-                }
-
-                combo.setLanche(lanche);
-            }
-            if (comboDTO.getAcompanhamento() != null) {
-                Optional<Item> item = itemRepository.consultarItemPorId(comboDTO.getAcompanhamento().getId());
-                combo.setAcompanhamento(item.get());
-            }
-            if (comboDTO.getBebida() != null) {
-                Optional<Item> item = itemRepository.consultarItemPorId(comboDTO.getBebida().getId());
-                combo.setBebida(item.get());
-            }
-            if (comboDTO.getSobremesa() != null) {
-                Optional<Item> item = itemRepository.consultarItemPorId(comboDTO.getSobremesa().getId());
-                combo.setSobremesa(item.get());
-            }
-
-            combo.validarItens();
+            Combo combo = ComboBuilder.combo()
+                    .comLanche(getLanche(comboDTO.getLanche()))
+                    .comAcompanhamento(getItem(comboDTO.getAcompanhamento()))
+                    .comBebida(getItem(comboDTO.getBebida()))
+                    .comSobremesa(getItem(comboDTO.getSobremesa()))
+                    .build();
 
             pedido.adicionaCombo(combo);
         }
 
         // Define status inicial do pedido
-        pedido.setStatus(StatusPedido.RECEBIDO);
+        pedido.setStatus(StatusPedido.AGUARDANDO_PAGAMENTO);
 
         Pedido pedidoSalvo = pedidoRepository.registrarPedido(pedido);
 
-        return consultarPedidoPorId(pedidoSalvo.getId());
+        return PedidoMapper.mapearParaPedidoDTO(pedidoSalvo);
     }
 
+    private Item getItem(final ItemDTO itemDTO) throws FoodException {
+        if (Objects.nonNull(itemDTO)) {
+            Long itemId = itemDTO.getId();
+            return itemRepository.consultarItemPorId(itemId)
+                    .orElseThrow(() -> new FoodException(ItemError.ITEM_PEDIDO_INEXISTENTE, itemId));
+        }
+        return null;
+    }
+
+    private Lanche getLanche(final LancheDTO lancheDTO) throws FoodException {
+
+        if (Objects.nonNull(lancheDTO)) {
+            Long lancheId = lancheDTO.getId();
+            Item item = itemRepository.consultarItemPorId(lancheId)
+                    .orElseThrow(() -> new FoodException(ItemError.ITEM_NAO_ENCONTRADO, lancheId));
+
+            Lanche lanche = new Lanche();
+            lanche.setNome(item.getNome());
+            lanche.setId(item.getId());
+            lanche.setPreco(item.getPreco());
+            lanche.setCategoria(item.getCategoria());
+            lanche.setObservacoes(lancheDTO.getObservacoes());
+            lanche.setCategoria(item.getCategoria());
+
+            if (CollectionsUtils.naoVazio(lancheDTO.getComplementos())) {
+                for (ItemDTO complementoDTO : lancheDTO.getComplementos()) {
+                    lanche.adicionaComplemento(getItem(complementoDTO));
+                }
+            }
+
+            return lanche;
+        }
+        return null;
+    }
+
+    public PedidoDTO atualizarStatusPedido(Long id) throws FoodException {
+        Optional<Pedido> pedidoOpt = pedidoRepository.consultarPedidoPorId(id);
+
+        if (pedidoOpt.isEmpty()) {
+            throw new FoodException(PedidoErros.PEDIDO_NAO_ENCONTRADO);
+        }
+
+        Pedido pedido = pedidoOpt.get();
+
+        if (StatusPedido.AGUARDANDO_PAGAMENTO.equals(pedido.getStatus())) {
+            throw new FoodException(PedidoErros.PEDIDO_NAO_PAGO);
+        }
+
+        pedido.atualizarStatus();
+
+        Pedido pedidoAtualizado = pedidoRepository.atualizarStatusPedido(pedido.getId(), pedido.getStatus());
+
+        return PedidoMapper.mapearParaPedidoDTO(pedidoAtualizado);
+    }
+
+    @Override
+    public List<PedidoDTO> listarPedidosPorStatus(final StatusPedido status)  {
+
+        List<Pedido> pedidos = pedidoRepository.listarPedidosPorStatus(status);
+
+        return PedidoMapper.mapearParaListaPedidoDTO(pedidos);
+    }
 }

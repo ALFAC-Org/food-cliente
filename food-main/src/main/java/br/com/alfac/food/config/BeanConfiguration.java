@@ -1,5 +1,10 @@
 package br.com.alfac.food.config;
 
+import br.com.alfac.food.core.application.pagamento.ports.PagamentoClient;
+import br.com.alfac.food.core.application.pagamento.ports.PagamentoService;
+import br.com.alfac.food.core.application.pagamento.services.PagamentoServiceImpl;
+import br.com.alfac.food.core.application.pedido.ports.StatusPedidoPagamentoService;
+import br.com.alfac.food.core.application.pedido.services.StatusPedidoPagamentoServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -27,5 +32,15 @@ public class BeanConfiguration {
     @Bean
     public ItemService itemService(ItemRepository itemRepository) {
         return new ItemServiceImpl(itemRepository);
+    }
+
+    @Bean
+    public PagamentoService pagamentoService(PagamentoClient pagamentoClient, PedidoService pedidoService, StatusPedidoPagamentoService statusPedidoPagamentoService) {
+        return new PagamentoServiceImpl(pagamentoClient, pedidoService, statusPedidoPagamentoService);
+    }
+
+    @Bean
+    public StatusPedidoPagamentoService statusPedidoPagamentoService(final PedidoRepository pedidoRepository) {
+        return new StatusPedidoPagamentoServiceImpl(pedidoRepository);
     }
 }
