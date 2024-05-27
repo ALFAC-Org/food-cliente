@@ -75,7 +75,7 @@ public class PedidoServiceImpl implements PedidoService {
 
         Pedido pedidoSalvo = pedidoRepository.registrarPedido(pedido);
 
-        return consultarPedidoPorId(pedidoSalvo.getId());
+        return PedidoMapper.mapearParaPedidoDTO(pedidoSalvo);
     }
 
     private Item getItem(final ItemDTO itemDTO) throws FoodException {
@@ -95,6 +95,7 @@ public class PedidoServiceImpl implements PedidoService {
                     .orElseThrow(() -> new FoodException(ItemError.ITEM_NAO_ENCONTRADO, lancheId));
 
             Lanche lanche = new Lanche();
+            lanche.setNome(item.getNome());
             lanche.setId(item.getId());
             lanche.setPreco(item.getPreco());
             lanche.setCategoria(item.getCategoria());

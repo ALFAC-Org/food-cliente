@@ -26,6 +26,7 @@ public final class PedidoMapper {
     }
 
     public static PedidoDTO mapearParaPedidoDTO(Pedido pedido) {
+        pedido.calcularValorTotal();
         PedidoDTO pedidoDTO = new PedidoDTO();
         pedidoDTO.setId(pedido.getId());
         pedidoDTO.setClienteId(pedido.getId());
@@ -38,10 +39,10 @@ public final class PedidoMapper {
             comboDTO.setAcompanhamento(ItemPedidoMapper.mapearParaItemDTO(combo.getAcompanhamento()));
             comboDTO.setBebida(ItemPedidoMapper.mapearParaItemDTO(combo.getBebida()));
             comboDTO.setSobremesa(ItemPedidoMapper.mapearParaItemDTO(combo.getSobremesa()));
-            
+            comboDTO.setValorTotal(combo.getTotal());
             combosDTO.add(comboDTO);
         }
-
+        pedidoDTO.setValorTotal(pedido.getValorTotal());
         pedidoDTO.setCombos(combosDTO);
 
         return pedidoDTO;

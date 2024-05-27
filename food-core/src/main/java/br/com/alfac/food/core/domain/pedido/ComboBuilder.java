@@ -35,6 +35,7 @@ public final class ComboBuilder {
     }
 
     public Combo build() throws FoodException {
+        combo.calcularValorTotal();
         combo.validarItens();
         return combo;
     }

@@ -2,11 +2,15 @@ package br.com.alfac.food.core.application.item.dto;
 
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Objects;
+
 
 public class ItemDTO {
     private Long id;
     private String nome;
-    private Double preco;
+    private BigDecimal preco;
     private CategoriaItem categoria;
 
     public Long getId() {
@@ -25,11 +29,15 @@ public class ItemDTO {
         this.nome = nome;
     }
 
-    public Double getPreco() {
+    public BigDecimal getPreco() {
+
+        if (Objects.nonNull(preco)) {
+            return preco.setScale(2, RoundingMode.HALF_UP);
+        }
         return preco;
     }
 
-    public void setPreco(Double preco) {
+    public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
 
