@@ -1,6 +1,7 @@
 package br.com.alfac.food.database.item.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 import jakarta.persistence.Entity;
@@ -25,7 +26,7 @@ public class ItemEntity implements Serializable {
     private String nome;
 
     @NotNull(message = "Preço do item é obrigatório")
-    private Double preco;
+    private BigDecimal preco;
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Categoria do item é obrigatório")
@@ -47,11 +48,11 @@ public class ItemEntity implements Serializable {
         this.nome = nome;
     }
 
-    public Double getPreco() {
+    public BigDecimal getPreco() {
         return preco;
     }
 
-    public void setPreco(final Double preco) {
+    public void setPreco(final BigDecimal preco) {
         this.preco = preco;
     }
 

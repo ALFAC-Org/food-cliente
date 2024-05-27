@@ -6,6 +6,7 @@ import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.database.pedido.entity.PedidoEntity;
 import br.com.alfac.food.database.pedido.mapper.PedidoEntityMapper;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,6 +36,7 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     }
 
     @Override
+    @Transactional
     public Pedido registrarPedido(Pedido pedido) {
         PedidoEntity pedidoEntity = pedidoEntityMapper.toEntity(pedido);
 

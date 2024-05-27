@@ -1,5 +1,7 @@
 package br.com.alfac.food.core.domain.pedido;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,6 +19,7 @@ public class Combo {
     private Item acompanhamento;
     private Item bebida;
     private Item sobremesa;
+    private BigDecimal total;
 
     public Lanche getLanche() {
         return lanche;
@@ -48,6 +51,39 @@ public class Combo {
 
     public void setSobremesa(Item sobremesa) {
         this.sobremesa = sobremesa;
+    }
+
+    public BigDecimal getTotal() {
+
+        if (total != null) {
+            return total.setScale(2, RoundingMode.HALF_UP);
+        }
+        return total;
+    }
+
+    public void setTotal(final BigDecimal total) {
+        this.total = total;
+    }
+
+    public void calcularValorTotal() {
+        this.total = BigDecimal.ZERO;
+        if (lanche != null) {
+            this.setTotal(this.total.add(lanche.getPreco()));
+            if (CollectionsUtils.naoVazio(lanche.getComplementos())) {
+                lanche.getComplementos().forEach(complemento ->
+                    this.setTotal( this.total.add(complemento.getPreco()))
+                );
+            }
+        }
+        if (acompanhamento != null) {
+            this.setTotal(this.total.add(acompanhamento.getPreco()));
+        }
+        if (bebida != null) {
+            this.setTotal(this.total.add(bebida.getPreco()));
+        }
+        if (sobremesa != null) {
+            this.setTotal(this.total.add(sobremesa.getPreco()));
+        }
     }
 
     public List<Item> getItens() {
