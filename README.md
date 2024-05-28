@@ -33,11 +33,18 @@ Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na ima
   - [6. Pedido sendo finalizado](#6-pedido-sendo-finalizado)
 - Tutoriais (vídeos)
   - [1. Executando a aplicação](https://drive.google.com/file/d/154ejhYolGbn8ZOZRvv5doR1YzDIEelpY/view?usp=sharing)
+
+  **Entenda tudo de uma única vez**
+
+  - [2. Fluxo inteiro](https://drive.google.com/file/d/1VTyIiK2U3QD6bJR_qfqcXjnM9rrR28b-/view?usp=sharing)
+
+  **Entenda o fluxo por partes**
+
   - [2. Se identificando (opcional)](https://drive.google.com/file/d/1bju8UWoqZsbBnEKla8-jTX7MMUT_7z_1/view?usp=sharing)
   - [3. Montando o `payload` com os itens do seu pedido](https://drive.google.com/file/d/1U2TRn4kerONNgG21dugjLrfBcWzrxdKT/view?usp=sharing)
   - [4. Pagando o pedido](https://drive.google.com/file/d/1vV3wZzFVNcnvOvxM0MaJ-2rET_7tlazL/view?usp=sharing)
   - [5. Atualizando status do pedido](https://drive.google.com/file/d/1RdVzS6jiC0mbnTH7vW-2H640A-kYRBht/view?usp=sharing)
-  - [6. Consultando pedidos por status](https://drive.google.com/file/d/1IFsE6sMsJIG6ymnFMLJtY-f1CoxVwTOF/view?usp=sharing)
+  - [6. Consultando pedidos por status (simulando um totem)](https://drive.google.com/file/d/1IFsE6sMsJIG6ymnFMLJtY-f1CoxVwTOF/view?usp=sharing)
 
 ## Tecnologia
 
