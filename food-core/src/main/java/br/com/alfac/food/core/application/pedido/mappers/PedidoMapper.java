@@ -3,6 +3,7 @@ package br.com.alfac.food.core.application.pedido.mappers;
 import br.com.alfac.food.core.application.pedido.dto.ComboDTO;
 import br.com.alfac.food.core.application.pedido.dto.LancheDTO;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
+import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.core.domain.pedido.Combo;
 import br.com.alfac.food.core.domain.pedido.Pedido;
 import br.com.alfac.food.core.exception.FoodException;
@@ -10,6 +11,7 @@ import br.com.alfac.food.core.exception.pedido.PedidoErros;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public final class PedidoMapper {
@@ -19,7 +21,7 @@ public final class PedidoMapper {
 
     public static List<PedidoDTO> mapearParaListaPedidoDTO(List<Pedido> pedidos) {
         List<PedidoDTO> listaPedidoDTO = new ArrayList<>();
-        for(Pedido pedido : pedidos){
+        for (Pedido pedido : pedidos) {
             listaPedidoDTO.add(mapearParaPedidoDTO(pedido));
         }
         return listaPedidoDTO;
@@ -29,11 +31,15 @@ public final class PedidoMapper {
         pedido.calcularValorTotal();
         PedidoDTO pedidoDTO = new PedidoDTO();
         pedidoDTO.setId(pedido.getId());
-        pedidoDTO.setClienteId(pedido.getCliente().getId());
+
+        Cliente cliente = pedido.getCliente();
+        if (Objects.nonNull(cliente)) {
+            pedidoDTO.setClienteId(cliente.getId());
+        }
         pedidoDTO.setStatusPedido(pedido.getStatus());
 
         List<ComboDTO> combosDTO = new ArrayList<>();
-        for(Combo combo : pedido.getCombos()){
+        for (Combo combo : pedido.getCombos()) {
             ComboDTO comboDTO = new ComboDTO();
             comboDTO.setLanche((LancheDTO) ItemPedidoMapper.mapearParaItemDTO(combo.getLanche()));
             comboDTO.setAcompanhamento(ItemPedidoMapper.mapearParaItemDTO(combo.getAcompanhamento()));

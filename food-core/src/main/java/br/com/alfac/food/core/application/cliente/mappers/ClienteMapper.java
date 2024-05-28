@@ -17,7 +17,7 @@ public final class ClienteMapper {
         clienteDTO.setNome(cliente.getNome());
         clienteDTO.setEmail(cliente.getEmail());
         clienteDTO.setId(cliente.getId());
-
+        clienteDTO.setUuId(cliente.getUuid());
         return clienteDTO;
     }
 
