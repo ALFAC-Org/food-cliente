@@ -476,6 +476,8 @@ Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz
 
 ## Roadmap
 
+### FASE 1
+
 - [x] Cadastro do Cliente
 - [x] Identificação do Cliente
 - [x] Criar, editar e remover produtos (itens);
@@ -488,9 +490,37 @@ Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz
 - [x] Fake checkout (apenas enviar os produtos escolhidos para a fila. O checkout é a finalização do pedido);
 - [ ] Dockerfile/docker-compose no docker-hub.
 
+<details>
+  <summary>FASE 2</summary>
+
+### FASE 2
+
+(MELHORIAS)
+
+- [ ] Quando tentar deletar um item que está sendo usando em um pedido, devemos tratar melhor a mensagem de erro;
+- [ ] Quando criar um novo item, podemos ter uma uk no nome + categoria para não deixar criar um item com nome e categoria igual a um item que já existe;
+- [ ] Como padrão: em todas as tabelas termos: `data_cadastro`, `data_atualizacao`
+- [ ]   Atualizar a aplicação desenvolvida na FASE 1 refatorando o código para seguir os padrões clean code e clean architecture.
+
+(ENTREGÁVEIS)
+
+- a. Alterar/criar as APIs:
+  - [ ] Checkout Pedido que deverá receber os produtos solicitados e retornar a identificação do pedido.
+  - [ ] Consultar status pagamento pedido, que informa se o pagamento foi aprovado ou não.
+  - [ ] Webhook para receber confirmação de pagamento aprovado ou recusado.
+  - [ ] A lista de pedidos deverá retorná-los com suas descrições, ordenados com a seguinte regra:
+  1. Pronto > Em Preparação > Recebido;
+  2. Pedidos mais antigos primeiro e mais novos depois;
+  3. Pedidos com status Finalizado não devem aparecer na lista.
+  - [ ] Atualizar o status do pedido.
+  - [ ] Como desafio extra, opcionalmente, você pode implementar a integração com Mercado Pago para gerar o QRCode para pagamento e integrar com o WebHook para capturar os pagamentos. Caso contrário, será necessário realizar o mock da parte de pagamentos. Como referência, acesse: [site do mercado pago](https://www.mercadopago.com.br/developers/pt/docs/qr-code/integration-configuration/qr-dynamic/integration).
+
+</details>
+
 ## Entregas
 
-- FASE 1 - **28/05/2024** - **<span style="color:red">AGUARDANDO</span>**
+- FASE 1 - **28/05/2024** - **<span style="color:green">FEITO</span>**
+- FASE 2 - **30/07/2024** - **<span style="color:red">AGUARDANDO</span>**
 
 ## Membros
 
