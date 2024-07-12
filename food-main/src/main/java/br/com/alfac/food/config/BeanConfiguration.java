@@ -1,22 +1,23 @@
 package br.com.alfac.food.config;
 
-import br.com.alfac.food.core.application.pagamento.ports.PagamentoClient;
-import br.com.alfac.food.core.application.pagamento.ports.PagamentoService;
-import br.com.alfac.food.core.application.pagamento.services.PagamentoServiceImpl;
-import br.com.alfac.food.core.application.pedido.ports.StatusPedidoPagamentoService;
-import br.com.alfac.food.core.application.pedido.services.StatusPedidoPagamentoServiceImpl;
+import br.com.alfac.food.core.application.pagamento.gateways.PagamentoClient;
+import br.com.alfac.food.core.application.pagamento.gateways.PagamentoService;
+import br.com.alfac.food.core.application.pagamento.usecases.PagamentoServiceImpl;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import br.com.alfac.food.core.application.cliente.ports.ClienteRepository;
-import br.com.alfac.food.core.application.cliente.ports.ClienteService;
-import br.com.alfac.food.core.application.cliente.services.ClienteServiceImpl;
-import br.com.alfac.food.core.application.item.ports.ItemRepository;
-import br.com.alfac.food.core.application.item.ports.ItemService;
-import br.com.alfac.food.core.application.item.services.ItemServiceImpl;
-import br.com.alfac.food.core.application.pedido.ports.PedidoRepository;
-import br.com.alfac.food.core.application.pedido.ports.PedidoService;
-import br.com.alfac.food.core.application.pedido.services.PedidoServiceImpl;
+import br.com.alfac.food.core.application.cliente.gateways.ClienteRepository;
+import br.com.alfac.food.core.application.cliente.gateways.ClienteService;
+import br.com.alfac.food.core.application.cliente.usecases.ClienteServiceImpl;
+import br.com.alfac.food.core.application.item.gateways.ItemRepository;
+import br.com.alfac.food.core.application.item.gateways.ItemService;
+import br.com.alfac.food.core.application.item.usecases.ItemServiceImpl;
+import br.com.alfac.food.core.application.pedido.gateways.PedidoRepository;
+import br.com.alfac.food.core.application.pedido.gateways.PedidoService;
+import br.com.alfac.food.core.application.pedido.gateways.StatusPedidoPagamentoService;
+import br.com.alfac.food.core.application.pedido.usecases.PedidoServiceImpl;
+import br.com.alfac.food.core.application.pedido.usecases.StatusPedidoPagamentoServiceImpl;
 
 @Configuration
 public class BeanConfiguration {
