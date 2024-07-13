@@ -1,9 +1,10 @@
 package br.com.alfac.food.client.mercadopago;
 
-import br.com.alfac.food.core.application.pagamento.ports.PagamentoClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import br.com.alfac.food.core.application.pagamento.gateways.PagamentoClient;
 
 @Service
 public class PagamentoClientImpl implements PagamentoClient {

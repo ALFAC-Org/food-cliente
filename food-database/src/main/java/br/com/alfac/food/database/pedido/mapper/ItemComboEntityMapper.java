@@ -10,8 +10,8 @@ import org.mapstruct.factory.Mappers;
 
 import br.com.alfac.food.core.domain.item.Item;
 import br.com.alfac.food.core.domain.pedido.Lanche;
-import br.com.alfac.food.database.pedido.entity.ItemComboComplementoEntity;
-import br.com.alfac.food.database.pedido.entity.ItemComboEntity;
+import br.com.alfac.food.database.pedido.persistence.ItemComboComplementoEntity;
+import br.com.alfac.food.database.pedido.persistence.ItemComboEntity;
 
 @Mapper(componentModel = "spring")
 public interface ItemComboEntityMapper {
