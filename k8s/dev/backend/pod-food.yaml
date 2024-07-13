@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-food
+  labels:
+    app: pod-food
+spec:
+  containers:
+    - name: pod-food-container
+      image: lcalves22cadastros/food:1
+      ports:
+        - containerPort: 8080
+      envFrom:
+        - configMapRef:
+            name: cm-food
+        - secretRef:
+            name: secret-food
