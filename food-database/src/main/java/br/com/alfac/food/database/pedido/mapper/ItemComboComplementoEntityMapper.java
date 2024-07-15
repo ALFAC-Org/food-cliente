@@ -1,7 +1,7 @@
 package br.com.alfac.food.database.pedido.mapper;
 
 import br.com.alfac.food.core.domain.item.Item;
-import br.com.alfac.food.database.pedido.entity.ItemComboComplementoEntity;
+import br.com.alfac.food.database.pedido.persistence.ItemComboComplementoEntity;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
