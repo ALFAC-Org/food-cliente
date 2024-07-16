@@ -1,5 +1,9 @@
 package br.com.alfac.food.core.application.pedido.usecases;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
 import br.com.alfac.food.core.application.cliente.gateways.ClienteRepository;
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.application.item.gateways.ItemRepository;
@@ -19,10 +23,6 @@ import br.com.alfac.food.core.exception.item.ItemError;
 import br.com.alfac.food.core.exception.pedido.PedidoErros;
 import br.com.alfac.food.core.utils.CollectionsUtils;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
 public class PedidoServiceImpl implements PedidoService {
 
     private final PedidoRepository pedidoRepository;
@@ -39,8 +39,7 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     public List<PedidoDTO> listarPedidos() {
-        List<Pedido> pedidos = pedidoRepository.listarPedidos();
-        return PedidoMapper.mapearParaListaPedidoDTO(pedidos);
+        return new ListarPedidosOrdenadosUseCase(pedidoRepository).listarPedidosOrdenados();
     }
 
     public PedidoDTO consultarPedidoPorId(Long id) throws FoodException {
@@ -61,10 +60,10 @@ public class PedidoServiceImpl implements PedidoService {
 
         for (ComboDTO comboDTO : pedidoDTO.getCombos()) {
             Combo combo = ComboBuilder.combo()
-                    .comLanche(getLanche(comboDTO.getLanche()))
-                    .comAcompanhamento(getItem(comboDTO.getAcompanhamento()))
-                    .comBebida(getItem(comboDTO.getBebida()))
-                    .comSobremesa(getItem(comboDTO.getSobremesa()))
+                    .comLanche(buscarLanche(comboDTO.getLanche()))
+                    .comAcompanhamento(buscarItem(comboDTO.getAcompanhamento()))
+                    .comBebida(buscarItem(comboDTO.getBebida()))
+                    .comSobremesa(buscarItem(comboDTO.getSobremesa()))
                     .build();
 
             pedido.adicionaCombo(combo);
@@ -78,7 +77,7 @@ public class PedidoServiceImpl implements PedidoService {
         return PedidoMapper.mapearParaPedidoDTO(pedidoSalvo);
     }
 
-    private Item getItem(final ItemDTO itemDTO) throws FoodException {
+    private Item buscarItem(final ItemDTO itemDTO) throws FoodException {
         if (Objects.nonNull(itemDTO)) {
             Long itemId = itemDTO.getId();
             return itemRepository.consultarItemPorId(itemId)
@@ -87,7 +86,7 @@ public class PedidoServiceImpl implements PedidoService {
         return null;
     }
 
-    private Lanche getLanche(final LancheDTO lancheDTO) throws FoodException {
+    private Lanche buscarLanche(final LancheDTO lancheDTO) throws FoodException {
 
         if (Objects.nonNull(lancheDTO)) {
             Long lancheId = lancheDTO.getId();
@@ -104,7 +103,7 @@ public class PedidoServiceImpl implements PedidoService {
 
             if (CollectionsUtils.naoVazio(lancheDTO.getComplementos())) {
                 for (ItemDTO complementoDTO : lancheDTO.getComplementos()) {
-                    lanche.adicionaComplemento(getItem(complementoDTO));
+                    lanche.adicionaComplemento(buscarItem(complementoDTO));
                 }
             }
 
@@ -134,7 +133,7 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    public List<PedidoDTO> listarPedidosPorStatus(final StatusPedido status)  {
+    public List<PedidoDTO> listarPedidosPorStatus(final StatusPedido status) {
 
         List<Pedido> pedidos = pedidoRepository.listarPedidosPorStatus(status);
 

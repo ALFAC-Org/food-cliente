@@ -1,5 +1,7 @@
 package br.com.alfac.food.core.application.pedido.usecases;
 
+import java.util.Optional;
+
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.application.pedido.gateways.PedidoRepository;
 import br.com.alfac.food.core.application.pedido.gateways.StatusPedidoPagamentoService;
@@ -10,8 +12,6 @@ import br.com.alfac.food.core.exception.FoodException;
 import br.com.alfac.food.core.exception.pagamento.PagamentoErro;
 import br.com.alfac.food.core.exception.pedido.PedidoErros;
 
-import java.util.Optional;
-
 public class StatusPedidoPagamentoServiceImpl implements StatusPedidoPagamentoService {
 
     private final PedidoRepository pedidoRepository;
@@ -20,7 +20,6 @@ public class StatusPedidoPagamentoServiceImpl implements StatusPedidoPagamentoSe
         this.pedidoRepository = pedidoRepository;
 
     }
-
 
     @Override
     public PedidoDTO atualizarStatus(final PedidoDTO pedidoDTO) throws FoodException {

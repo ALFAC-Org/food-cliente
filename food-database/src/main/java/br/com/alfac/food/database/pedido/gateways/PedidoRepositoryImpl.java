@@ -1,17 +1,17 @@
 package br.com.alfac.food.database.pedido.gateways;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.com.alfac.food.core.application.pedido.gateways.PedidoRepository;
 import br.com.alfac.food.core.domain.pedido.Pedido;
 import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.database.pedido.mapper.PedidoEntityMapper;
 import br.com.alfac.food.database.pedido.persistence.PedidoEntity;
 import br.com.alfac.food.database.pedido.persistence.PedidoEntityRepository;
-
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @Component
 public class PedidoRepositoryImpl implements PedidoRepository {
