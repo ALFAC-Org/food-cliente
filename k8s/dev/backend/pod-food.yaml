@@ -15,3 +15,10 @@ spec:
             name: cm-food
         - secretRef:
             name: secret-food
+      resources:
+        requests:
+          memory: "512Mi"
+          cpu: "500m"
+        limits:
+          memory: "1Gi"
+          cpu: "1"
