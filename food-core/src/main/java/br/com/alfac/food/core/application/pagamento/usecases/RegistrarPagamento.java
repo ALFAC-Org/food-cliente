@@ -2,7 +2,6 @@ package br.com.alfac.food.core.application.pagamento.usecases;
 
 import br.com.alfac.food.core.application.pagamento.dto.PagamentoDTO;
 import br.com.alfac.food.core.application.pagamento.gateways.PagamentoClient;
-import br.com.alfac.food.core.application.pagamento.gateways.PagamentoService;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.application.pedido.gateways.PedidoService;
 import br.com.alfac.food.core.application.pedido.gateways.StatusPedidoPagamentoService;
@@ -10,14 +9,14 @@ import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.core.exception.FoodException;
 import br.com.alfac.food.core.exception.pagamento.PagamentoErro;
 
-public class PagamentoServiceImpl implements PagamentoService {
+public class RegistrarPagamento  {
 
     private final PagamentoClient pagamentoClient;
     private final PedidoService pedidoService;
     private final StatusPedidoPagamentoService statusPedidoPagamentoService;
 
-    public PagamentoServiceImpl(final PagamentoClient pagamentoClient, final PedidoService pedidoService,
-                                final StatusPedidoPagamentoService statusPedidoPagamentoService) {
+    public RegistrarPagamento(final PagamentoClient pagamentoClient, final PedidoService pedidoService,
+                              final StatusPedidoPagamentoService statusPedidoPagamentoService) {
         this.pagamentoClient = pagamentoClient;
         this.pedidoService = pedidoService;
         this.statusPedidoPagamentoService = statusPedidoPagamentoService;

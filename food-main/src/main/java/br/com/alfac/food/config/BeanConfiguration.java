@@ -1,8 +1,7 @@
 package br.com.alfac.food.config;
 
 import br.com.alfac.food.core.application.pagamento.gateways.PagamentoClient;
-import br.com.alfac.food.core.application.pagamento.gateways.PagamentoService;
-import br.com.alfac.food.core.application.pagamento.usecases.PagamentoServiceImpl;
+import br.com.alfac.food.core.application.pagamento.usecases.RegistrarPagamento;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,8 +35,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public PagamentoService pagamentoService(PagamentoClient pagamentoClient, PedidoService pedidoService, StatusPedidoPagamentoService statusPedidoPagamentoService) {
-        return new PagamentoServiceImpl(pagamentoClient, pedidoService, statusPedidoPagamentoService);
+    public RegistrarPagamento pagamentoService(PagamentoClient pagamentoClient, PedidoService pedidoService, StatusPedidoPagamentoService statusPedidoPagamentoService) {
+        return new RegistrarPagamento(pagamentoClient, pedidoService, statusPedidoPagamentoService);
     }
 
     @Bean

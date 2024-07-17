@@ -13,6 +13,8 @@ public class PedidoDTO {
     private Long id;
     private StatusPedido statusPedido;
     private BigDecimal valorTotal;
+    private String qrCode;
+
 
     public Long getId() {
         return id;

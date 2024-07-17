@@ -3,7 +3,6 @@ package br.com.alfac.food.api.pagamento.controller;
 import br.com.alfac.food.api.config.exception.ApiError;
 import br.com.alfac.food.api.pagamento.dto.PagamentoRequest;
 import br.com.alfac.food.core.application.pagamento.dto.PagamentoDTO;
-import br.com.alfac.food.core.application.pagamento.gateways.PagamentoService;
 import br.com.alfac.food.core.exception.FoodException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
