@@ -20,6 +20,19 @@ spec:
                 name: cm-food
             - secretRef:
                 name: secret-food
+          # Necessário para autoscaling
+          # -----
+          # Segundo o Chat GPT, eis o necessário: 
+          # - Comece com 0.5 CPU e 512Mi de memória para aplicações leves.
+          # - Para aplicações de complexidade média, use 1 CPU e 1Gi de memória.
+          # - Para aplicações pesadas, comece com 2 CPUs e 2Gi de memória, ajustando conforme necessário.
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
   selector:
     matchLabels:
       app: pod-food
