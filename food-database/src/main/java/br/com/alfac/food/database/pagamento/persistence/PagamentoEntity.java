@@ -3,11 +3,8 @@ package br.com.alfac.food.database.pagamento.persistence;
 import br.com.alfac.food.core.domain.pagamento.StatusPagamento;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.GenerationTime;
-import org.hibernate.annotations.GeneratorType;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
@@ -19,6 +16,7 @@ public class PagamentoEntity implements Serializable {
     private Long id;
 
     @NotNull(message = "Id do pedido é obrigatório")
+    @Column(name = "pedido_id")
     private Long pedidoId;
 
     @Enumerated(EnumType.STRING)
@@ -26,11 +24,12 @@ public class PagamentoEntity implements Serializable {
     private StatusPagamento status;
 
     @NotNull(message = "Data do pagamento é obrigatório")
+    @Column(name = "data_pagamento")
     private LocalDateTime dataPagamento;
 
     @NotNull(message = "Data do atualização é obrigatório")
+    @Column(name = "data_atualizacao")
     private LocalDateTime dataAtualizacao;
-
 
     public Long getId() {
         return id;

@@ -1,5 +1,6 @@
 package br.com.alfac.food.api.pedido.controller;
 
+import br.com.alfac.food.core.application.pedido.dto.PedidoCriadoDTO;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
@@ -112,5 +113,5 @@ public interface PedidoControllerExamples {
           @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
       }) })
 
-  ResponseEntity<PedidoDTO> registrarPedido(@RequestBody PedidoRequest pedidoRequest) throws FoodException;
+  ResponseEntity<PedidoCriadoDTO> registrarPedido(@RequestBody PedidoRequest pedidoRequest) throws FoodException;
 }

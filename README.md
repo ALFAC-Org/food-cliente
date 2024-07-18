@@ -246,7 +246,7 @@ Envie o `payload` para o pedido ser registrado:
 
 ### Via Swagger
 
-[http://localhost:8080/swagger-ui/index.html#/Pedido/registrarPedido](http://localhost:8080/swagger-ui/index.html#/Pedido/registrarPedido)
+[http://localhost:8080/swagger-ui/index.html#/Pedido/criarPedido](http://localhost:8080/swagger-ui/index.html#/Pedido/criarPedido)
 
 ### Via Terminal
 

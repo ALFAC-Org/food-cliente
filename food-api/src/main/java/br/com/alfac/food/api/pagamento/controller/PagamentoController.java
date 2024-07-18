@@ -24,24 +24,24 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Pagamento", description = "Métodos para realização do faker checkout do pagamento")
 public class PagamentoController {
 
-    private final PagamentoService pagamentoService;
-
-    public PagamentoController(final PagamentoService pagamentoService) {
-        this.pagamentoService =pagamentoService;
-    }
-
-
-    @Operation(summary = "Efetivar pagamento do pedido")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Pagamento realizado"),
-            @ApiResponse(responseCode = "404", description = "Erro pedido não encontrado", content = {
-                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
-            })})
-    @PostMapping
-    public ResponseEntity<PagamentoDTO> pagar(@Valid @RequestBody PagamentoRequest pagamentoRequest) throws FoodException {
-        PagamentoDTO pagamentoDTO = pagamentoService.efetuarPagamento(pagamentoRequest.getIdPedido());
-
-        return new ResponseEntity<>(pagamentoDTO, HttpStatus.OK);
-    }
+//    private final PagamentoService pagamentoService;
+//
+//    public PagamentoController(final PagamentoService pagamentoService) {
+//        this.pagamentoService =pagamentoService;
+//    }
+//
+//
+//    @Operation(summary = "Efetivar pagamento do pedido")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Pagamento realizado"),
+//            @ApiResponse(responseCode = "404", description = "Erro pedido não encontrado", content = {
+//                    @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
+//            })})
+//    @PostMapping
+//    public ResponseEntity<PagamentoDTO> pagar(@Valid @RequestBody PagamentoRequest pagamentoRequest) throws FoodException {
+//        PagamentoDTO pagamentoDTO = pagamentoService.efetuarPagamento(pagamentoRequest.getIdPedido());
+//
+//        return new ResponseEntity<>(pagamentoDTO, HttpStatus.OK);
+//    }
 
 }
