@@ -1,14 +1,14 @@
 package br.com.alfac.food.database.pedido.persistence;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.database.cliente.persistence.ClienteEntity;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "pedido")
@@ -31,6 +31,10 @@ public class PedidoEntity implements Serializable {
     @JoinColumn(name = "id_pedido")
     @NotEmpty(message = "Obrigatório 1 ou mais combos")
     private List<ComboEntity> combos;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data_cadastro", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date dataCadastro;
 
     public Long getId() {
         return id;
@@ -64,4 +68,11 @@ public class PedidoEntity implements Serializable {
         this.combos = combos;
     }
 
+    public Date getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(Date dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
 }

@@ -3,6 +3,7 @@ package br.com.alfac.food.core.domain.pedido;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,6 +19,7 @@ public class Pedido implements AggregateRoot {
     private StatusPedido status;
     private List<Combo> combos;
     private BigDecimal valorTotal;
+    private Date dataCadastro;
 
     public void calcularValorTotal() {
         if (CollectionsUtils.naoVazio(combos)) {
@@ -89,5 +91,11 @@ public class Pedido implements AggregateRoot {
         this.valorTotal = valorTotal;
     }
 
+    public Date getDataCadastro() {
+        return dataCadastro;
+    }
     
+    public void setDataCadastro(Date dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
 }

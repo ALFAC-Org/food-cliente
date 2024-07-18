@@ -45,10 +45,10 @@ public class CriarPedido {
 
         for (ComboDTO comboDTO : pedidoDTO.getCombos()) {
             Combo combo = ComboBuilder.combo()
-                    .comLanche(getLanche(comboDTO.getLanche()))
-                    .comAcompanhamento(getItem(comboDTO.getAcompanhamento()))
-                    .comBebida(getItem(comboDTO.getBebida()))
-                    .comSobremesa(getItem(comboDTO.getSobremesa()))
+                    .comLanche(buscarLanche(comboDTO.getLanche()))
+                    .comAcompanhamento(buscarItem(comboDTO.getAcompanhamento()))
+                    .comBebida(buscarItem(comboDTO.getBebida()))
+                    .comSobremesa(buscarItem(comboDTO.getSobremesa()))
                     .build();
 
             pedido.adicionaCombo(combo);
@@ -62,7 +62,7 @@ public class CriarPedido {
         return PedidoMapper.mapearParaPedidoDTO(pedidoSalvo);
     }
 
-    private Lanche getLanche(final LancheDTO lancheDTO) throws FoodException {
+    private Lanche buscarLanche(final LancheDTO lancheDTO) throws FoodException {
 
         if (Objects.nonNull(lancheDTO)) {
             Long lancheId = lancheDTO.getId();
@@ -79,7 +79,7 @@ public class CriarPedido {
 
             if (CollectionsUtils.naoVazio(lancheDTO.getComplementos())) {
                 for (ItemDTO complementoDTO : lancheDTO.getComplementos()) {
-                    lanche.adicionaComplemento(getItem(complementoDTO));
+                    lanche.adicionaComplemento(buscarItem(complementoDTO));
                 }
             }
 
@@ -88,7 +88,7 @@ public class CriarPedido {
         return null;
     }
 
-    private Item getItem(final ItemDTO itemDTO) throws FoodException {
+    private Item buscarItem(final ItemDTO itemDTO) throws FoodException {
         if (Objects.nonNull(itemDTO)) {
             Long itemId = itemDTO.getId();
             return itemRepository.consultarItemPorId(itemId)
@@ -96,5 +96,4 @@ public class CriarPedido {
         }
         return null;
     }
-
 }
