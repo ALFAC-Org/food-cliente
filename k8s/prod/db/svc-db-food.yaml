@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-db-food
+  labels:
+    app: svc-db-food
+spec:
+  # Se for usar RDS:
+  # externalName: alfac-db-instance-01.cvqnndaq7eyn.us-east-1.rds.amazonaws.com
+  ports:
+  - port: 3306
+    nodePort: 31006
+    name: svc-db-food
+  type: NodePort
+  selector:
+    app: statefulset-db-food

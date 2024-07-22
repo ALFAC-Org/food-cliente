@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset-db-food
+spec:
+  selector:
+    matchLabels:
+      app: statefulset-db-food
+  serviceName: statefulset-db-food
+  replicas: 1
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: statefulset-db-food
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: statefulset-db-food-mysql-container
+          image: mysql:8
+          ports:
+          - containerPort: 3306
+          envFrom:
+            - secretRef:
+                name: secret-food
+          volumeMounts:
+            - name: pv-db-food
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: pv-db-food
+          persistentVolumeClaim:
+            claimName: pvc-db-food
