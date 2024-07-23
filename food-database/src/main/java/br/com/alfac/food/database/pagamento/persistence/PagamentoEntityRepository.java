@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PagamentoEntityRepository extends JpaRepository<PagamentoEntity, Long> {
     
-    Optional<PagamentoEntity> findByPedidoId(Long id);
+    Optional<PagamentoEntity> findByPedidoId(Long pedidoId);
 }

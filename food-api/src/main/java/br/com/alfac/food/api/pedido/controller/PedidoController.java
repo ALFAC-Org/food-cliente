@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.alfac.food.api.pedido.dto.PedidoRequest;
 import br.com.alfac.food.api.pedido.dto.PedidosResponse;
 import br.com.alfac.food.api.pedido.mapper.PedidoMapper;
-import br.com.alfac.food.core.application.pagamento.dto.PagamentoEntityDTO;
 import br.com.alfac.food.core.application.pedido.controller.ControladorPedido;
 import br.com.alfac.food.core.application.pedido.dto.PedidoCriadoDTO;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
@@ -77,11 +76,5 @@ public class PedidoController implements PedidoControllerExamples {
         return new ResponseEntity<>(new PedidosResponse(pedidoDTOS), HttpStatus.OK);
     }
 
-    @Operation(summary = "Consultar status do pedido por pedido id")
-    @GetMapping(value = "/status-pagamento/{pedido_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PagamentoEntityDTO> consultarStatusPedidoPorId(@PathVariable Long pedido_id) throws FoodException {
-        PagamentoEntityDTO statusPedido = controladorPedido.consultarPagamentoPorPedidoId(pedido_id);
-        
-        return new ResponseEntity<>(statusPedido, HttpStatus.OK);
-    }
+    
 }

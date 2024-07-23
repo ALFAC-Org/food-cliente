@@ -9,5 +9,5 @@ public interface PagamentoRepository {
     PagamentoEntityDTO criar(PagamentoEntityDTO pagamentoEntityDTO);
     PagamentoEntityDTO atualizar(PagamentoEntityDTO pagamentoEntityDTO);
     Optional<PagamentoEntityDTO> buscarPorId(Long id);
-    Optional<PagamentoEntityDTO> buscarPorPedidoId(Long idPedido);
+    Optional<PagamentoEntityDTO> buscarPorPedidoId(Long pedidoId);
 }

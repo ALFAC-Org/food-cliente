@@ -46,7 +46,7 @@ public class PagamentoRepositoryImpl implements PagamentoRepository {
     }
 
     @Override
-    public Optional<PagamentoEntityDTO> buscarPorPedidoId(final Long id) {
-        return PagamentoEntityMapper.toDTO(pagamentoEntityRepository.findByPedidoId(id));
+    public Optional<PagamentoEntityDTO> buscarPorPedidoId(final Long pedidoId) {
+        return PagamentoEntityMapper.toDTO(pagamentoEntityRepository.findByPedidoId(pedidoId));
     }
 }

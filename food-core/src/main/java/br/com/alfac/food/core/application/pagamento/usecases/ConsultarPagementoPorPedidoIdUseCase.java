@@ -14,9 +14,9 @@ public class ConsultarPagementoPorPedidoIdUseCase {
         this.pagamentoRepository = pagamentoRepository;
     }
     
-    public PagamentoEntityDTO executar(final Long idPedido) throws FoodException {
+    public PagamentoEntityDTO executar(final Long pedidoId) throws FoodException {
         
-        Optional<PagamentoEntityDTO> pagamento = pagamentoRepository.buscarPorPedidoId(idPedido);
+        Optional<PagamentoEntityDTO> pagamento = pagamentoRepository.buscarPorPedidoId(pedidoId);
         
         if (pagamento.isEmpty()) {
             throw new FoodException(PagamentoErro.PAGAMENTO_NAO_ENCONTRADO);

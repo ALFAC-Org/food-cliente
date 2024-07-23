@@ -7,6 +7,7 @@ import br.com.alfac.food.core.application.item.gateways.ItemRepository;
 import br.com.alfac.food.core.application.item.gateways.ItemService;
 import br.com.alfac.food.core.application.item.usecases.ItemServiceImpl;
 import br.com.alfac.food.core.application.pagamento.controller.ControladoRecebimentoPagamento;
+import br.com.alfac.food.core.application.pagamento.controller.ControladorPagamento;
 import br.com.alfac.food.core.application.pagamento.gateways.PagamentoClient;
 import br.com.alfac.food.core.application.pagamento.gateways.PagamentoRepository;
 import br.com.alfac.food.core.application.pagamento.usecases.AlterarStatusPagamentoRealizado;
@@ -69,8 +70,13 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public ControladorPedido controladorPedido(final CriarPedido criarPedido, final CriarPagamentoPendente criarPagamentoPendente, final PagamentoClient pagamentoClient, final ConsultarPagementoPorPedidoIdUseCase consultarPagementoPorPedidoIdUseCase) {
-        return new ControladorPedido(criarPedido, criarPagamentoPendente, pagamentoClient, consultarPagementoPorPedidoIdUseCase);
+    public ControladorPedido controladorPedido(final CriarPedido criarPedido, final CriarPagamentoPendente criarPagamentoPendente, final PagamentoClient pagamentoClient) {
+        return new ControladorPedido(criarPedido, criarPagamentoPendente, pagamentoClient);
+    }
+
+    @Bean 
+    public ControladorPagamento controladorPagamento(final ConsultarPagementoPorPedidoIdUseCase consultarPagementoPorPedidoIdUseCase) {
+        return new ControladorPagamento(consultarPagementoPorPedidoIdUseCase);
     }
 
     @Bean
