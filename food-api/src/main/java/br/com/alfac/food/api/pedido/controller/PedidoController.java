@@ -75,6 +75,4 @@ public class PedidoController implements PedidoControllerExamples {
         List<PedidoDTO> pedidoDTOS = pedidoService.listarPedidosPorStatus(status);
         return new ResponseEntity<>(new PedidosResponse(pedidoDTOS), HttpStatus.OK);
     }
-
-    
 }

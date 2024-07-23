@@ -14,13 +14,11 @@ public class ControladorPedido {
     private final CriarPagamentoPendente registrarPagamento;
     private final PagamentoClient pagamentoClient;
     
-
     public ControladorPedido(final CriarPedido criarPedido, final CriarPagamentoPendente criarPagamentoPendente, final PagamentoClient pagamentoClient) {
         this.criarPedido = criarPedido;
         this.registrarPagamento = criarPagamentoPendente;
         this.pagamentoClient = pagamentoClient;
     }
-
 
     public PedidoCriadoDTO criarPedido(PedidoDTO pedidoDTO) throws FoodException {
 
