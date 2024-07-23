@@ -1,19 +1,13 @@
 package br.com.alfac.food.core.application.cliente.gateways;
 
-import br.com.alfac.food.core.domain.cliente.Cliente;
-
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ClienteRepository {
+import br.com.alfac.food.core.domain.cliente.Cliente;
 
-    /**
-     * 
-     */
+public interface ClienteRepositoryInterface {
     Optional<Cliente> consultarClientePorCPF(String cpf);
     Optional<Cliente> consultarClientePorUuId(UUID id);
     Optional<Cliente> consultarClientePorId(Long id);
-
     Cliente cadastrarCliente(Cliente cliente);
-
 }
