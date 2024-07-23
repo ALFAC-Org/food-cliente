@@ -1,9 +1,5 @@
 package br.com.alfac.food.core.application.pedido.usecases;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-
 import br.com.alfac.food.core.application.cliente.gateways.ClienteRepository;
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.application.item.gateways.ItemRepository;
@@ -11,7 +7,6 @@ import br.com.alfac.food.core.application.pedido.dto.ComboDTO;
 import br.com.alfac.food.core.application.pedido.dto.LancheDTO;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.application.pedido.gateways.PedidoRepository;
-import br.com.alfac.food.core.application.pedido.gateways.PedidoService;
 import br.com.alfac.food.core.application.pedido.mappers.PedidoMapper;
 import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.core.domain.item.Item;
@@ -20,34 +15,25 @@ import br.com.alfac.food.core.exception.FoodException;
 import br.com.alfac.food.core.exception.cliente.ClienteError;
 import br.com.alfac.food.core.exception.combo.ComboError;
 import br.com.alfac.food.core.exception.item.ItemError;
-import br.com.alfac.food.core.exception.pedido.PedidoErros;
 import br.com.alfac.food.core.utils.CollectionsUtils;
 
-public class PedidoServiceImpl implements PedidoService {
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+public class CriarPedido {
 
     private final PedidoRepository pedidoRepository;
     private final ClienteRepository clienteRepository;
     private final ItemRepository itemRepository;
 
-    public PedidoServiceImpl(
-            final PedidoRepository pedidoRepository,
-            final ClienteRepository clienteRepository,
-            final ItemRepository itemRepository) {
+    public CriarPedido(final PedidoRepository pedidoRepository, final ClienteRepository clienteRepository, final ItemRepository itemRepository) {
         this.pedidoRepository = pedidoRepository;
         this.clienteRepository = clienteRepository;
         this.itemRepository = itemRepository;
     }
 
-    public List<PedidoDTO> listarPedidos() {
-        return new ListarPedidosOrdenadosUseCase(pedidoRepository).listarPedidosOrdenados();
-    }
 
-    public PedidoDTO consultarPedidoPorId(Long id) throws FoodException {
-        Optional<Pedido> pedidoOpt = pedidoRepository.consultarPedidoPorId(id);
-        return PedidoMapper.mapearParaPedidoDTO(pedidoOpt);
-    }
-
-    public PedidoDTO registrarPedido(PedidoDTO pedidoDTO) throws FoodException {
+    public PedidoDTO executar(PedidoDTO pedidoDTO) throws FoodException {
         Pedido pedido = new Pedido();
 
         if (pedidoDTO.getClienteId() != null) {
@@ -72,18 +58,12 @@ public class PedidoServiceImpl implements PedidoService {
         // Define status inicial do pedido
         pedido.setStatus(StatusPedido.AGUARDANDO_PAGAMENTO);
 
+        // Define data de cadastro do pedido (evita erro de data nula)
+        pedido.setDataCadastro(LocalDateTime.now());
+
         Pedido pedidoSalvo = pedidoRepository.registrarPedido(pedido);
 
         return PedidoMapper.mapearParaPedidoDTO(pedidoSalvo);
-    }
-
-    private Item buscarItem(final ItemDTO itemDTO) throws FoodException {
-        if (Objects.nonNull(itemDTO)) {
-            Long itemId = itemDTO.getId();
-            return itemRepository.consultarItemPorId(itemId)
-                    .orElseThrow(() -> new FoodException(ItemError.ITEM_PEDIDO_INEXISTENTE, itemId));
-        }
-        return null;
     }
 
     private Lanche buscarLanche(final LancheDTO lancheDTO) throws FoodException {
@@ -112,31 +92,12 @@ public class PedidoServiceImpl implements PedidoService {
         return null;
     }
 
-    public PedidoDTO atualizarStatusPedido(Long id) throws FoodException {
-        Optional<Pedido> pedidoOpt = pedidoRepository.consultarPedidoPorId(id);
-
-        if (pedidoOpt.isEmpty()) {
-            throw new FoodException(PedidoErros.PEDIDO_NAO_ENCONTRADO);
+    private Item buscarItem(final ItemDTO itemDTO) throws FoodException {
+        if (Objects.nonNull(itemDTO)) {
+            Long itemId = itemDTO.getId();
+            return itemRepository.consultarItemPorId(itemId)
+                    .orElseThrow(() -> new FoodException(ItemError.ITEM_PEDIDO_INEXISTENTE, itemId));
         }
-
-        Pedido pedido = pedidoOpt.get();
-
-        if (StatusPedido.AGUARDANDO_PAGAMENTO.equals(pedido.getStatus())) {
-            throw new FoodException(PedidoErros.PEDIDO_NAO_PAGO);
-        }
-
-        pedido.atualizarStatus();
-
-        Pedido pedidoAtualizado = pedidoRepository.atualizarStatusPedido(pedido.getId(), pedido.getStatus());
-
-        return PedidoMapper.mapearParaPedidoDTO(pedidoAtualizado);
-    }
-
-    @Override
-    public List<PedidoDTO> listarPedidosPorStatus(final StatusPedido status) {
-
-        List<Pedido> pedidos = pedidoRepository.listarPedidosPorStatus(status);
-
-        return PedidoMapper.mapearParaListaPedidoDTO(pedidos);
+        return null;
     }
 }

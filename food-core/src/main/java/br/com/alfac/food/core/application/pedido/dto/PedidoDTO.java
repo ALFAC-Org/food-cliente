@@ -8,6 +8,7 @@ import java.math.RoundingMode;
 import br.com.alfac.food.core.domain.pedido.StatusPedido;
 
 public class PedidoDTO {
+
     private List<ComboDTO> combos;
     private Long clienteId;
     private Long id;

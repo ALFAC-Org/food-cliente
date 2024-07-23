@@ -3,8 +3,11 @@ package br.com.alfac.food.api.pedido.controller;
 import br.com.alfac.food.api.pedido.dto.PedidoRequest;
 import br.com.alfac.food.api.pedido.dto.PedidosResponse;
 import br.com.alfac.food.api.pedido.mapper.PedidoMapper;
+import br.com.alfac.food.core.application.pedido.controller.ControladorPedido;
+import br.com.alfac.food.core.application.pedido.dto.PedidoCriadoDTO;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.application.pedido.gateways.PedidoService;
+import br.com.alfac.food.core.application.pedido.usecases.PedidoUseCase;
 import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.core.exception.FoodException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,12 +24,14 @@ import java.util.List;
 @Tag(name = "Pedido", description = "Métodos para manipulação de pedidos")
 public class PedidoController implements PedidoControllerExamples {
 
-    private final PedidoService pedidoService;
+    private final PedidoUseCase pedidoService;
     private final PedidoMapper pedidoMapper;
+    private final ControladorPedido controladorPedido;
 
-    public PedidoController(final PedidoService pedidoService, PedidoMapper pedidoMapper) {
+    public PedidoController(final PedidoUseCase pedidoService, PedidoMapper pedidoMapper, final ControladorPedido controladorPedido) {
         this.pedidoService = pedidoService;
         this.pedidoMapper = pedidoMapper;
+        this.controladorPedido = controladorPedido;
     }
 
     @GetMapping
@@ -43,10 +48,10 @@ public class PedidoController implements PedidoControllerExamples {
 
     @Override
     @PostMapping
-    public ResponseEntity<PedidoDTO> registrarPedido(@RequestBody PedidoRequest pedidoRequest) throws FoodException {
-        PedidoDTO pedido = pedidoService.registrarPedido(pedidoMapper.toDTO(pedidoRequest));
+    public ResponseEntity<PedidoCriadoDTO> registrarPedido(@RequestBody PedidoRequest pedidoRequest) throws FoodException {
+        PedidoCriadoDTO pedidoCriado = controladorPedido.executar(pedidoMapper.toDTO(pedidoRequest));
 
-        return new ResponseEntity<>(pedido, HttpStatus.CREATED);
+        return new ResponseEntity<>(pedidoCriado, HttpStatus.CREATED);
     }
 
     @Operation(summary = "Atualizar status do pedido (de modo sequencial)")

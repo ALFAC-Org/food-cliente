@@ -11,9 +11,14 @@ public class PagamentoClientImpl implements PagamentoClient {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PagamentoClientImpl.class);
 
+    /**
+     * Simula uma chamada para o Mercado Pago retornando um id supondo que seria um QRCode
+     * @param idPedido
+     * @return
+     */
     @Override
-    public boolean efetuarPagamento(final Long idPedido) {
+    public String gerarQrCode(final Long idPedido) {
         LOGGER.debug("Efetuando pagamento idPedido {}", idPedido);
-        return true;
+        return idPedido.toString();
     }
 }

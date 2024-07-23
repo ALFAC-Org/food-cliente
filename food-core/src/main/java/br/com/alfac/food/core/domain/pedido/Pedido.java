@@ -10,6 +10,7 @@ import java.util.Objects;
 import br.com.alfac.food.core.domain.base.AggregateRoot;
 import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.core.exception.FoodException;
+import br.com.alfac.food.core.exception.pagamento.PagamentoErro;
 import br.com.alfac.food.core.exception.pedido.PedidoErros;
 import br.com.alfac.food.core.utils.CollectionsUtils;
 
@@ -38,6 +39,17 @@ public class Pedido implements AggregateRoot {
 
         this.status = this.status.getProximoStatus();
     }
+
+    public void atualizarStatusRecebido() throws FoodException {
+
+        if (!StatusPedido.AGUARDANDO_PAGAMENTO.equals(this.status)) {
+            throw new FoodException(PagamentoErro.PAGAMENTO_JA_REALIZADO);
+        }
+
+        this.status = this.status.getProximoStatus();
+    }
+
+
 
     public Cliente getCliente() {
         return cliente;
