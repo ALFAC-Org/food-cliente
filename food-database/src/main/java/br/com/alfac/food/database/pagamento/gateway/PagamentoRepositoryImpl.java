@@ -1,13 +1,13 @@
 package br.com.alfac.food.database.pagamento.gateway;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import br.com.alfac.food.core.application.pagamento.dto.PagamentoEntityDTO;
 import br.com.alfac.food.core.application.pagamento.gateways.PagamentoRepository;
 import br.com.alfac.food.database.pagamento.mapper.PagamentoEntityMapper;
 import br.com.alfac.food.database.pagamento.persistence.PagamentoEntity;
 import br.com.alfac.food.database.pagamento.persistence.PagamentoEntityRepository;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 public class PagamentoRepositoryImpl implements PagamentoRepository {
 
@@ -43,5 +43,10 @@ public class PagamentoRepositoryImpl implements PagamentoRepository {
     @Override
     public Optional<PagamentoEntityDTO> buscarPorId(final Long id) {
         return PagamentoEntityMapper.toDTO(pagamentoEntityRepository.findById(id));
+    }
+
+    @Override
+    public Optional<PagamentoEntityDTO> buscarPorPedidoId(final Long id) {
+        return PagamentoEntityMapper.toDTO(pagamentoEntityRepository.findByPedidoId(id));
     }
 }

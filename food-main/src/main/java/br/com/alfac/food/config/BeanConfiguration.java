@@ -19,8 +19,11 @@ import br.com.alfac.food.core.application.pedido.usecases.PedidoUseCase;
 import br.com.alfac.food.core.application.pedido.usecases.AtualizarStatusPedidoPagamentoRecebido;
 import br.com.alfac.food.database.pagamento.gateway.PagamentoRepositoryImpl;
 import br.com.alfac.food.database.pagamento.persistence.PagamentoEntityRepository;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import br.com.alfac.food.core.application.pagamento.usecases.ConsultarPagementoPorPedidoIdUseCase;
 
 @Configuration
 public class BeanConfiguration {
@@ -51,6 +54,11 @@ public class BeanConfiguration {
     }
 
     @Bean
+    public ConsultarPagementoPorPedidoIdUseCase consultarPagementoPorPedidoIdUseCase(final PagamentoRepository pagamentoRepository) {
+        return new ConsultarPagementoPorPedidoIdUseCase(pagamentoRepository);
+    }
+
+    @Bean
     public AtualizarStatusPedidoPagamentoRecebido statusPedidoPagamentoService(final PedidoRepository pedidoRepository) {
         return new AtualizarStatusPedidoPagamentoRecebido(pedidoRepository);
     }
@@ -61,8 +69,8 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public ControladorPedido controladorPedido(final CriarPedido criarPedido, final CriarPagamentoPendente criarPagamentoPendente, final PagamentoClient pagamentoClient) {
-        return new ControladorPedido(criarPedido, criarPagamentoPendente, pagamentoClient);
+    public ControladorPedido controladorPedido(final CriarPedido criarPedido, final CriarPagamentoPendente criarPagamentoPendente, final PagamentoClient pagamentoClient, final ConsultarPagementoPorPedidoIdUseCase consultarPagementoPorPedidoIdUseCase) {
+        return new ControladorPedido(criarPedido, criarPagamentoPendente, pagamentoClient, consultarPagementoPorPedidoIdUseCase);
     }
 
     @Bean
