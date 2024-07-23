@@ -17,6 +17,7 @@ import br.com.alfac.food.core.exception.combo.ComboError;
 import br.com.alfac.food.core.exception.item.ItemError;
 import br.com.alfac.food.core.utils.CollectionsUtils;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class CriarPedido {
@@ -56,6 +57,9 @@ public class CriarPedido {
 
         // Define status inicial do pedido
         pedido.setStatus(StatusPedido.AGUARDANDO_PAGAMENTO);
+
+        // Define data de cadastro do pedido (evita erro de data nula)
+        pedido.setDataCadastro(LocalDateTime.now());
 
         Pedido pedidoSalvo = pedidoRepository.registrarPedido(pedido);
 
