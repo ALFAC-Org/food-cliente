@@ -1,27 +1,26 @@
 package br.com.alfac.food.database.cliente.gateways;
 
-import br.com.alfac.food.core.application.cliente.gateways.ClienteRepository;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.stereotype.Component;
+
+import br.com.alfac.food.core.application.cliente.gateways.ClienteRepositoryInterface;
 import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.database.cliente.mapper.ClienteEntityMapper;
 import br.com.alfac.food.database.cliente.persistence.ClienteEntity;
 import br.com.alfac.food.database.cliente.persistence.ClienteEntityRepository;
 
-import org.springframework.stereotype.Component;
-
-import java.util.Optional;
-import java.util.UUID;
-
 @Component
-public class ClienteRepositoryImpl implements ClienteRepository {
-
-
+public class ClienteRepository implements ClienteRepositoryInterface {
+    
     private final ClienteEntityRepository clienteEntityRepository;
     private final ClienteEntityMapper clienteEntityMapper;
-    public ClienteRepositoryImpl(final ClienteEntityRepository clienteEntityRepository, final ClienteEntityMapper clienteMapper) {
+
+    public ClienteRepository(final ClienteEntityRepository clienteEntityRepository, final ClienteEntityMapper clienteMapper) {
         this.clienteEntityRepository = clienteEntityRepository;
         this.clienteEntityMapper = clienteMapper;
     }
-
 
     @Override
     public Optional<Cliente> consultarClientePorCPF(String cpf){
@@ -66,5 +65,4 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
         return clienteOpt;
     }
-
 }

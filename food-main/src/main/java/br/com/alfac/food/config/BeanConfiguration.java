@@ -1,8 +1,12 @@
 package br.com.alfac.food.config;
 
-import br.com.alfac.food.core.application.cliente.gateways.ClienteRepository;
-import br.com.alfac.food.core.application.cliente.gateways.ClienteService;
-import br.com.alfac.food.core.application.cliente.usecases.ClienteServiceImpl;
+import br.com.alfac.food.core.application.cliente.gateways.ClienteRepositoryInterface;
+import br.com.alfac.food.core.application.cliente.usecases.cadastrarcliente.CadastrarClienteUseCase;
+import br.com.alfac.food.core.application.cliente.usecases.consultarclienteporcpf.ConsultarClientePorCpfInterfaceUseCase;
+import br.com.alfac.food.core.application.cliente.usecases.consultarclienteporcpf.ConsultarClientePorCpfUseCase;
+import br.com.alfac.food.core.application.cliente.usecases.consultarclienteporid.ConsultarClientePorIdInterfaceUseCase;
+import br.com.alfac.food.core.application.cliente.usecases.consultarclienteporid.ConsultarClientePorIdUseCase;
+import br.com.alfac.food.core.application.cliente.usecases.consultarclienteporuuidu.ConsultarClientePorUuidUseCase;
 import br.com.alfac.food.core.application.item.gateways.ItemRepository;
 import br.com.alfac.food.core.application.item.gateways.ItemService;
 import br.com.alfac.food.core.application.item.usecases.ItemServiceImpl;
@@ -24,15 +28,13 @@ import br.com.alfac.food.database.pagamento.persistence.PagamentoEntityRepositor
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import br.com.alfac.food.core.application.cliente.controller.ControladorCliente;
+import br.com.alfac.food.core.application.cliente.usecases.cadastrarcliente.CadastrarClienteInterfaceUseCase;
+import br.com.alfac.food.core.application.cliente.usecases.consultarclienteporuuidu.ConsultarClientePorUuidInterfaceUseCase;
 import br.com.alfac.food.core.application.pagamento.usecases.ConsultarPagementoPorPedidoIdUseCase;
 
 @Configuration
 public class BeanConfiguration {
-
-    @Bean
-    public ClienteService clienteService(ClienteRepository clienteRepository) {
-        return new ClienteServiceImpl(clienteRepository);
-    }
 
     @Bean
     public PedidoUseCase pedidoService(PedidoRepository pedidoRepository) {
@@ -65,7 +67,7 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public CriarPedido criarPedido(final PedidoRepository pedidoRepository, final ClienteRepository clienteRepository, final ItemRepository itemRepository) {
+    public CriarPedido criarPedido(final PedidoRepository pedidoRepository, final ClienteRepositoryInterface clienteRepository, final ItemRepository itemRepository) {
         return new CriarPedido(pedidoRepository, clienteRepository, itemRepository);
     }
 
@@ -77,6 +79,34 @@ public class BeanConfiguration {
     @Bean 
     public ControladorPagamento controladorPagamento(final ConsultarPagementoPorPedidoIdUseCase consultarPagementoPorPedidoIdUseCase) {
         return new ControladorPagamento(consultarPagementoPorPedidoIdUseCase);
+    }
+
+    @Bean
+    public ConsultarClientePorCpfUseCase consultarClientePorCpfUseCase(final ClienteRepositoryInterface clienteRepository){
+        return new ConsultarClientePorCpfUseCase(clienteRepository);
+    }
+
+    @Bean
+    public ConsultarClientePorIdUseCase consultarClientePorId(final ClienteRepositoryInterface clienteRepository){
+        return new ConsultarClientePorIdUseCase(clienteRepository);
+    }
+
+    @Bean
+    public ConsultarClientePorUuidUseCase consultarClientePorUuid(final ClienteRepositoryInterface clienteRepository){
+        return new ConsultarClientePorUuidUseCase(clienteRepository);
+    }
+
+    @Bean
+    public CadastrarClienteUseCase cadastrarClienteUseCase(final ClienteRepositoryInterface clienteRepository){
+        return new CadastrarClienteUseCase(clienteRepository);
+    }
+
+    @Bean
+    public ControladorCliente controladorCliente(final ConsultarClientePorCpfInterfaceUseCase consultarClientePorCpfUseCase,
+    final ConsultarClientePorIdInterfaceUseCase consultarClientePorId,
+    final ConsultarClientePorUuidInterfaceUseCase consultarClientePorUuid,
+    final CadastrarClienteInterfaceUseCase cadastrarClienteUseCase) {
+        return new ControladorCliente(consultarClientePorCpfUseCase, consultarClientePorId, consultarClientePorUuid, cadastrarClienteUseCase);
     }
 
     @Bean

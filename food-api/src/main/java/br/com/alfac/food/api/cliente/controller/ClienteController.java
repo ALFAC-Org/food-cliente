@@ -1,10 +1,22 @@
 package br.com.alfac.food.api.cliente.controller;
 
+import java.util.UUID;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.com.alfac.food.api.cliente.dto.ClienteRequest;
 import br.com.alfac.food.api.cliente.mapper.ClienteMapper;
 import br.com.alfac.food.api.config.exception.ApiError;
+import br.com.alfac.food.core.application.cliente.controller.ControladorCliente;
 import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
-import br.com.alfac.food.core.application.cliente.gateways.ClienteService;
 import br.com.alfac.food.core.exception.FoodException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,23 +25,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/clientes")
 @Tag(name = "Cliente", description = "Métodos para manipulação de clientes")
 public class ClienteController {
 
-    private final ClienteService clienteService;
+    private final ControladorCliente controladorCliente;
     private final ClienteMapper clienteMapper;
 
-    public ClienteController(final ClienteService clienteService, final ClienteMapper clienteMapper) {
-        this.clienteService = clienteService;
+    public ClienteController(final ControladorCliente controladorCliente, final ClienteMapper clienteMapper) {
+        this.controladorCliente = controladorCliente;
         this.clienteMapper = clienteMapper;
     }
 
@@ -41,7 +47,7 @@ public class ClienteController {
             })})
     @GetMapping(value = "/por-cpf/{cpf}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClienteDTO> consultarCliente(@PathVariable String cpf) throws FoodException {
-        return new ResponseEntity<>(clienteService.consultarClientePorCpf(cpf), HttpStatus.OK);
+        return new ResponseEntity<>(controladorCliente.consultarClientePorCpf(cpf), HttpStatus.OK);
     }
 
     @Operation(summary = "Consultar cliente pelo id")
@@ -52,7 +58,7 @@ public class ClienteController {
             })})
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClienteDTO> consultarClientePorId(@PathVariable Long id) throws FoodException {
-        return new ResponseEntity<>(clienteService.consultarClientePorId(id), HttpStatus.OK);
+        return new ResponseEntity<>(controladorCliente.consultarClientePorId(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Consultar cliente pelo uuid")
@@ -63,7 +69,7 @@ public class ClienteController {
             })})
     @GetMapping(value = "/por-uuid/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClienteDTO> consultarClientePorUuid(@PathVariable UUID uuid) throws FoodException {
-        return new ResponseEntity<>(clienteService.consultarClientePorUuid(uuid), HttpStatus.OK);
+        return new ResponseEntity<>(controladorCliente.consultarClientePorUuid(uuid), HttpStatus.OK);
     }
 
     @Operation(summary = "Cadastrar cliente")
@@ -73,8 +79,8 @@ public class ClienteController {
                     @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
             })})
     @PostMapping
-    public ResponseEntity<ClienteDTO> cadastrarCliente(@Valid @RequestBody ClienteRequest clienteRequest) {
-        ClienteDTO cliente = clienteService.cadastrarCliente(clienteMapper.toDTO(clienteRequest));
+    public ResponseEntity<ClienteDTO> cadastrarCliente(@Valid @RequestBody ClienteRequest clienteRequest) throws FoodException {
+        ClienteDTO cliente = controladorCliente.cadastrarCliente(clienteMapper.toDTO(clienteRequest));
 
         return new ResponseEntity<>(cliente, HttpStatus.CREATED);
     }

@@ -1,6 +1,9 @@
 package br.com.alfac.food.core.application.pedido.usecases;
 
-import br.com.alfac.food.core.application.cliente.gateways.ClienteRepository;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
+import br.com.alfac.food.core.application.cliente.gateways.ClienteRepositoryInterface;
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.application.item.gateways.ItemRepository;
 import br.com.alfac.food.core.application.pedido.dto.ComboDTO;
@@ -10,28 +13,28 @@ import br.com.alfac.food.core.application.pedido.gateways.PedidoRepository;
 import br.com.alfac.food.core.application.pedido.mappers.PedidoMapper;
 import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.core.domain.item.Item;
-import br.com.alfac.food.core.domain.pedido.*;
+import br.com.alfac.food.core.domain.pedido.Combo;
+import br.com.alfac.food.core.domain.pedido.ComboBuilder;
+import br.com.alfac.food.core.domain.pedido.Lanche;
+import br.com.alfac.food.core.domain.pedido.Pedido;
+import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.core.exception.FoodException;
 import br.com.alfac.food.core.exception.cliente.ClienteError;
 import br.com.alfac.food.core.exception.combo.ComboError;
 import br.com.alfac.food.core.exception.item.ItemError;
 import br.com.alfac.food.core.utils.CollectionsUtils;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
-
 public class CriarPedido {
 
     private final PedidoRepository pedidoRepository;
-    private final ClienteRepository clienteRepository;
+    private final ClienteRepositoryInterface clienteRepository;
     private final ItemRepository itemRepository;
 
-    public CriarPedido(final PedidoRepository pedidoRepository, final ClienteRepository clienteRepository, final ItemRepository itemRepository) {
+    public CriarPedido(final PedidoRepository pedidoRepository, final ClienteRepositoryInterface clienteRepository, final ItemRepository itemRepository) {
         this.pedidoRepository = pedidoRepository;
         this.clienteRepository = clienteRepository;
         this.itemRepository = itemRepository;
     }
-
 
     public PedidoDTO executar(PedidoDTO pedidoDTO) throws FoodException {
         Pedido pedido = new Pedido();
