@@ -1,23 +1,29 @@
 package br.com.alfac.food.api.pedido.controller;
 
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.com.alfac.food.api.pedido.dto.PedidoRequest;
 import br.com.alfac.food.api.pedido.dto.PedidosResponse;
 import br.com.alfac.food.api.pedido.mapper.PedidoMapper;
 import br.com.alfac.food.core.application.pedido.controller.ControladorPedido;
 import br.com.alfac.food.core.application.pedido.dto.PedidoCriadoDTO;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
-import br.com.alfac.food.core.application.pedido.gateways.PedidoService;
 import br.com.alfac.food.core.application.pedido.usecases.PedidoUseCase;
 import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.core.exception.FoodException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/pedidos")
@@ -49,7 +55,7 @@ public class PedidoController implements PedidoControllerExamples {
     @Override
     @PostMapping
     public ResponseEntity<PedidoCriadoDTO> registrarPedido(@RequestBody PedidoRequest pedidoRequest) throws FoodException {
-        PedidoCriadoDTO pedidoCriado = controladorPedido.executar(pedidoMapper.toDTO(pedidoRequest));
+        PedidoCriadoDTO pedidoCriado = controladorPedido.criarPedido(pedidoMapper.toDTO(pedidoRequest));
 
         return new ResponseEntity<>(pedidoCriado, HttpStatus.CREATED);
     }
