@@ -32,7 +32,9 @@ Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na ima
 - Encerramento do fluxo
   - [6. Pedido sendo finalizado](#6-pedido-sendo-finalizado)
 - Tutoriais (vídeos)
-  - [1. Executando a aplicação](https://drive.google.com/file/d/154ejhYolGbn8ZOZRvv5doR1YzDIEelpY/view?usp=sharing)
+  - [1. Executando a aplicação - Com Kubernetes - localmente](https://drive.google.com/file/d/1CloOrEDDemPQSZ8cqH2SL5Oh6xoJIAXb/view?usp=sharing)
+  - [2. Executando a aplicação - Com Kubernetes - na nuvem (AWS)](https://drive.google.com/file/d/1njxcGlQfmKcCtbqMI9Qf19vxJwZ-MD3D/view?usp=sharing)
+  - [3. Executando a aplicação - Com Docker](https://drive.google.com/file/d/154ejhYolGbn8ZOZRvv5doR1YzDIEelpY/view?usp=sharing)
 
   **Entenda tudo de uma única vez**
 
@@ -49,24 +51,56 @@ Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na ima
 ## Tecnologia
 
 - Java 17 - _backend_
+- Maven - _gerenciar dependências do backend_
 - MySQL 8 - _banco de dados_
 - Swagger - _documentação e uso de API's_
-- Docker - _orquestração da aplicação_
-- Maven - _gerenciar dependências do backend_
+- Docker - _containerização da aplicação_
+- Kubernetes - _orquestração da aplicação_
 
 ## Requisitos
 
-- Docker
+- Docker _(versão 27.0.3)_ - para rodar localmente
+- Kubernetes _(versão 1.30)_ - para rodar localmente e na nuvem (AWS)
 
 ## Executando a aplicação
 
+### Opção 1 - Kubernetes (recomendado)
+
+1.1 - Adicionando _configmaps_ e _secrets_:
+
+```bash
+kubectl apply -f food/k8s/dev/shared
 ```
+
+1.2 - Adicionando _banco de dados_:
+
+```bash
+kubectl apply -f food/k8s/dev/db
+```
+
+1.3 - Adicionando _backend_:
+
+```bash
+kubectl apply -f food/k8s/dev/backend
+```
+
+### Opção 2 - Docker
+
+```bash
 docker-compose up
 ```
 
 # Realizando o pedido
 
-Uma vez a aplicação rodando, é necessário acessar o `Swagger` da aplicação pelo navegador: [http://localhost:8080/api-docs](http://localhost:8080/api-docs) ou [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+Uma vez a aplicação rodando, é necessário acessar o `Swagger` da aplicação pelo navegador: 
+
+Opção 1 - Kubernetes (recomendado)
+* [http://localhost:30001/api-docs](http://localhost:8080/api-docs) 
+* ou [http://localhost:30001/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+Opção 2 - Docker
+* [http://localhost:8080/api-docs](http://localhost:8080/api-docs) 
+* ou [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 O fluxo deve ser feito na sequência:
 
@@ -483,7 +517,8 @@ Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz
 
 ## Roadmap
 
-### FASE 1
+<details>
+  <summary>FASE 1</summary>
 
 - [x] Cadastro do Cliente
 - [x] Identificação do Cliente
@@ -495,32 +530,45 @@ Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz
 - [x] Atualizar status do pedido - combobox;
 - [x] Validação dos itens do combo;
 - [x] Fake checkout (apenas enviar os produtos escolhidos para a fila. O checkout é a finalização do pedido);
-- [ ] Dockerfile/docker-compose no docker-hub.
+- [x] Dockerfile/docker-compose no docker-hub.
+
+</details>
 
 <details>
   <summary>FASE 2</summary>
 
-### FASE 2
+#### Alterar/criar as APIs
 
-(MELHORIAS)
+- [x] Checkout do pedido: deverá receber os produtos solicitados e retornar a identificação do pedido;
+- [x] Consultar status do pagamento do pedido: informando se o pagamento foi aprovado ou não (incluindo cancelado).
+- [x] Webhook: para receber confirmação de pagamento aprovado ou recusado;
+- [x] A lista de pedidos deverá retorná-los com suas descrições, ordenados com a seguinte regra:
+  - [x] 1. Pronto > Em Preparação > Recebido;
+  - [x] 2. Pedidos mais antigos primeiro e mais novos depois;
+  - [x] 3. Pedidos com status Finalizado não devem aparecer na lista.
+- [x] Atualizar o status do pedido;
+- [ ] Como desafio extra (opcionalmente), você pode implementar a integração com Mercado Pago para gerar o QRCode para pagamento e integrar com o WebHook para capturar os pagamentos.
+- [x] Caso contrário, será necessário realizar o mock da parte de pagamentos. Como referência, acesse: https://www.mercadopago.com.br/developers/pt/docs/qr-code/integration-configuration/qr-dynamic/integration.
+
+#### Documentação
+
+- [x] Atualização de README;
+- [ ] Desenho da arquitetura pensado por você, pessoa arquiteta de software, contemplando:
+  - [x] - i. Os requisitos do negócio (problema). <span style="color:red">(Colocar o link do diagrama que o @Leonardo FIAP) (Podemos usar o Miro que fizemos da primeira vez)</span>
+  - [x] - ii. Os requisitos de infraestrutura:
+    - Você pode utilizar o MiniKube, Docker Kubernetes, AKS, EKS, GKE ou qualquer nuvem que você desenha.
+- [x] Collection com todas as APIs desenvolvidas:
+  - [x] i. Link do Swagger no projeto ou link para download da collection do Postman (JSON).
+- [ ] Guia completo com todas as instruções para execução do projeto e a ordem de execução das APIs, caso seja necessário;
+- [ ] Link para vídeo demonstrando a arquitetura desenvolvida na nuvem ou localmente.
+
+#### Melhorias
 
 - [ ] Quando tentar deletar um item que está sendo usando em um pedido, devemos tratar melhor a mensagem de erro;
 - [ ] Quando criar um novo item, podemos ter uma uk no nome + categoria para não deixar criar um item com nome e categoria igual a um item que já existe;
-- [ ] Como padrão: em todas as tabelas termos: `data_cadastro`, `data_atualizacao`
-- [ ]   Atualizar a aplicação desenvolvida na FASE 1 refatorando o código para seguir os padrões clean code e clean architecture.
-
-(ENTREGÁVEIS)
-
-- a. Alterar/criar as APIs:
-  - [ ] Checkout Pedido que deverá receber os produtos solicitados e retornar a identificação do pedido.
-  - [ ] Consultar status pagamento pedido, que informa se o pagamento foi aprovado ou não.
-  - [ ] Webhook para receber confirmação de pagamento aprovado ou recusado.
-  - [ ] A lista de pedidos deverá retorná-los com suas descrições, ordenados com a seguinte regra:
-  1. Pronto > Em Preparação > Recebido;
-  2. Pedidos mais antigos primeiro e mais novos depois;
-  3. Pedidos com status Finalizado não devem aparecer na lista.
-  - [ ] Atualizar o status do pedido.
-  - [ ] Como desafio extra, opcionalmente, você pode implementar a integração com Mercado Pago para gerar o QRCode para pagamento e integrar com o WebHook para capturar os pagamentos. Caso contrário, será necessário realizar o mock da parte de pagamentos. Como referência, acesse: [site do mercado pago](https://www.mercadopago.com.br/developers/pt/docs/qr-code/integration-configuration/qr-dynamic/integration).
+- [x] Como padrão:
+  - [x] em todas as tabelas termos: `data_cadastro`,  `data_atualizacao`;
+- [x]   Atualizar a aplicação desenvolvida na FASE 1 refatorando o código para seguir os padrões clean code e clean architecture.
 
 </details>
 
@@ -537,4 +585,3 @@ Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz
 | Carlos Henrique Carvalho de Santana | - *RM355339* <br />-  *[rm355339@fiap.com.br](mailto:rm355339@fiap.com.br)* <br />- [@carlohcs](https://github.com/carlohcs) |
 | Leonardo Alves Campos | - *RM355568* <br />- [rm355568@fiap.com.br](mailto:rm355568@fiap.com.br) <br />- [@lcalves](https://github.com/lcalves) |
 | Andre Musolino | -  *RM355582* <br />- *[rm355582@fiap.com.br](mailto:rm355582@fiap.com.br)* <br />- [@amusolino](https://github.com/amusolino) |
-| Ardiles Guerra | -  *RM355674* <br />- *[rm355674@fiap.com.br](mailto:rm355674@fiap.com.br)* |
