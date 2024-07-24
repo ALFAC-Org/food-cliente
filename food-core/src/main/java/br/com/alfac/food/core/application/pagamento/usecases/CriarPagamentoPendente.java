@@ -5,6 +5,7 @@ import br.com.alfac.food.core.application.pagamento.gateways.PagamentoRepository
 import br.com.alfac.food.core.application.pagamento.mapper.PagamentoMapper;
 import br.com.alfac.food.core.domain.pagamento.Pagamento;
 import br.com.alfac.food.core.exception.FoodException;
+import br.com.alfac.food.core.exception.pedido.PedidoErros;
 
 public class CriarPagamentoPendente {
 

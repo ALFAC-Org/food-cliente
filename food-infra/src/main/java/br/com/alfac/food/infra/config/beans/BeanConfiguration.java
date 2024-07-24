@@ -1,19 +1,24 @@
 package br.com.alfac.food.infra.config.beans;
 
+import br.com.alfac.food.core.application.cliente.adapters.gateways.RepositorioClienteGateway;
 import br.com.alfac.food.core.application.item.gateways.ItemRepository;
 import br.com.alfac.food.core.application.item.gateways.ItemService;
 import br.com.alfac.food.core.application.item.usecases.ItemServiceImpl;
 import br.com.alfac.food.core.application.pagamento.controller.ControladoRecebimentoPagamento;
 import br.com.alfac.food.core.application.pagamento.controller.ControladorPagamento;
+import br.com.alfac.food.core.application.pagamento.gateways.PagamentoClient;
 import br.com.alfac.food.core.application.pagamento.gateways.PagamentoRepository;
 import br.com.alfac.food.core.application.pagamento.usecases.AlterarStatusPagamentoRealizado;
 import br.com.alfac.food.core.application.pagamento.usecases.CriarPagamentoPendente;
+import br.com.alfac.food.core.application.pedido.controller.ControladorPedido;
 import br.com.alfac.food.core.application.pedido.gateways.PedidoRepository;
+import br.com.alfac.food.core.application.pedido.usecases.CriarPedido;
 import br.com.alfac.food.core.application.pedido.usecases.PedidoUseCase;
 import br.com.alfac.food.core.application.pedido.usecases.AtualizarStatusPedidoPagamentoRecebido;
 
 import br.com.alfac.food.infra.pagamento.gateway.PagamentoRepositoryImpl;
 import br.com.alfac.food.infra.pagamento.persistence.PagamentoEntityRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -52,15 +57,15 @@ public class BeanConfiguration {
         return new AtualizarStatusPedidoPagamentoRecebido(pedidoRepository);
     }
 
-//    @Bean
-//    public CriarPedido criarPedido(final PedidoRepository pedidoRepository, final RepositorioClienteGateway clienteRepository, final ItemRepository itemRepository) {
-//        return new CriarPedido(pedidoRepository, clienteRepository, itemRepository);
-//    }
+    @Bean
+    public CriarPedido criarPedido(final PedidoRepository pedidoRepository, final RepositorioClienteGateway repositorioClienteGatewayMySQL, final ItemRepository itemRepository) {
+        return new CriarPedido(pedidoRepository, repositorioClienteGatewayMySQL, itemRepository);
+    }
 
-//    @Bean
-//    public ControladorPedido controladorPedido(final CriarPedido criarPedido, final CriarPagamentoPendente criarPagamentoPendente, final PagamentoClient pagamentoClient) {
-//        return new ControladorPedido(criarPedido, criarPagamentoPendente, pagamentoClient);
-//    }
+    @Bean
+    public ControladorPedido controladorPedido(final CriarPedido criarPedido, final CriarPagamentoPendente criarPagamentoPendente, final PagamentoClient pagamentoClient) {
+        return new ControladorPedido(criarPedido, criarPagamentoPendente, pagamentoClient);
+    }
 
     @Bean
     public ControladorPagamento controladorPagamento(final ConsultarPagementoPorPedidoIdUseCase consultarPagementoPorPedidoIdUseCase) {

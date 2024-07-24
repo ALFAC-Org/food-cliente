@@ -11,8 +11,8 @@ public class ClienteConfiguration {
 
 
     @Bean(name = "controladorClientePostgres")
-    public ControladorCliente controladorClientePostgres(final RepositorioClienteGateway repositorioClienteGatewayPostgres ) {
-        return new ControladorCliente(repositorioClienteGatewayPostgres);
+    public ControladorCliente controladorClientePostgres(final RepositorioClienteGateway repositorioClienteGatewayMySQL ) {
+        return new ControladorCliente(repositorioClienteGatewayMySQL);
     }
 
     @Bean(name = "controladorClienteMemoria")
