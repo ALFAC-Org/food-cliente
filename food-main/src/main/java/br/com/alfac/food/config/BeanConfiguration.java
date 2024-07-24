@@ -1,6 +1,7 @@
 package br.com.alfac.food.config;
 
 import br.com.alfac.food.core.application.cliente.gateways.ClienteRepositoryInterface;
+import br.com.alfac.food.core.application.cliente.usecases.cadastrarcliente.CadastrarClienteInterfaceUseCase;
 import br.com.alfac.food.core.application.cliente.usecases.cadastrarcliente.CadastrarClienteUseCase;
 import br.com.alfac.food.core.application.cliente.usecases.consultarclienteporcpf.ConsultarClientePorCpfInterfaceUseCase;
 import br.com.alfac.food.core.application.cliente.usecases.consultarclienteporcpf.ConsultarClientePorCpfUseCase;
@@ -22,14 +23,13 @@ import br.com.alfac.food.core.application.pedido.gateways.StatusPedidoPagamentoS
 import br.com.alfac.food.core.application.pedido.usecases.CriarPedido;
 import br.com.alfac.food.core.application.pedido.usecases.PedidoUseCase;
 import br.com.alfac.food.core.application.pedido.usecases.AtualizarStatusPedidoPagamentoRecebido;
-import br.com.alfac.food.database.pagamento.gateway.PagamentoRepositoryImpl;
-import br.com.alfac.food.database.pagamento.persistence.PagamentoEntityRepository;
 
+import br.com.alfac.food.infra.pagamento.gateway.PagamentoRepositoryImpl;
+import br.com.alfac.food.infra.pagamento.persistence.PagamentoEntityRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import br.com.alfac.food.core.application.cliente.controller.ControladorCliente;
-import br.com.alfac.food.core.application.cliente.usecases.cadastrarcliente.CadastrarClienteInterfaceUseCase;
 import br.com.alfac.food.core.application.cliente.usecases.consultarclienteporuuidu.ConsultarClientePorUuidInterfaceUseCase;
 import br.com.alfac.food.core.application.pagamento.usecases.ConsultarPagementoPorPedidoIdUseCase;
 

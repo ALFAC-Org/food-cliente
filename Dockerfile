@@ -9,9 +9,8 @@ COPY pom.xml .
 
 # Copia os modulos para o WORKDIR
 COPY food-main ./food-main
-COPY food-api ./food-api
+COPY food-api ./food-infra
 COPY food-core ./food-core
-COPY food-database ./food-database
 COPY food-client ./food-client
 
 # Compila o aplicativo com o Maven
