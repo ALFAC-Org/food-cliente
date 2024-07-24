@@ -2,9 +2,8 @@ package br.com.alfac.food.core.domain.cliente.vo;
 
 import java.util.Objects;
 
-import br.com.alfac.food.core.domain.base.ValueObject;
 
-public class CPF extends ValueObject {
+public class CPF {
     private String numero;
 
     public CPF(String numero){
@@ -32,16 +31,5 @@ public class CPF extends ValueObject {
         return Objects.hash(numero);
     }
 
-    @Override
-    public boolean sameValueAs(ValueObject other) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
 }

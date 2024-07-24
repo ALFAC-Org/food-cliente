@@ -1,4 +1,4 @@
-package br.com.alfac.food.config;
+package br.com.alfac.food.infra.config.beans;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;

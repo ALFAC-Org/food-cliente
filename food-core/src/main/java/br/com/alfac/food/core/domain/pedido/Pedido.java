@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import br.com.alfac.food.core.domain.base.AggregateRoot;
 import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.core.exception.FoodException;
 import br.com.alfac.food.core.exception.pagamento.PagamentoErro;
 import br.com.alfac.food.core.exception.pedido.PedidoErros;
 import br.com.alfac.food.core.utils.CollectionsUtils;
 
-public class Pedido implements AggregateRoot {
+public class Pedido  {
+
     private Long id;
     private Cliente cliente;
     private StatusPedido status;

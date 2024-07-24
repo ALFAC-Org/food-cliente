@@ -1,4 +1,4 @@
-package br.com.alfac.food.core.application.cliente.mappers;
+package br.com.alfac.food.core.application.cliente.adapters.presenter;
 
 import br.com.alfac.food.core.application.cliente.dto.ClienteDTO;
 import br.com.alfac.food.core.domain.cliente.Cliente;
@@ -7,9 +7,9 @@ import br.com.alfac.food.core.exception.cliente.ClienteError;
 
 import java.util.Optional;
 
-public final class ClienteMapper {
+public final class ClientePresenter {
 
-    private ClienteMapper() {
+    private ClientePresenter() {
     }
 
     public static ClienteDTO mapearParaClienteDTO(Cliente cliente) {
@@ -22,10 +22,4 @@ public final class ClienteMapper {
     }
 
 
-    public static ClienteDTO mapearParaClienteDTO(Optional<Cliente> clienteOpt) throws FoodException {
-
-        Cliente cliente = clienteOpt.orElseThrow(() -> new FoodException(ClienteError.CLIENTE_NAO_ENCONTRADO));
-
-        return mapearParaClienteDTO(cliente);
-    }
 }

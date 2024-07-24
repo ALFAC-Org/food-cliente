@@ -1,6 +1,6 @@
 package br.com.alfac.food.infra.cliente.gateways;
 
-import br.com.alfac.food.core.application.cliente.gateways.ClienteRepositoryInterface;
+import br.com.alfac.food.core.application.cliente.adapters.gateways.RepositorioClienteGateway;
 import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.infra.cliente.mapper.ClienteEntityMapper;
 import br.com.alfac.food.infra.cliente.persistence.ClienteEntity;
@@ -11,14 +11,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class ClienteRepository implements ClienteRepositoryInterface {
+public class RepositorioClienteGatewayMySQL implements RepositorioClienteGateway {
     
     private final ClienteEntityRepository clienteEntityRepository;
-    private final ClienteEntityMapper clienteEntityMapper;
 
-    public ClienteRepository(final ClienteEntityRepository clienteEntityRepository, final ClienteEntityMapper clienteMapper) {
+    public RepositorioClienteGatewayMySQL(final ClienteEntityRepository clienteEntityRepository) {
         this.clienteEntityRepository = clienteEntityRepository;
-        this.clienteEntityMapper = clienteMapper;
     }
 
     @Override
@@ -43,12 +41,12 @@ public class ClienteRepository implements ClienteRepositoryInterface {
 
     @Override
     public Cliente cadastrarCliente(Cliente cliente){
-        ClienteEntity clienteEntity = clienteEntityMapper.toEntity(cliente);
+        ClienteEntity clienteEntity = ClienteEntityMapper.INSTANCE.toEntity(cliente);
         clienteEntity.setUuid(UUID.randomUUID());
 
         ClienteEntity clienteCriado = clienteEntityRepository.save(clienteEntity);
 
-        return clienteEntityMapper.toDomain(clienteCriado);
+        return ClienteEntityMapper.INSTANCE.toDomain(clienteCriado);
     }
 
     private Optional<Cliente> montarCliente(Optional<ClienteEntity> clienteEntityOpt) {
@@ -57,7 +55,7 @@ public class ClienteRepository implements ClienteRepositoryInterface {
         if (clienteEntityOpt.isPresent()) {
             ClienteEntity clienteEntity = clienteEntityOpt.get();
 
-            Cliente cliente = clienteEntityMapper.toDomain(clienteEntity);
+            Cliente cliente = ClienteEntityMapper.INSTANCE.toDomain(clienteEntity);
 
             clienteOpt = Optional.of(cliente);
         }

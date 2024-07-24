@@ -1,4 +1,4 @@
-package br.com.alfac.food.infra.config;
+package br.com.alfac.food.infra.config.exception;
 
 import java.util.Iterator;
 
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
-import br.com.alfac.food.infra.config.exception.ApiError;
-import br.com.alfac.food.infra.config.exception.ApiErrorItem;
 import br.com.alfac.food.core.exception.FoodException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
