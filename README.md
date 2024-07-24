@@ -10,12 +10,19 @@ Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na ima
 
 ## Fluxo completo no MIRO
 
+### Fase 1
+
 - Brain Storming
 - Event Storming
 - Fluxo Vertical
 - Linguagem Ubíqua
 
-[https://miro.com/app/board/uXjVKZNCxxM](https://miro.com/app/board/uXjVKZNCxxM=/?share_link_id=127959473892)
+### Fase 2
+
+- <span style="color:red">Desenho da arquitetura</span>
+- <span style="color:red">Requisitos da infraestrutura</span>
+
+Veja em: [https://miro.com/app/board/uXjVKZNCxxM](https://miro.com/app/board/uXjVKZNCxxM=/?share_link_id=127959473892)
 
 ## Tabela de conteúdos
 - [Tecnologia](#tecnologia)
@@ -84,6 +91,12 @@ kubectl apply -f food/k8s/dev/db
 kubectl apply -f food/k8s/dev/backend
 ```
 
+1.4 - (opcional) Adicionando _autoscaling_:
+
+```bash
+kubectl apply -f food/k8s/dev/autoscaling
+```
+
 ### Opção 2 - Docker
 
 ```bash
@@ -95,8 +108,8 @@ docker-compose up
 Uma vez a aplicação rodando, é necessário acessar o `Swagger` da aplicação pelo navegador: 
 
 Opção 1 - Kubernetes (recomendado)
-* [http://localhost:30001/api-docs](http://localhost:8080/api-docs) 
-* ou [http://localhost:30001/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+* [http://localhost:30001/api-docs](http://localhost:30001/api-docs) 
+* ou [http://localhost:30001/swagger-ui/index.html](http://localhost:30001/swagger-ui/index.html)
 
 Opção 2 - Docker
 * [http://localhost:8080/api-docs](http://localhost:8080/api-docs) 
@@ -106,27 +119,32 @@ O fluxo deve ser feito na sequência:
 
 1. Se identificando (opcional)
 2. Montando o `payload` do seu pedido, contendo ao menos um dos itens a seguir:
-  - Lanche
+
+- Lanche
   - Acompanhamento
   - Bebida
   - Sobremesa
+
 3. Registrando o seu pedido
+
 4. Realizando o pagamento
+
 5. Avançando o status do pedido (fila)
+
 6. Pedido sendo finalizado
 
-## 1. Se identificando (opcional)
+### 1. Se identificando (opcional)
 
 <details>
   <summary>Passo a passo</summary>
 
 Seguindo o cenário feliz, faça o cadastro do seu cliente. E com o id que irá retornar da `response`, você irá utilizá-lo nas etapas seguintes.
 
-### Via Swagger
+#### Via Swagger
 
 [http://localhost:8080/swagger-ui/index.html#/Cliente/cadastrarCliente](http://localhost:8080/swagger-ui/index.html#/Cliente/cadastrarCliente)
 
-### Via Terminal
+#### Via Terminal
 
 `POST http://localhost:8080/api/v1/clientes`
 
@@ -157,7 +175,7 @@ curl -X 'POST' \
 Com isso, você terá seu cliente cadastrado.
 </details>
 
-## 2. Montando o `payload` com os itens do seu pedido
+### 2. Montando o `payload` com os itens do seu pedido
 
 <details>
   <summary>Passo a passo</summary>
@@ -174,11 +192,11 @@ Onde `CATEGORIA`:
 
 Para consultar os itens disponíveis:
 
-### Via Swagger
+#### Via Swagger
 
 [http://localhost:8080/swagger-ui/index.html#/Item/consultarItensPorCategoria](http://localhost:8080/swagger-ui/index.html#/Item/consultarItensPorCategoria)
 
-### Via Terminal
+#### Via Terminal
 
 Exemplo (pega todos os produtos (itens) disponíveis na categoria de LANCHE):
 
@@ -271,18 +289,18 @@ Basta então registrar o pedido, como na próxima etapa.
 
 </details>
 
-## 3. Registrando o seu pedido
+### 3. Registrando o seu pedido
 
 <details>
   <summary>Passo a passo</summary>
 
 Envie o `payload` para o pedido ser registrado:
 
-### Via Swagger
+#### Via Swagger
 
 [http://localhost:8080/swagger-ui/index.html#/Pedido/criarPedido](http://localhost:8080/swagger-ui/index.html#/Pedido/criarPedido)
 
-### Via Terminal
+#### Via Terminal
 
 ```bash
 curl -X 'POST' \
@@ -325,7 +343,7 @@ curl -X 'POST' \
 ```
 </details>
 
-## 4. Realizando o pagamento
+### 4. Realizando o pagamento
 
 <details>
   <summary>Passo a passo</summary>
@@ -334,11 +352,11 @@ Todo pedido realizado começa com status de `Aguardando Pagamento`.
 
 Sendo assim, precisamos realizar o `pagamento` deste pedido.
 
-### Via Swagger
+#### Via Swagger
 
 [http://localhost:8080/swagger-ui/index.html#/Pagamento/pagar](http://localhost:8080/swagger-ui/index.html#/Pagamento/pagar)
 
-### Via Terminal
+#### Via Terminal
 
 ```bash
 curl -X 'POST' \
@@ -364,7 +382,7 @@ Após o pagamento, é necessário avançar o status do pedido na fila. Veja o t�
 
 </details>
 
-## 5. Avançando o status do pedido (fila)
+### 5. Avançando o status do pedido (fila)
 
 <details>
   <summary>Passo a passo</summary>
@@ -380,11 +398,11 @@ Fluxo da alteração dos status:
         - Executa a API para atualizar status: `Finalizado`;
           - Executa a API para atualizar status: recebe a mensagem `Status do pedido já finalizado não permite alteração.`;
 
-### Via Swagger
+#### Via Swagger
 
 [http://localhost:8080/swagger-ui/index.html#/Pedido/atualizarStatusPedido](http://localhost:8080/swagger-ui/index.html#/Pedido/atualizarStatusPedido)
 
-### Via Terminal
+#### Via Terminal
 
 ```bash
 curl -X 'PUT' \
@@ -489,7 +507,7 @@ A atualização deve ser feita até que se chegue ao status de `FINALIZADO`.
 
 </details>
 
-## 6. Pedido sendo finalizado
+### 6. Pedido sendo finalizado
 
 <details>
   <summary>Passo a passo</summary>
@@ -498,12 +516,11 @@ Uma vez que o pedido chegou ao status de `FINALIZADO`, consideramos que o client
 
 Para isso, podemos listar os pedidos finalizados:
 
-## Via Swagger
+#### Via Swagger
 
 [http://localhost:8080/swagger-ui/index.html#/Pedido/listarPedidos](http://localhost:8080/swagger-ui/index.html#/Pedido/listarPedidos)
 
-
-### Via Terminal
+#### Via Terminal
 
 ```bash
 curl -X 'GET' \
