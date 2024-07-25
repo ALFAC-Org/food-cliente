@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.alfac.food.infra.config.exception.ApiError;
 import br.com.alfac.food.infra.item.dto.ItemRequest;
 import br.com.alfac.food.infra.item.mapper.ItemMapper;
+import br.com.alfac.food.core.application.item.adapters.controller.ControladorItem;
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
-import br.com.alfac.food.core.application.item.gateways.ItemService;
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 import br.com.alfac.food.core.exception.FoodException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,14 +31,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api/v1/itens")
 @Tag(name = "Item", description = "Métodos para manipulação de itens (LANCHE, COMPLEMENTO, ACOMPANHAMENTO, BEBIDA, SOBREMESA...)")
-public class ItemController implements BaseItemController {
+public class ItemHandler implements BaseItemHandler {
 
-    private final ItemService itemService;
+    private final ControladorItem controladorItem;
     private final ItemMapper itemMapper;
 
-    public ItemController(final ItemService itemService, final ItemMapper itemMapper) {
-        this.itemService = itemService;
-        this.itemMapper = itemMapper;
+    public ItemHandler(final ControladorItem controladorItem) {
+        this.itemMapper = ItemMapper.INSTANCE;
+        this.controladorItem = controladorItem;
     }
 
     @Operation(summary = "Consultar todos os itens")
@@ -49,7 +49,7 @@ public class ItemController implements BaseItemController {
         })})
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ItemDTO>> consultarItens() throws FoodException {
-        return new ResponseEntity<>(itemService.consultarItens(), HttpStatus.OK);
+        return new ResponseEntity<>(controladorItem.consultarItens(), HttpStatus.OK);
     }
 
     @Operation(summary = "Consultar itens por categoria")
@@ -60,7 +60,7 @@ public class ItemController implements BaseItemController {
         })})
     @GetMapping(value = "por-categoria/{categoria}/itens", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ItemDTO>> consultarItensPorCategoria(@PathVariable CategoriaItem categoria) throws FoodException {
-        return new ResponseEntity<>(itemService.consultarItensPorCategoria(categoria), HttpStatus.OK);
+        return new ResponseEntity<>(controladorItem.consultarItensPorCategoria(categoria), HttpStatus.OK);
     }
 
     @Operation(summary = "Consultar item por Id")
@@ -71,7 +71,7 @@ public class ItemController implements BaseItemController {
         })})
     @GetMapping(value = "por-id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ItemDTO> consultarPorId(@PathVariable Long id) throws FoodException {
-        return new ResponseEntity<>(itemService.consultarItemPorId(id), HttpStatus.OK);
+        return new ResponseEntity<>(controladorItem.consultarItemPorId(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Criar novo item")
@@ -82,7 +82,7 @@ public class ItemController implements BaseItemController {
         })})
     @PostMapping
     public ResponseEntity<ItemDTO> cadastrarItem(@RequestBody ItemRequest itemRequest) throws FoodException {
-        ItemDTO itemDTO = itemService.cadastrarItem(itemMapper.toDTO(itemRequest));
+        ItemDTO itemDTO = controladorItem.cadastrarItem(itemMapper.toDTO(itemRequest));
 
         return new ResponseEntity<>(itemDTO, HttpStatus.CREATED);
     }
@@ -95,7 +95,7 @@ public class ItemController implements BaseItemController {
         })})
     @PutMapping("/{id}")
     public ResponseEntity<ItemDTO> atualizarItem(@PathVariable Long id, @RequestBody ItemRequest itemRequest) throws FoodException {
-        ItemDTO itemDTO = itemService.atualizarItem(id, itemMapper.toDTO(itemRequest));
+        ItemDTO itemDTO = controladorItem.atualizarItem(id, itemMapper.toDTO(itemRequest));
         return new ResponseEntity<>(itemDTO, HttpStatus.OK);
     }
 
@@ -107,6 +107,6 @@ public class ItemController implements BaseItemController {
         })})
     @DeleteMapping("/{id}")
     public ResponseEntity<ItemDTO> excluirItem(@PathVariable Long id) throws FoodException {
-        return new ResponseEntity<>(itemService.excluirItem(id), HttpStatus.OK);
+        return new ResponseEntity<>(controladorItem.excluirItem(id), HttpStatus.OK);
     }
 }

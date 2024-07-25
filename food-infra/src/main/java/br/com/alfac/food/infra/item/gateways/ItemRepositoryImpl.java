@@ -1,7 +1,7 @@
 package br.com.alfac.food.infra.item.gateways;
 
+import br.com.alfac.food.core.application.item.adapters.gateways.RepositorioItemGateway;
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
-import br.com.alfac.food.core.application.item.gateways.ItemRepository;
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 import br.com.alfac.food.core.domain.item.Item;
 import br.com.alfac.food.infra.item.mapper.ItemEntityMapper;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class ItemRepositoryImpl implements ItemRepository {
+public class ItemRepositoryImpl implements RepositorioItemGateway {
 
     private final ItemEntityRepository itemEntityRepository;
     private final ItemEntityMapper itemEntityMapper;

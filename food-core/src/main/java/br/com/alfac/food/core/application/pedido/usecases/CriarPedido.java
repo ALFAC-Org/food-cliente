@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import br.com.alfac.food.core.application.cliente.adapters.gateways.RepositorioClienteGateway;
+import br.com.alfac.food.core.application.item.adapters.gateways.RepositorioItemGateway;
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
-import br.com.alfac.food.core.application.item.gateways.ItemRepository;
 import br.com.alfac.food.core.application.pedido.dto.ComboDTO;
 import br.com.alfac.food.core.application.pedido.dto.LancheDTO;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
@@ -28,9 +28,9 @@ public class CriarPedido {
 
     private final PedidoRepository pedidoRepository;
     private final RepositorioClienteGateway clienteRepository;
-    private final ItemRepository itemRepository;
+    private final RepositorioItemGateway itemRepository;
 
-    public CriarPedido(final PedidoRepository pedidoRepository, final RepositorioClienteGateway clienteRepository, final ItemRepository itemRepository) {
+    public CriarPedido(final PedidoRepository pedidoRepository, final RepositorioClienteGateway clienteRepository, final RepositorioItemGateway itemRepository) {
         this.pedidoRepository = pedidoRepository;
         this.clienteRepository = clienteRepository;
         this.itemRepository = itemRepository;
