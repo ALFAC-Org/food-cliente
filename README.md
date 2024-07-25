@@ -19,8 +19,8 @@ Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na ima
 
 ### Fase 2
 
-- <span style="color:red">Desenho da arquitetura</span>
-- <span style="color:red">Requisitos da infraestrutura</span>
+- [Desenho da arquitetura](https://miro.com/app/board/uXjVKZNCxxM=/?moveToWidget=3458764595480615411&cot=10)
+- [Requisitos da infraestrutura](https://drive.google.com/file/d/1SdsSAvb8gIy9qvau1m_bTNp2WUR5uzds/view?usp=sharing)
 
 Veja em: [https://miro.com/app/board/uXjVKZNCxxM](https://miro.com/app/board/uXjVKZNCxxM=/?share_link_id=127959473892)
 
@@ -552,7 +552,7 @@ Veja em https://github.com/ALFAC-Org/food/tree/hexagonal#roadmap
 
 - [x] Atualização de README;
 - [ ] Desenho da arquitetura pensado por você, pessoa arquiteta de software, contemplando:
-  - [x] - i. Os requisitos do negócio (problema). <span style="color:red">(Colocar o link do diagrama que o @Leonardo FIAP) (Podemos usar o Miro que fizemos da primeira vez)</span>
+  - [x] - i. Os requisitos do negócio (problema).
   - [x] - ii. Os requisitos de infraestrutura:
     - Você pode utilizar o MiniKube, Docker Kubernetes, AKS, EKS, GKE ou qualquer nuvem que você desenha.
 - [x] Collection com todas as APIs desenvolvidas:
@@ -560,13 +560,12 @@ Veja em https://github.com/ALFAC-Org/food/tree/hexagonal#roadmap
 - [ ] Guia completo com todas as instruções para execução do projeto e a ordem de execução das APIs, caso seja necessário;
 - [ ] Link para vídeo demonstrando a arquitetura desenvolvida na nuvem ou localmente.
 
-#### Melhorias
+#### Melhorias (identificadas pelo time)
 
 - [ ] Quando tentar deletar um item que está sendo usando em um pedido, devemos tratar melhor a mensagem de erro;
 - [ ] Quando criar um novo item, podemos ter uma uk no nome + categoria para não deixar criar um item com nome e categoria igual a um item que já existe;
-- [x] Como padrão:
-  - [x] em todas as tabelas termos: `data_cadastro`,  `data_atualizacao`;
-- [x]   Atualizar a aplicação desenvolvida na FASE 1 refatorando o código para seguir os padrões clean code e clean architecture.
+- [x] Em todas as tabelas termos: `data_cadastro`, `data_atualizacao`;
+- [x] Atualizar a aplicação desenvolvida na FASE 1 refatorando o código para seguir os padrões clean code e clean architecture.
 
 </details>
 
