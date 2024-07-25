@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.alfac.food.infra.pedido.dto.PedidoRequest;
 import br.com.alfac.food.infra.pedido.dto.PedidosResponse;
 import br.com.alfac.food.infra.pedido.mapper.PedidoMapper;
-import br.com.alfac.food.core.application.pedido.controller.ControladorPedido;
+import br.com.alfac.food.core.application.pedido.adapters.controller.ControladorPedido;
 import br.com.alfac.food.core.application.pedido.dto.PedidoCriadoDTO;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.application.pedido.usecases.PedidoUseCase;

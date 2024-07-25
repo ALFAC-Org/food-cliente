@@ -1,10 +1,12 @@
 package br.com.alfac.food.infra.pedido.mapper;
 
+import br.com.alfac.food.core.domain.cliente.Cliente;
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 import br.com.alfac.food.core.domain.item.Item;
 import br.com.alfac.food.core.domain.pedido.Combo;
 import br.com.alfac.food.core.domain.pedido.Lanche;
 import br.com.alfac.food.core.domain.pedido.Pedido;
+import br.com.alfac.food.core.exception.FoodException;
 import br.com.alfac.food.infra.cliente.mapper.ClienteEntityMapper;
 import br.com.alfac.food.infra.pedido.persistence.ComboEntity;
 import br.com.alfac.food.infra.pedido.persistence.ItemComboEntity;
@@ -20,13 +22,16 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {ClienteEntityMapper.class})
 public interface PedidoEntityMapper {
 
-    ItemComboEntityMapper itemComboEntityMapper = Mappers.getMapper(ItemComboEntityMapper.class);
+    PedidoEntityMapper INSTANCE = Mappers.getMapper(PedidoEntityMapper.class);
 
     @Mapping(target = "combos", source = "combos", qualifiedByName = "combosToEntityParser")
     PedidoEntity toEntity(Pedido pedido);
 
-    @Mapping(target = "combos", source = "combos", qualifiedByName = "combosToDomainParser")
-    Pedido toDomain(PedidoEntity pedido);
+
+    default Pedido toDomain(PedidoEntity pedido) throws FoodException {
+        Cliente cliente = ClienteEntityMapper.INSTANCE.toDomain(pedido.getCliente());
+        return new Pedido(pedido.getId(), cliente, pedido.getStatus(),  combosToDomain(pedido.getCombos()), pedido.getDataCadastro());
+    }
 
     List<Pedido> toDomain(List<PedidoEntity> pedido);
 
@@ -42,9 +47,9 @@ public interface PedidoEntityMapper {
                 ItemComboEntity itemComboEntity = null;
 
                 if(item instanceof Lanche){
-                    itemComboEntity = itemComboEntityMapper.lancheToEntity((Lanche) item);
+                    itemComboEntity = ItemComboEntityMapper.INSTANCE.lancheToEntity((Lanche) item);
                 } else {
-                    itemComboEntity = itemComboEntityMapper.itemToEntity(item);
+                    itemComboEntity = ItemComboEntityMapper.INSTANCE.itemToEntity(item);
                 }
 
                 itensComboEntities.add(itemComboEntity);
@@ -65,16 +70,16 @@ public interface PedidoEntityMapper {
 
             for(ItemComboEntity itemEntity : comboEntity.getItens()){
                 if(CategoriaItem.LANCHE.equals(itemEntity.getItem().getCategoria())){
-                    combo.setLanche(itemComboEntityMapper.toLancheDomain(itemEntity));
+                    combo.setLanche(ItemComboEntityMapper.INSTANCE.toLancheDomain(itemEntity));
                 }
                 if(CategoriaItem.ACOMPANHAMENTO.equals(itemEntity.getItem().getCategoria())){
-                    combo.setAcompanhamento(itemComboEntityMapper.toItemDomain(itemEntity));
+                    combo.setAcompanhamento(ItemComboEntityMapper.INSTANCE.toItemDomain(itemEntity));
                 }
                 if(CategoriaItem.BEBIDA.equals(itemEntity.getItem().getCategoria())){
-                    combo.setBebida(itemComboEntityMapper.toItemDomain(itemEntity));
+                    combo.setBebida(ItemComboEntityMapper.INSTANCE.toItemDomain(itemEntity));
                 }
                 if(CategoriaItem.SOBREMESA.equals(itemEntity.getItem().getCategoria())){
-                    combo.setSobremesa(itemComboEntityMapper.toItemDomain(itemEntity));
+                    combo.setSobremesa(ItemComboEntityMapper.INSTANCE.toItemDomain(itemEntity));
                 }
             }
             combos.add(combo);

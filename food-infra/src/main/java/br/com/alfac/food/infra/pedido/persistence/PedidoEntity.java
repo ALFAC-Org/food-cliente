@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -21,7 +21,7 @@ public class PedidoEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_cliente", referencedColumnName = "id")
     private ClienteEntity cliente;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status_pedido")
     @NotNull(message = "Status do pedido é obrigatório")
@@ -32,9 +32,8 @@ public class PedidoEntity implements Serializable {
     @NotEmpty(message = "Obrigatório 1 ou mais combos")
     private List<ComboEntity> combos;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "data_cadastro", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private Date dataCadastro;
+    @Column(name = "data_cadastro")
+    private LocalDateTime dataCadastro;
 
     public Long getId() {
         return id;
@@ -68,11 +67,11 @@ public class PedidoEntity implements Serializable {
         this.combos = combos;
     }
 
-    public Date getDataCadastro() {
+    public LocalDateTime getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(Date dataCadastro) {
+    public void setDataCadastro(LocalDateTime dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 }

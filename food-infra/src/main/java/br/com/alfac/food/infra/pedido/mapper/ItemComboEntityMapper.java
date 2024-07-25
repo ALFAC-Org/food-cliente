@@ -15,8 +15,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ItemComboEntityMapper {
 
-    ItemComboComplementoEntityMapper itemComboComplementoEntityMapper =
-        Mappers.getMapper(ItemComboComplementoEntityMapper.class);
+    ItemComboEntityMapper INSTANCE = Mappers.getMapper(ItemComboEntityMapper.class);
 
     @Mapping(target = "item.id", source = "id")
     @Mapping(target = "id", source = "id", ignore = true)
@@ -54,7 +53,7 @@ public interface ItemComboEntityMapper {
         if(complementos != null){
             complementosEntities = new ArrayList<>(); 
             for(Item complemento : complementos){
-                complementosEntities.add(itemComboComplementoEntityMapper.toEntity(complemento));
+                complementosEntities.add(ItemComboComplementoEntityMapper.INSTANCE.toEntity(complemento));
             }
         }
         return complementosEntities;
@@ -66,7 +65,7 @@ public interface ItemComboEntityMapper {
         if(complementosEntities != null){
             complementos = new ArrayList<>(); 
             for(ItemComboComplementoEntity complementoEntity : complementosEntities){
-                complementos.add(itemComboComplementoEntityMapper.toDomain(complementoEntity));
+                complementos.add(ItemComboComplementoEntityMapper.INSTANCE.toDomain(complementoEntity));
             }
         }
         return complementos;

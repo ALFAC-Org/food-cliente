@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.alfac.food.core.application.pagamento.controller.ControladorPagamento;
-import br.com.alfac.food.core.application.pagamento.dto.PagamentoEntityDTO;
+import br.com.alfac.food.core.application.pagamento.adapters.controller.ControladorPagamento;
+import br.com.alfac.food.core.application.pagamento.dto.PagamentoResponse;
 import br.com.alfac.food.core.exception.FoodException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,15 +21,15 @@ public class PagamentoController {
 
     private final ControladorPagamento controladorPagamento;
 
-    public PagamentoController(ControladorPagamento controladorPagamento) {
+    public PagamentoController(final ControladorPagamento controladorPagamento) {
         this.controladorPagamento = controladorPagamento;
     }
     
     @Operation(summary = "Consultar status do pedido por pedido id")
     @GetMapping(value = "/status-pagamento/{pedido_id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PagamentoEntityDTO> consultarStatusPedidoPorPedidoId(@PathVariable Long pedido_id) throws FoodException {
-        PagamentoEntityDTO statusPedido = controladorPagamento.consultarPagamentoPorPedidoId(pedido_id);
+    public ResponseEntity<PagamentoResponse> consultarStatusPedidoPorPedidoId(@PathVariable Long pedido_id) throws FoodException {
+        PagamentoResponse pagamentoResponse = controladorPagamento.consultarPagamentoPorPedidoId(pedido_id);
         
-        return new ResponseEntity<>(statusPedido, HttpStatus.OK);
+        return new ResponseEntity<>(pagamentoResponse, HttpStatus.OK);
     }
 }
