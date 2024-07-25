@@ -1,4 +1,4 @@
-package br.com.alfac.food.core.application.item.gateways;
+package br.com.alfac.food.core.application.item.adapters.gateways;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.domain.item.CategoriaItem;
 import br.com.alfac.food.core.domain.item.Item;
 
-public interface ItemRepository {
+public interface RepositorioItemGateway {
 
     List<Item> consultarItens();
 

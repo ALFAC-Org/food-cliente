@@ -1,9 +1,7 @@
 package br.com.alfac.food.infra.config.beans;
 
 import br.com.alfac.food.core.application.cliente.adapters.gateways.RepositorioClienteGateway;
-import br.com.alfac.food.core.application.item.gateways.ItemRepository;
-import br.com.alfac.food.core.application.item.gateways.ItemService;
-import br.com.alfac.food.core.application.item.usecases.ItemServiceImpl;
+import br.com.alfac.food.core.application.item.adapters.gateways.RepositorioItemGateway;
 import br.com.alfac.food.core.application.pagamento.controller.ControladoRecebimentoPagamento;
 import br.com.alfac.food.core.application.pagamento.controller.ControladorPagamento;
 import br.com.alfac.food.core.application.pagamento.gateways.PagamentoClient;
@@ -33,11 +31,6 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public ItemService itemService(ItemRepository itemRepository) {
-        return new ItemServiceImpl(itemRepository);
-    }
-
-    @Bean
     public PagamentoRepository pagamentoRepository(final PagamentoEntityRepository pagamentoEntityRepository) {
         return new PagamentoRepositoryImpl(pagamentoEntityRepository);
     }
@@ -58,7 +51,7 @@ public class BeanConfiguration {
     }
 
     @Bean
-    public CriarPedido criarPedido(final PedidoRepository pedidoRepository, final RepositorioClienteGateway repositorioClienteGatewayMySQL, final ItemRepository itemRepository) {
+    public CriarPedido criarPedido(final PedidoRepository pedidoRepository, final RepositorioClienteGateway repositorioClienteGatewayMySQL, final RepositorioItemGateway itemRepository) {
         return new CriarPedido(pedidoRepository, repositorioClienteGatewayMySQL, itemRepository);
     }
 

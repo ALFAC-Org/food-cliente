@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
-public interface BaseItemController {
+public interface BaseItemHandler {
 
   @Operation(summary = "Cadastrar item", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = {
     @ExampleObject(name = "Lanche", value = """
