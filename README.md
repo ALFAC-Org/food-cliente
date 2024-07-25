@@ -10,12 +10,23 @@ Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na ima
 
 ## Fluxo completo no MIRO
 
+### Fase 1
+
 - Brain Storming
 - Event Storming
 - Fluxo Vertical
 - Linguagem Ubíqua
 
-[https://miro.com/app/board/uXjVKZNCxxM](https://miro.com/app/board/uXjVKZNCxxM=/?share_link_id=127959473892)
+### Fase 2
+
+- [Desenho da arquitetura](https://miro.com/app/board/uXjVKZNCxxM=/?moveToWidget=3458764595480615411&cot=10)
+- [Requisitos da infraestrutura](https://drive.google.com/file/d/1SdsSAvb8gIy9qvau1m_bTNp2WUR5uzds/view?usp=sharing)
+
+Veja em: [https://miro.com/app/board/uXjVKZNCxxM](https://miro.com/app/board/uXjVKZNCxxM=/?share_link_id=127959473892)
+
+> [!WARNING]  
+> **Essa documentação foca na 2° FASE do Tech Challenge - usando Kubernetes como base para a aplicação. Se precisar, consulte o README.md da 1° FASE no link: https://github.com/ALFAC-Org/food/tree/hexagonal**
+
 
 ## Tabela de conteúdos
 - [Tecnologia](#tecnologia)
@@ -31,9 +42,10 @@ Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na ima
   - [5. Avançando o status do pedido (fila)](#5-avançando-o-status-do-pedido-fila)
 - Encerramento do fluxo
   - [6. Pedido sendo finalizado](#6-pedido-sendo-finalizado)
-- Tutoriais (vídeos)
-  - [1. Executando a aplicação](https://drive.google.com/file/d/154ejhYolGbn8ZOZRvv5doR1YzDIEelpY/view?usp=sharing)
-
+- **Tutoriais (vídeos)**
+  - [1. Executando a aplicação - Com Kubernetes - localmente](https://drive.google.com/file/d/1CloOrEDDemPQSZ8cqH2SL5Oh6xoJIAXb/view?usp=sharing)
+  - [2. Executando a aplicação - Com Kubernetes - na nuvem (AWS)](https://drive.google.com/file/d/1njxcGlQfmKcCtbqMI9Qf19vxJwZ-MD3D/view?usp=sharing)
+  
   **Entenda tudo de uma única vez**
 
   - [2. Fluxo inteiro](https://drive.google.com/file/d/1VTyIiK2U3QD6bJR_qfqcXjnM9rrR28b-/view?usp=sharing)
@@ -49,56 +61,87 @@ Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na ima
 ## Tecnologia
 
 - Java 17 - _backend_
+- Maven - _gerenciar dependências do backend_
 - MySQL 8 - _banco de dados_
 - Swagger - _documentação e uso de API's_
-- Docker - _orquestração da aplicação_
-- Maven - _gerenciar dependências do backend_
+- Docker - _containerização da aplicação_
+- Kubernetes - _orquestração da aplicação_
 
 ## Requisitos
 
-- Docker
+- Docker _(versão 27.0.3)_ - para rodar localmente
+- Kubernetes _(versão 1.30)_ - para rodar localmente e na nuvem (AWS)
 
 ## Executando a aplicação
 
+Adicione _configmaps_ e _secrets_:
+
+```bash
+kubectl apply -f food/k8s/dev/shared
 ```
-docker-compose up
+
+Adicione _banco de dados_:
+
+```bash
+kubectl apply -f food/k8s/dev/db
+```
+
+Adicionando _backend_:
+
+```bash
+kubectl apply -f food/k8s/dev/backend
+```
+
+1.4 - (opcional) Adicione _autoscaling_:
+
+```bash
+kubectl apply -f food/k8s/dev/autoscaling
 ```
 
 # Realizando o pedido
 
-Uma vez a aplicação rodando, é necessário acessar o `Swagger` da aplicação pelo navegador: [http://localhost:8080/api-docs](http://localhost:8080/api-docs) ou [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+Uma vez a aplicação rodando, é necessário acessar o `Swagger` da aplicação pelo navegador:
+
+* [http://localhost:30001/api-docs](http://localhost:30001/api-docs) 
+* ou [http://localhost:30001/swagger-ui/index.html](http://localhost:30001/swagger-ui/index.html)
+
 
 O fluxo deve ser feito na sequência:
 
 1. Se identificando (opcional)
 2. Montando o `payload` do seu pedido, contendo ao menos um dos itens a seguir:
-  - Lanche
+
+- Lanche
   - Acompanhamento
   - Bebida
   - Sobremesa
+
 3. Registrando o seu pedido
+
 4. Realizando o pagamento
+
 5. Avançando o status do pedido (fila)
+
 6. Pedido sendo finalizado
 
-## 1. Se identificando (opcional)
+### 1. Se identificando (opcional)
 
 <details>
   <summary>Passo a passo</summary>
 
 Seguindo o cenário feliz, faça o cadastro do seu cliente. E com o id que irá retornar da `response`, você irá utilizá-lo nas etapas seguintes.
 
-### Via Swagger
+#### Via Swagger
 
-[http://localhost:8080/swagger-ui/index.html#/Cliente/cadastrarCliente](http://localhost:8080/swagger-ui/index.html#/Cliente/cadastrarCliente)
+[http://localhost:30001/swagger-ui/index.html#/Cliente/cadastrarCliente](http://localhost:30001/swagger-ui/index.html#/Cliente/cadastrarCliente)
 
-### Via Terminal
+#### Via Terminal
 
-`POST http://localhost:8080/api/v1/clientes`
+`POST http://localhost:30001/api/v1/clientes`
 
 ```bash
 curl -X 'POST' \
-'http://localhost:8080/api/v1/clientes' \
+'http://localhost:30001/api/v1/clientes' \
 -H 'accept: */*' \
 -H 'Content-Type: application/json' \
 -d '{
@@ -123,7 +166,7 @@ curl -X 'POST' \
 Com isso, você terá seu cliente cadastrado.
 </details>
 
-## 2. Montando o `payload` com os itens do seu pedido
+### 2. Montando o `payload` com os itens do seu pedido
 
 <details>
   <summary>Passo a passo</summary>
@@ -140,18 +183,18 @@ Onde `CATEGORIA`:
 
 Para consultar os itens disponíveis:
 
-### Via Swagger
+#### Via Swagger
 
-[http://localhost:8080/swagger-ui/index.html#/Item/consultarItensPorCategoria](http://localhost:8080/swagger-ui/index.html#/Item/consultarItensPorCategoria)
+[http://localhost:30001/swagger-ui/index.html#/Item/consultarItensPorCategoria](http://localhost:30001/swagger-ui/index.html#/Item/consultarItensPorCategoria)
 
-### Via Terminal
+#### Via Terminal
 
 Exemplo (pega todos os produtos (itens) disponíveis na categoria de LANCHE):
 
 ```bash
 
 curl -X 'GET' \
-  'http://localhost:8080/api/v1/itens/por-categoria/LANCHE/itens' \
+  'http://localhost:30001/api/v1/itens/por-categoria/LANCHE/itens' \
   -H 'accept: application/json'
 ```
 
@@ -237,22 +280,22 @@ Basta então registrar o pedido, como na próxima etapa.
 
 </details>
 
-## 3. Registrando o seu pedido
+### 3. Registrando o seu pedido
 
 <details>
   <summary>Passo a passo</summary>
 
 Envie o `payload` para o pedido ser registrado:
 
-### Via Swagger
+#### Via Swagger
 
-[http://localhost:8080/swagger-ui/index.html#/Pedido/criarPedido](http://localhost:8080/swagger-ui/index.html#/Pedido/criarPedido)
+[http://localhost:30001/swagger-ui/index.html#/Pedido/criarPedido](http://localhost:30001/swagger-ui/index.html#/Pedido/criarPedido)
 
-### Via Terminal
+#### Via Terminal
 
 ```bash
 curl -X 'POST' \
-  'http://localhost:8080/api/v1/pedidos' \
+  'http://localhost:30001/api/v1/pedidos' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -291,7 +334,7 @@ curl -X 'POST' \
 ```
 </details>
 
-## 4. Realizando o pagamento
+### 4. Realizando o pagamento
 
 <details>
   <summary>Passo a passo</summary>
@@ -300,11 +343,11 @@ Todo pedido realizado começa com status de `Aguardando Pagamento`.
 
 Sendo assim, precisamos realizar o `pagamento` deste pedido.
 
-### Via Swagger
+#### Via Swagger
 
-[http://localhost:8080/swagger-ui/index.html#/Pagamento/pagar](http://localhost:8080/swagger-ui/index.html#/Pagamento/pagar)
+[http://localhost:30001/swagger-ui/index.html#/Pagamento/pagar](http://localhost:30001/swagger-ui/index.html#/Pagamento/pagar)
 
-### Via Terminal
+#### Via Terminal
 
 ```bash
 curl -X 'POST' \
@@ -330,7 +373,7 @@ Após o pagamento, é necessário avançar o status do pedido na fila. Veja o t�
 
 </details>
 
-## 5. Avançando o status do pedido (fila)
+### 5. Avançando o status do pedido (fila)
 
 <details>
   <summary>Passo a passo</summary>
@@ -346,15 +389,15 @@ Fluxo da alteração dos status:
         - Executa a API para atualizar status: `Finalizado`;
           - Executa a API para atualizar status: recebe a mensagem `Status do pedido já finalizado não permite alteração.`;
 
-### Via Swagger
+#### Via Swagger
 
-[http://localhost:8080/swagger-ui/index.html#/Pedido/atualizarStatusPedido](http://localhost:8080/swagger-ui/index.html#/Pedido/atualizarStatusPedido)
+[http://localhost:30001/swagger-ui/index.html#/Pedido/atualizarStatusPedido](http://localhost:30001/swagger-ui/index.html#/Pedido/atualizarStatusPedido)
 
-### Via Terminal
+#### Via Terminal
 
 ```bash
 curl -X 'PUT' \
-  'http://localhost:8080/api/v1/pedidos/1/atualizar-status' \
+  'http://localhost:30001/api/v1/pedidos/1/atualizar-status' \
   -H 'accept: application/json'
 ```
 
@@ -455,7 +498,7 @@ A atualização deve ser feita até que se chegue ao status de `FINALIZADO`.
 
 </details>
 
-## 6. Pedido sendo finalizado
+### 6. Pedido sendo finalizado
 
 <details>
   <summary>Passo a passo</summary>
@@ -464,16 +507,15 @@ Uma vez que o pedido chegou ao status de `FINALIZADO`, consideramos que o client
 
 Para isso, podemos listar os pedidos finalizados:
 
-## Via Swagger
+#### Via Swagger
 
-[http://localhost:8080/swagger-ui/index.html#/Pedido/listarPedidos](http://localhost:8080/swagger-ui/index.html#/Pedido/listarPedidos)
+[http://localhost:30001/swagger-ui/index.html#/Pedido/listarPedidos](http://localhost:30001/swagger-ui/index.html#/Pedido/listarPedidos)
 
-
-### Via Terminal
+#### Via Terminal
 
 ```bash
 curl -X 'GET' \
-  'http://localhost:8080/api/v1/pedidos/status/FINALIZADO' \
+  'http://localhost:30001/api/v1/pedidos/status/FINALIZADO' \
   -H 'accept: application/json'
 ```
 
@@ -483,44 +525,47 @@ Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz
 
 ## Roadmap
 
-### FASE 1
+<details>
+  <summary>FASE 1</summary>
 
-- [x] Cadastro do Cliente
-- [x] Identificação do Cliente
-- [x] Criar, editar e remover produtos (itens);
-- [x] Buscar produtos por categoria;
-- [x] Listar os pedidos;
-- [x] Listar pedido por id;
-- [x] Cadastrar item;
-- [x] Atualizar status do pedido - combobox;
-- [x] Validação dos itens do combo;
-- [x] Fake checkout (apenas enviar os produtos escolhidos para a fila. O checkout é a finalização do pedido);
-- [ ] Dockerfile/docker-compose no docker-hub.
+Veja em https://github.com/ALFAC-Org/food/tree/hexagonal#roadmap
+
+</details>
 
 <details>
   <summary>FASE 2</summary>
 
-### FASE 2
+#### Alterar/criar as APIs
 
-(MELHORIAS)
+- [x] Checkout do pedido: deverá receber os produtos solicitados e retornar a identificação do pedido;
+- [x] Consultar status do pagamento do pedido: informando se o pagamento foi aprovado ou não (incluindo cancelado).
+- [x] Webhook: para receber confirmação de pagamento aprovado ou recusado;
+- [x] A lista de pedidos deverá retorná-los com suas descrições, ordenados com a seguinte regra:
+  - [x] 1. Pronto > Em Preparação > Recebido;
+  - [x] 2. Pedidos mais antigos primeiro e mais novos depois;
+  - [x] 3. Pedidos com status Finalizado não devem aparecer na lista.
+- [x] Atualizar o status do pedido;
+- ~~[ ] Como desafio extra (opcionalmente), você pode implementar a integração com Mercado Pago para gerar o QRCode para pagamento e integrar com o WebHook para capturar os pagamentos.~~
+- [x] Caso contrário, será necessário realizar o mock da parte de pagamentos. Como referência, acesse: https://www.mercadopago.com.br/developers/pt/docs/qr-code/integration-configuration/qr-dynamic/integration.
+
+#### Documentação
+
+- [x] Atualização de README;
+- [ ] Desenho da arquitetura pensado por você, pessoa arquiteta de software, contemplando:
+  - [x] - i. Os requisitos do negócio (problema).
+  - [x] - ii. Os requisitos de infraestrutura:
+    - Você pode utilizar o MiniKube, Docker Kubernetes, AKS, EKS, GKE ou qualquer nuvem que você desenha.
+- [x] Collection com todas as APIs desenvolvidas:
+  - [x] i. Link do Swagger no projeto ou link para download da collection do Postman (JSON).
+- [ ] Guia completo com todas as instruções para execução do projeto e a ordem de execução das APIs, caso seja necessário;
+- [ ] Link para vídeo demonstrando a arquitetura desenvolvida na nuvem ou localmente.
+
+#### Melhorias (identificadas pelo time)
 
 - [ ] Quando tentar deletar um item que está sendo usando em um pedido, devemos tratar melhor a mensagem de erro;
 - [ ] Quando criar um novo item, podemos ter uma uk no nome + categoria para não deixar criar um item com nome e categoria igual a um item que já existe;
-- [ ] Como padrão: em todas as tabelas termos: `data_cadastro`, `data_atualizacao`
-- [ ]   Atualizar a aplicação desenvolvida na FASE 1 refatorando o código para seguir os padrões clean code e clean architecture.
-
-(ENTREGÁVEIS)
-
-- a. Alterar/criar as APIs:
-  - [ ] Checkout Pedido que deverá receber os produtos solicitados e retornar a identificação do pedido.
-  - [ ] Consultar status pagamento pedido, que informa se o pagamento foi aprovado ou não.
-  - [ ] Webhook para receber confirmação de pagamento aprovado ou recusado.
-  - [ ] A lista de pedidos deverá retorná-los com suas descrições, ordenados com a seguinte regra:
-  1. Pronto > Em Preparação > Recebido;
-  2. Pedidos mais antigos primeiro e mais novos depois;
-  3. Pedidos com status Finalizado não devem aparecer na lista.
-  - [ ] Atualizar o status do pedido.
-  - [ ] Como desafio extra, opcionalmente, você pode implementar a integração com Mercado Pago para gerar o QRCode para pagamento e integrar com o WebHook para capturar os pagamentos. Caso contrário, será necessário realizar o mock da parte de pagamentos. Como referência, acesse: [site do mercado pago](https://www.mercadopago.com.br/developers/pt/docs/qr-code/integration-configuration/qr-dynamic/integration).
+- [x] Em todas as tabelas termos: `data_cadastro`, `data_atualizacao`;
+- [x] Atualizar a aplicação desenvolvida na FASE 1 refatorando o código para seguir os padrões clean code e clean architecture.
 
 </details>
 
@@ -537,4 +582,3 @@ Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz
 | Carlos Henrique Carvalho de Santana | - *RM355339* <br />-  *[rm355339@fiap.com.br](mailto:rm355339@fiap.com.br)* <br />- [@carlohcs](https://github.com/carlohcs) |
 | Leonardo Alves Campos | - *RM355568* <br />- [rm355568@fiap.com.br](mailto:rm355568@fiap.com.br) <br />- [@lcalves](https://github.com/lcalves) |
 | Andre Musolino | -  *RM355582* <br />- *[rm355582@fiap.com.br](mailto:rm355582@fiap.com.br)* <br />- [@amusolino](https://github.com/amusolino) |
-| Ardiles Guerra | -  *RM355674* <br />- *[rm355674@fiap.com.br](mailto:rm355674@fiap.com.br)* |
