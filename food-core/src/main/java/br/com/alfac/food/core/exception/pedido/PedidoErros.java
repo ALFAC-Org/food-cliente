@@ -14,6 +14,8 @@ public class PedidoErros extends FoodErrosImpl {
     public static final FoodError DATA_CADASTRO_OBRIGATORIO = new PedidoErros("005", "Data de cadastro é obrigatória.");
     public static final FoodError ID_OBRIGATORIO = new PedidoErros("006", "Id é obrigatório.");
     public static final FoodError STATUS_OBRIGATORIO = new PedidoErros("007", "Status é obrigatório.");
+    public static final FoodError STATUS_INVALIDO_CANCELAMENTO = new PedidoErros("008", "Status atual do pedido não permite cancelamento.");
+    public static final FoodError STATUS_PEDIDO_CANCELADO = new PedidoErros("009", "Status do pedido cancelado não permite alteração.");
 
     private static final String APP_PREFIX = "PEDIDO";
 

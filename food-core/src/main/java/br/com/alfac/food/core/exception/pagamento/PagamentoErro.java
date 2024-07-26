@@ -15,6 +15,7 @@ public class PagamentoErro extends FoodErrosImpl {
     public static final FoodError ID_OBRIGATORIO = new PagamentoErro("005", "Id do pagamento é obrigatório");
     public static final FoodError DATA_PAGAMENTO_OBRIGATORIO = new PagamentoErro("006", "Data do pagamento é obrigatório");
     public static final FoodError PAGAMENTO_NAO_ENCONTRADO = new PagamentoErro("007", "Pagamento não encontrado");
+    public static final FoodError STATUS_INVALIDO_CANCELAMENTO = new PagamentoErro("008", "Status atual do pagamento não permite cancelamento");
 
     private static final String APP_PREFIX = "PGTO";
 

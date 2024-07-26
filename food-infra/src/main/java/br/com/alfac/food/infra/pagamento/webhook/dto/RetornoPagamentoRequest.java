@@ -1,4 +1,6 @@
 package br.com.alfac.food.infra.pagamento.webhook.dto;
 
-public record RetornoPagamentoRequest(Long pagamentoId) {
+import br.com.alfac.food.core.domain.pagamento.StatusConfirmacaoPagamento;
+
+public record RetornoPagamentoRequest(Long pagamentoId, StatusConfirmacaoPagamento statusConfirmacaoPagamento) {
 }

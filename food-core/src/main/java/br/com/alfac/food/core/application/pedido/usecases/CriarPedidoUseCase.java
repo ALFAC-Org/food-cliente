@@ -21,14 +21,14 @@ import br.com.alfac.food.core.utils.CollectionsUtils;
 
 import java.util.Objects;
 
-public class CriarPedidoUserCase {
+public class CriarPedidoUseCase {
 
     private final RepositorioPedidoGateway repositorioPedidoGateway;
     private final ConsultarClientePorIdUseCase consultarClientePorIdUseCase;
     private final ConsultarItemPorIdUseCase consultarItemPorIdUseCase;
 
-    public CriarPedidoUserCase(final RepositorioPedidoGateway repositorioPedidoGateway, final RepositorioClienteGateway clienteRepository,
-                               final RepositorioItemGateway itemRepository) {
+    public CriarPedidoUseCase(final RepositorioPedidoGateway repositorioPedidoGateway, final RepositorioClienteGateway clienteRepository,
+                              final RepositorioItemGateway itemRepository) {
         this.repositorioPedidoGateway = repositorioPedidoGateway;
         this.consultarClientePorIdUseCase = new ConsultarClientePorIdUseCase(clienteRepository);
         this.consultarItemPorIdUseCase = new ConsultarItemPorIdUseCase(itemRepository);

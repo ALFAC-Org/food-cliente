@@ -4,7 +4,7 @@ import br.com.alfac.food.core.application.cliente.adapters.gateways.RepositorioC
 import br.com.alfac.food.core.application.item.adapters.gateways.RepositorioItemGateway;
 import br.com.alfac.food.core.application.pagamento.adapters.gateways.PagamentoClientGateway;
 import br.com.alfac.food.core.application.pagamento.adapters.gateways.RepositorioPagamentoGateway;
-import br.com.alfac.food.core.application.pagamento.usecases.CriarPagamentoPendenteUserCase;
+import br.com.alfac.food.core.application.pagamento.usecases.CriarPagamentoPendenteUseCase;
 import br.com.alfac.food.core.application.pagamento.usecases.CriarQrCodePagamento;
 import br.com.alfac.food.core.application.pedido.adapters.gateways.RepositorioPedidoGateway;
 import br.com.alfac.food.core.application.pedido.adapters.presenter.PedidoPresenter;
@@ -20,8 +20,8 @@ import java.util.List;
 
 public class ControladorPedido {
 
-    private final CriarPedidoUserCase criarPedidoUserCase;
-    private final CriarPagamentoPendenteUserCase criarPagamentoPendenteUserCase;
+    private final CriarPedidoUseCase criarPedidoUseCase;
+    private final CriarPagamentoPendenteUseCase criarPagamentoPendenteUseCase;
     private final CriarQrCodePagamento criarQrCodePagamento;
     private final RepositorioPedidoGateway repositorioPedidoGateway;
 
@@ -30,16 +30,16 @@ public class ControladorPedido {
                              final RepositorioPagamentoGateway repositorioPagamentoGateway,
                              final PagamentoClientGateway pagamentoClientGateway) {
         this.repositorioPedidoGateway = repositorioPedidoGateway;
-        this.criarPedidoUserCase = new CriarPedidoUserCase(repositorioPedidoGateway, clienteRepository, itemRepository);
-        this.criarPagamentoPendenteUserCase = new CriarPagamentoPendenteUserCase(repositorioPagamentoGateway);
+        this.criarPedidoUseCase = new CriarPedidoUseCase(repositorioPedidoGateway, clienteRepository, itemRepository);
+        this.criarPagamentoPendenteUseCase = new CriarPagamentoPendenteUseCase(repositorioPagamentoGateway);
         this.criarQrCodePagamento = new CriarQrCodePagamento(pagamentoClientGateway);
     }
 
     public PedidoCriadoDTO criarPedido(PedidoDTO pedidoDTO) throws FoodException {
 
-        Pedido pedido = criarPedidoUserCase.executar(pedidoDTO);
+        Pedido pedido = criarPedidoUseCase.executar(pedidoDTO);
 
-        Pagamento pagamento = criarPagamentoPendenteUserCase.executar(pedido.getId());
+        Pagamento pagamento = criarPagamentoPendenteUseCase.executar(pedido.getId());
 
         String qrCodeParaPagamento = criarQrCodePagamento.executar(pagamento.getId());
 

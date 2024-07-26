@@ -28,7 +28,7 @@ public class RetornoPagamentoController {
     @Operation(summary = "Responsável por receber estimulo requisição quando pagamento realizado na processadora de pagamento")
     @PostMapping
     public ResponseEntity<Void> consultarPedidoPorStatus(@RequestBody RetornoPagamentoRequest retornoPagamento) throws FoodException {
-        controladorRecebimentoPagamento.executar(retornoPagamento.pagamentoId());
+        controladorRecebimentoPagamento.executarRetornoPagamento(retornoPagamento.pagamentoId(), retornoPagamento.statusConfirmacaoPagamento());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

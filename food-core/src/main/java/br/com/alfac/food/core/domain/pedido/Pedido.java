@@ -1,5 +1,11 @@
 package br.com.alfac.food.core.domain.pedido;
 
+import br.com.alfac.food.core.domain.cliente.Cliente;
+import br.com.alfac.food.core.exception.FoodException;
+import br.com.alfac.food.core.exception.pagamento.PagamentoErro;
+import br.com.alfac.food.core.exception.pedido.PedidoErros;
+import br.com.alfac.food.core.utils.CollectionsUtils;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -7,14 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import br.com.alfac.food.core.domain.cliente.Cliente;
-import br.com.alfac.food.core.domain.pagamento.StatusPagamento;
-import br.com.alfac.food.core.exception.FoodException;
-import br.com.alfac.food.core.exception.pagamento.PagamentoErro;
-import br.com.alfac.food.core.exception.pedido.PedidoErros;
-import br.com.alfac.food.core.utils.CollectionsUtils;
-
-public class Pedido  {
+public class Pedido {
 
     private Long id;
     private Cliente cliente;
@@ -31,7 +30,7 @@ public class Pedido  {
 
     }
 
-    public Pedido(final Long id, final Cliente cliente, final StatusPedido status, final List<Combo> combos,final LocalDateTime dataCadastro) throws FoodException {
+    public Pedido(final Long id, final Cliente cliente, final StatusPedido status, final List<Combo> combos, final LocalDateTime dataCadastro) throws FoodException {
 
         validarDados(id, status, dataCadastro);
         this.id = id;
@@ -58,9 +57,11 @@ public class Pedido  {
     }
 
 
-
     public void atualizarStatus() throws FoodException {
 
+        if (StatusPedido.CANCELADO.equals(this.status)) {
+            throw new FoodException(PedidoErros.STATUS_PEDIDO_CANCELADO);
+        }
         if (StatusPedido.FINALIZADO.equals(this.status)) {
             throw new FoodException(PedidoErros.STATUS_PEDIDO_JA_FINALIZADO);
         }
@@ -69,12 +70,23 @@ public class Pedido  {
     }
 
     public void atualizarStatusRecebido() throws FoodException {
+        if (StatusPedido.CANCELADO.equals(this.status)) {
+            throw new FoodException(PedidoErros.STATUS_INVALIDO_CANCELAMENTO);
+        }
 
         if (!StatusPedido.AGUARDANDO_PAGAMENTO.equals(this.status)) {
             throw new FoodException(PagamentoErro.PAGAMENTO_JA_REALIZADO);
         }
 
         this.status = this.status.getProximoStatus();
+    }
+
+    public void cancelar() throws FoodException {
+
+        if (!StatusPedido.AGUARDANDO_PAGAMENTO.equals(this.status)) {
+            throw new FoodException(PedidoErros.STATUS_PEDIDO_JA_FINALIZADO);
+        }
+        this.status = StatusPedido.CANCELADO;
     }
 
     public void adicionaCombo(Combo combo) throws FoodException {
@@ -86,7 +98,6 @@ public class Pedido  {
     }
 
 
-
     public Cliente getCliente() {
         return cliente;
     }
@@ -95,7 +106,6 @@ public class Pedido  {
     public List<Combo> getCombos() {
         return combos;
     }
-
 
 
     public Long getId() {
@@ -124,8 +134,6 @@ public class Pedido  {
     public LocalDateTime getDataCadastro() {
         return dataCadastro;
     }
-
-
 
 
 }

@@ -5,12 +5,12 @@ import br.com.alfac.food.core.application.pagamento.adapters.mapper.PagamentoMap
 import br.com.alfac.food.core.domain.pagamento.Pagamento;
 import br.com.alfac.food.core.exception.FoodException;
 
-public class CriarPagamentoPendenteUserCase {
+public class CriarPagamentoPendenteUseCase {
 
 
     private final RepositorioPagamentoGateway repositorioPagamentoGateway;
 
-    public CriarPagamentoPendenteUserCase(final RepositorioPagamentoGateway repositorioPagamentoGateway) {
+    public CriarPagamentoPendenteUseCase(final RepositorioPagamentoGateway repositorioPagamentoGateway) {
         this.repositorioPagamentoGateway = repositorioPagamentoGateway;
     }
 
