@@ -2,6 +2,7 @@ package br.com.alfac.food.infra.config.beans;
 
 import br.com.alfac.food.core.application.cliente.adapters.controller.ControladorCliente;
 import br.com.alfac.food.core.application.cliente.adapters.gateways.RepositorioClienteGateway;
+import br.com.alfac.food.infra.cliente.gateways.RepositorioClienteMySQLGatewayImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,9 +11,9 @@ public class ClienteConfiguration {
 
 
 
-    @Bean(name = "controladorClientePostgres")
-    public ControladorCliente controladorClientePostgres(final RepositorioClienteGateway repositorioClienteGatewayMySQL ) {
-        return new ControladorCliente(repositorioClienteGatewayMySQL);
+    @Bean(name = "controladorClienteMySQL")
+    public ControladorCliente controladorClienteMySQL(final RepositorioClienteMySQLGatewayImpl repositorioClienteMySQLGateway ) {
+        return new ControladorCliente(repositorioClienteMySQLGateway);
     }
 
     @Bean(name = "controladorClienteMemoria")

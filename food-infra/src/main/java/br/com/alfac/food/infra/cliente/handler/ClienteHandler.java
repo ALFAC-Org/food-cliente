@@ -25,12 +25,12 @@ import java.util.UUID;
 @Tag(name = "Cliente", description = "Métodos para manipulação de clientes")
 public class ClienteHandler {
 
-    private final ControladorCliente controladorClientePostgres;
+    private final ControladorCliente controladorClienteMySQL;
     private final ClienteMapper clienteMapper;
 
-    public ClienteHandler(final ControladorCliente controladorClientePostgres) {
+    public ClienteHandler(final ControladorCliente controladorClienteMySQL) {
         this.clienteMapper = ClienteMapper.INSTANCE;
-        this.controladorClientePostgres = controladorClientePostgres;
+        this.controladorClienteMySQL = controladorClienteMySQL;
     }
 
     @Operation(summary = "Consultar cliente pelo CPF", description = "CPF contém 11 dígitos")
@@ -41,7 +41,7 @@ public class ClienteHandler {
             })})
     @GetMapping(value = "/por-cpf/{cpf}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClienteDTO> consultarCliente(@PathVariable String cpf) throws FoodException {
-        return new ResponseEntity<>(controladorClientePostgres.consultarClientePorCpf(cpf), HttpStatus.OK);
+        return new ResponseEntity<>(controladorClienteMySQL.consultarClientePorCpf(cpf), HttpStatus.OK);
     }
 
     @Operation(summary = "Consultar cliente pelo id")
@@ -52,7 +52,7 @@ public class ClienteHandler {
             })})
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClienteDTO> consultarClientePorId(@PathVariable Long id) throws FoodException {
-        return new ResponseEntity<>(controladorClientePostgres.consultarClientePorId(id), HttpStatus.OK);
+        return new ResponseEntity<>(controladorClienteMySQL.consultarClientePorId(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Consultar cliente pelo uuid")
@@ -63,7 +63,7 @@ public class ClienteHandler {
             })})
     @GetMapping(value = "/por-uuid/{uuid}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClienteDTO> consultarClientePorUuid(@PathVariable UUID uuid) throws FoodException {
-        return new ResponseEntity<>(controladorClientePostgres.consultarClientePorUuid(uuid), HttpStatus.OK);
+        return new ResponseEntity<>(controladorClienteMySQL.consultarClientePorUuid(uuid), HttpStatus.OK);
     }
 
     @Operation(summary = "Cadastrar cliente")
@@ -74,8 +74,12 @@ public class ClienteHandler {
             })})
     @PostMapping
     public ResponseEntity<ClienteDTO> cadastrarCliente(@Valid @RequestBody ClienteRequest clienteRequest) throws FoodException {
-        ClienteDTO cliente = controladorClientePostgres.cadastrarCliente(clienteMapper.toDTO(clienteRequest));
+
+
+        ClienteDTO cliente = controladorClienteMySQL.cadastrarCliente(clienteMapper.toDTO(clienteRequest));
         return new ResponseEntity<>(cliente, HttpStatus.CREATED);
+
+
     }
 
 }

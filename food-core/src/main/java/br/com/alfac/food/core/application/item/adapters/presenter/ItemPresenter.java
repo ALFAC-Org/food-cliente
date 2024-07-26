@@ -1,14 +1,14 @@
-package br.com.alfac.food.core.application.item.mappers;
-
-import java.util.ArrayList;
-import java.util.List;
+package br.com.alfac.food.core.application.item.adapters.presenter;
 
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
 import br.com.alfac.food.core.domain.item.Item;
 
-public final class ItemMapper {
+import java.util.ArrayList;
+import java.util.List;
 
-    private ItemMapper() {
+public final class ItemPresenter {
+
+    private ItemPresenter() {
     }
 
     public static ItemDTO mapearParaItemDTO(Item item) {
@@ -44,4 +44,5 @@ public final class ItemMapper {
 
         return itemDTOList;
     }
+
 }

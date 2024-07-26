@@ -11,11 +11,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class RepositorioClienteGatewayMySQL implements RepositorioClienteGateway {
+public class RepositorioClienteMySQLGatewayImpl implements RepositorioClienteGateway {
     
     private final ClienteEntityRepository clienteEntityRepository;
 
-    public RepositorioClienteGatewayMySQL(final ClienteEntityRepository clienteEntityRepository) {
+    public RepositorioClienteMySQLGatewayImpl(final ClienteEntityRepository clienteEntityRepository) {
         this.clienteEntityRepository = clienteEntityRepository;
     }
 

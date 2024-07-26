@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -85,6 +86,16 @@ public class FoodExceptionHandler {
         ex.getBindingResult().getFieldErrors().forEach(error ->
                 apiError.addArguments(new ApiErrorItem("", error.getDefaultMessage(), error.getField()))
         );
+
+        return buildResponseEntity(apiError);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseBody
+    public ResponseEntity<ApiError> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        LOGGER.error(ex.getLocalizedMessage(), ex);
+        ApiError apiError = ApiError.createDefaultApiValidationError();
+        apiError.addArguments(new ApiErrorItem("", "Dados informado viola algum campo de integridade de dados, revise sua requisição", ""));
 
         return buildResponseEntity(apiError);
     }

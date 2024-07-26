@@ -17,15 +17,17 @@ import java.util.Optional;
 public class RepositorioPedidoGatewayImpl implements RepositorioPedidoGateway {
 
     private final PedidoEntityRepository pedidoEntityRepository;
+    private final PedidoEntityMapper pedidoEntityMapper;
 
-    public RepositorioPedidoGatewayImpl(final PedidoEntityRepository pedidoEntityRepository) {
+    public RepositorioPedidoGatewayImpl(final PedidoEntityRepository pedidoEntityRepository, final PedidoEntityMapper pedidoEntityMapper) {
         this.pedidoEntityRepository = pedidoEntityRepository;
+        this.pedidoEntityMapper = pedidoEntityMapper;
     }
 
     @Override
     public List<Pedido> listarPedidos() {
         List<PedidoEntity> pedidoEntities = pedidoEntityRepository.findAll();
-        return PedidoEntityMapper.INSTANCE.toDomain(pedidoEntities);
+        return pedidoEntityMapper.toDomain(pedidoEntities);
     }
 
     @Override
@@ -37,11 +39,11 @@ public class RepositorioPedidoGatewayImpl implements RepositorioPedidoGateway {
     @Override
     @Transactional
     public Pedido registrarPedido(Pedido pedido) throws FoodException {
-        PedidoEntity pedidoEntity = PedidoEntityMapper.INSTANCE.toEntity(pedido);
+        PedidoEntity pedidoEntity = pedidoEntityMapper.toEntity(pedido);
 
         PedidoEntity pedidoCriado = pedidoEntityRepository.save(pedidoEntity);
 
-        return PedidoEntityMapper.INSTANCE.toDomain(pedidoCriado);
+        return pedidoEntityMapper.toDomain(pedidoCriado);
     }
 
     private Optional<Pedido> montarPedido(Optional<PedidoEntity> pedidoEntityOpt) throws FoodException {
@@ -50,7 +52,7 @@ public class RepositorioPedidoGatewayImpl implements RepositorioPedidoGateway {
         if (pedidoEntityOpt.isPresent()) {
             PedidoEntity pedidoEntity = pedidoEntityOpt.get();
 
-            Pedido pedido = PedidoEntityMapper.INSTANCE.toDomain(pedidoEntity);
+            Pedido pedido = pedidoEntityMapper.toDomain(pedidoEntity);
 
             pedidoOpt = Optional.of(pedido);
         }
@@ -67,7 +69,7 @@ public class RepositorioPedidoGatewayImpl implements RepositorioPedidoGateway {
 
             PedidoEntity pedidoAtualizado = pedidoEntityRepository.save(pedidoEntity);
 
-            return PedidoEntityMapper.INSTANCE.toDomain(pedidoAtualizado);
+            return pedidoEntityMapper.toDomain(pedidoAtualizado);
         }
 
         return null;
@@ -77,7 +79,7 @@ public class RepositorioPedidoGatewayImpl implements RepositorioPedidoGateway {
     public List<Pedido> listarPedidosPorStatus(final StatusPedido status) {
         List<PedidoEntity> pedidos = pedidoEntityRepository.findAllByStatus(status);
 
-        return PedidoEntityMapper.INSTANCE.toDomain(pedidos);
+        return pedidoEntityMapper.toDomain(pedidos);
     }
 
 }

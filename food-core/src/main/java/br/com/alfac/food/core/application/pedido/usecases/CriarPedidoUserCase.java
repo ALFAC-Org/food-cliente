@@ -2,8 +2,8 @@ package br.com.alfac.food.core.application.pedido.usecases;
 
 import br.com.alfac.food.core.application.cliente.adapters.gateways.RepositorioClienteGateway;
 import br.com.alfac.food.core.application.cliente.usecases.ConsultarClientePorIdUseCase;
+import br.com.alfac.food.core.application.item.adapters.gateways.RepositorioItemGateway;
 import br.com.alfac.food.core.application.item.dto.ItemDTO;
-import br.com.alfac.food.core.application.item.gateways.ItemRepository;
 import br.com.alfac.food.core.application.item.usecases.ConsultarItemPorIdUseCase;
 import br.com.alfac.food.core.application.pedido.dto.ComboDTO;
 import br.com.alfac.food.core.application.pedido.dto.LancheDTO;
@@ -27,7 +27,8 @@ public class CriarPedidoUserCase {
     private final ConsultarClientePorIdUseCase consultarClientePorIdUseCase;
     private final ConsultarItemPorIdUseCase consultarItemPorIdUseCase;
 
-    public CriarPedidoUserCase(final RepositorioPedidoGateway repositorioPedidoGateway, final RepositorioClienteGateway clienteRepository, final ItemRepository itemRepository) {
+    public CriarPedidoUserCase(final RepositorioPedidoGateway repositorioPedidoGateway, final RepositorioClienteGateway clienteRepository,
+                               final RepositorioItemGateway itemRepository) {
         this.repositorioPedidoGateway = repositorioPedidoGateway;
         this.consultarClientePorIdUseCase = new ConsultarClientePorIdUseCase(clienteRepository);
         this.consultarItemPorIdUseCase = new ConsultarItemPorIdUseCase(itemRepository);
@@ -57,9 +58,7 @@ public class CriarPedidoUserCase {
             pedido.adicionaCombo(combo);
         }
 
-        Pedido pedidoSalvo = repositorioPedidoGateway.registrarPedido(pedido);
-
-        return pedidoSalvo;
+        return repositorioPedidoGateway.registrarPedido(pedido);
     }
 
     private Lanche buscarLanche(final LancheDTO lancheDTO) throws FoodException {

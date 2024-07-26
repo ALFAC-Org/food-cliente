@@ -22,8 +22,6 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = {ClienteEntityMapper.class})
 public interface PedidoEntityMapper {
 
-    PedidoEntityMapper INSTANCE = Mappers.getMapper(PedidoEntityMapper.class);
-
     @Mapping(target = "combos", source = "combos", qualifiedByName = "combosToEntityParser")
     PedidoEntity toEntity(Pedido pedido);
 
