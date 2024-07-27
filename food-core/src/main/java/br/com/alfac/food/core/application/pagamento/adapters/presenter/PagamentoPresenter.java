@@ -9,7 +9,7 @@ public class PagamentoPresenter {
     }
 
     public static PagamentoResponse toPagamentoResponse(Pagamento pagamento) {
-        return new PagamentoResponse(pagamento.getPedidoId(), pagamento.getId(), pagamento.getStatusPagamento(), pagamento.getPedidoId(),
+        return new PagamentoResponse(pagamento.getId(), pagamento.getStatusPagamento(), pagamento.getPedidoId(),
                 pagamento.getDataPagamento());
     }
 }

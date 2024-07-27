@@ -7,7 +7,7 @@ import br.com.alfac.food.core.exception.FoodException;
 public class PagamentoMapper {
 
     public static PagamentoResponse toPagamentoEntityDTO(Pagamento pagamento) {
-        return new PagamentoResponse(pagamento.getPedidoId(), pagamento.getId(), pagamento.getStatusPagamento(), pagamento.getPedidoId(),
+        return new PagamentoResponse(pagamento.getId(), pagamento.getStatusPagamento(), pagamento.getPedidoId(),
                 pagamento.getDataPagamento());
     }
 
