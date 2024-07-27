@@ -80,6 +80,12 @@ Adicione _configmaps_ e _secrets_:
 kubectl apply -f food/k8s/dev/shared
 ```
 
+Adicione o drive aws-ebs-csi-drive:
+
+```bash
+kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.32"
+```
+
 Adicione _banco de dados_:
 
 ```bash
