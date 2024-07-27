@@ -59,6 +59,14 @@ public class Pagamento {
         this.statusPagamento = StatusPagamento.APROVADO;
     }
 
+    public void cancelar() throws FoodException {
+        if (!StatusPagamento.PENDENTE.equals(this.statusPagamento)) {
+            throw new FoodException(PagamentoErro.STATUS_INVALIDO_CANCELAMENTO);
+        }
+
+        this.statusPagamento = StatusPagamento.CANCELADO;
+    }
+
     public Long getId() {
         return id;
     }
@@ -74,4 +82,6 @@ public class Pagamento {
     public LocalDateTime getDataPagamento() {
         return dataPagamento;
     }
+
+
 }

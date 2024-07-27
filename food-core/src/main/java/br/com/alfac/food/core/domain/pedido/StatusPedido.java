@@ -5,7 +5,8 @@ public enum StatusPedido {
     RECEBIDO("Recebido"),
     EM_PREPARACAO("Em preparação"),
     PRONTO("Pronto"),
-    FINALIZADO("Finalizado");
+    FINALIZADO("Finalizado"),
+    CANCELADO("CANCELADO");
 
     private final String descricao;
     private StatusPedido proximoStatus;

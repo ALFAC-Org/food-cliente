@@ -6,10 +6,8 @@
 
     <modules>
         <module>food-main</module>
-        <module>food-client</module>
         <module>food-core</module>
-        <module>food-database</module>
-        <module>food-api</module>
+        <module>food-infra</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

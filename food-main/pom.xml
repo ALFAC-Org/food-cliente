@@ -24,19 +24,10 @@
         </dependency>
         <dependency>
             <groupId>br.com.alfac</groupId>
-            <artifactId>food-api</artifactId>
+            <artifactId>food-infra</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>br.com.alfac</groupId>
-            <artifactId>food-database</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>br.com.alfac</groupId>
-            <artifactId>food-client</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+
     </dependencies>
 
     <build>
