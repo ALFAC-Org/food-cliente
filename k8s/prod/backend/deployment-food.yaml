@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
         - name: pod-food-container
-          image: lcalves22cadastros/food:1
+          image: carlohcs/food-repo:4
           ports:
             - containerPort: 8080
           envFrom:
