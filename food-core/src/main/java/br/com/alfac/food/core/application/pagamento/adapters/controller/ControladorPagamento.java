@@ -4,7 +4,6 @@ import br.com.alfac.food.core.application.pagamento.adapters.gateways.Repositori
 import br.com.alfac.food.core.application.pagamento.adapters.presenter.PagamentoPresenter;
 import br.com.alfac.food.core.application.pagamento.dto.PagamentoResponse;
 import br.com.alfac.food.core.application.pagamento.usecases.ConsultarPagementoPorPedidoIdUseCase;
-import br.com.alfac.food.core.domain.pagamento.Pagamento;
 import br.com.alfac.food.core.exception.FoodException;
 
 public class ControladorPagamento {

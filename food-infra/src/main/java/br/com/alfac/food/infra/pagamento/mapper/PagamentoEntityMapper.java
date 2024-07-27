@@ -14,7 +14,7 @@ public class PagamentoEntityMapper {
         PagamentoEntity pagamentoEntity = new PagamentoEntity();
 
         pagamentoEntity.setId(pagamentoResponse.id());
-        pagamentoEntity.setPedidoId(pagamentoResponse.idPedido());
+        pagamentoEntity.setPedidoId(pagamentoResponse.pedidoId());
         pagamentoEntity.setDataPagamento(pagamentoResponse.dataPagamento());
         pagamentoEntity.setStatus(pagamentoResponse.status());
         pagamentoEntity.setDataAtualizacao(LocalDateTime.now());
@@ -23,7 +23,7 @@ public class PagamentoEntityMapper {
     }
 
     public static PagamentoResponse toDTO(final PagamentoEntity pagamentoEntity) {
-        return new PagamentoResponse(pagamentoEntity.getPedidoId(), pagamentoEntity.getId(), pagamentoEntity.getStatus(), pagamentoEntity.getPedidoId(),
+        return new PagamentoResponse(pagamentoEntity.getId(), pagamentoEntity.getStatus(), pagamentoEntity.getPedidoId(),
                 pagamentoEntity.getDataPagamento());
     }
 
@@ -32,7 +32,7 @@ public class PagamentoEntityMapper {
 
         if (pagamentoEntity.isPresent()) {
 
-            return Optional.of(new PagamentoResponse(pagamentoEntity.get().getPedidoId(), pagamentoEntity.get().getId(),
+            return Optional.of(new PagamentoResponse(pagamentoEntity.get().getId(),
                     pagamentoEntity.get().getStatus(), pagamentoEntity.get().getPedidoId(), pagamentoEntity.get().getDataPagamento()));
 
         }
