@@ -34,8 +34,8 @@ Veja em: [https://miro.com/app/board/uXjVKZNCxxM](https://miro.com/app/board/uXj
 - [Arquitetura](#arquitetura)
   - [Visão Geral](#visão-geral)
     - [Vídeo - Arquitetura da aplicação: Kubernetes + AWS](https://drive.google.com/file/d/1wuyAu3_Hne0w3iy7KY5_TZ-NDytB4kTw/view?usp=sharing)
+    - [Vídeo - Arquitetura da aplicação: código e aplicação do Clean Architecture](https://youtu.be/H04AmyucSN0)
   - [Microsserviços](#microsserviços)
-  - [Visão Geral](#visão-geral)
 - [Executando a aplicação](#executando-a-aplicação)
   - [Localmente](#localmente)
   - [Na nuvem (AWS)](#na-nuvem-aws)
@@ -82,9 +82,11 @@ Veja em: [https://miro.com/app/board/uXjVKZNCxxM](https://miro.com/app/board/uXj
 
 ### Visão Geral
 
-A aplicação está estruturada no padrão de _Clean Architecture_. A execução pode ser executada tanto via _Docker_ como _Kubernetes_. Podendo ser hospedada tanto localmente ou na nuvem, usando serviços como _AWS_. A interação da aplicação se dá através de _APIs_ com o _Swagger_ disponibilizado.
+A aplicação está estruturada no padrão de _Clean Architecture_. Pode ser executada tanto via _Docker_ como _Kubernetes_. Podendo ser hospedada tanto localmente ou na nuvem, usando serviços como _AWS_. A interação da aplicação se dá através de _APIs_ com o _Swagger_ disponibilizado.
 
 [Vídeo - Arquitetura da aplicação: Kubernetes + AWS](https://drive.google.com/file/d/1wuyAu3_Hne0w3iy7KY5_TZ-NDytB4kTw/view?usp=sharing)
+
+[Vídeo - Arquitetura da aplicação: código e aplicação do Clean Architecture](https://youtu.be/H04AmyucSN0)
 
 ### Microsserviços
 
@@ -627,7 +629,7 @@ Veja em https://github.com/ALFAC-Org/food/tree/hexagonal#roadmap
 #### Documentação
 
 - [x] Atualização de README;
-- [ ] Desenho da arquitetura pensado por você, pessoa arquiteta de software, contemplando:
+- [x] Desenho da arquitetura pensado por você, pessoa arquiteta de software, contemplando:
   - [x] - i. Os requisitos do negócio (problema).
   - [x] - ii. Os requisitos de infraestrutura:
     - Você pode utilizar o MiniKube, Docker Kubernetes, AKS, EKS, GKE ou qualquer nuvem que você desenha.
