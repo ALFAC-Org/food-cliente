@@ -27,63 +27,87 @@ Veja em: [https://miro.com/app/board/uXjVKZNCxxM](https://miro.com/app/board/uXj
 > [!WARNING]  
 > **Essa documentação foca na 2° FASE do Tech Challenge - usando Kubernetes como base para a aplicação. Se precisar, consulte o README.md da 1° FASE no link: https://github.com/ALFAC-Org/food/tree/hexagonal**
 
-
 ## Tabela de conteúdos
+
 - [Tecnologia](#tecnologia)
 - [Requisitos](#requisitos)
+- [Arquitetura](#arquitetura)
+  - [Visão Geral](#visão-geral)
+    - [Vídeo - Arquitetura da aplicação: Kubernetes + AWS](https://drive.google.com/file/d/1wuyAu3_Hne0w3iy7KY5_TZ-NDytB4kTw/view?usp=sharing)
+    - [Vídeo - Arquitetura da aplicação: código e aplicação do Clean Architecture](https://youtu.be/H04AmyucSN0)
+  - [Microsserviços](#microsserviços)
 - [Executando a aplicação](#executando-a-aplicação)
-- [Realizando o pedido](#realizando-o-pedido)
+  - [Localmente](#localmente)
+  - [Na nuvem (AWS)](#na-nuvem-aws)
+- [Fluxo do usuário](#fluxo-do-usuário)
   - [1. Se identificando (opcional)](#1-se-identificando-opcional)
   - [2. Montando o `payload` com os itens do seu pedido](#2-montando-o-payload-com-os-itens-do-seu-pedido)
   - [3. Registrando o seu pedido](#3-registrando-o-seu-pedido)
-- Pagamento do pedido
   - [4. Realizando o pagamento](#4-realizando-o-pagamento)
-- Movendo pedido na fila
   - [5. Avançando o status do pedido (fila)](#5-avançando-o-status-do-pedido-fila)
-- Encerramento do fluxo
   - [6. Pedido sendo finalizado](#6-pedido-sendo-finalizado)
+  - [7. Acompanhamento do pedido(simulação de totem)](#7-acompanhamento-do-pedido-simulação-de-totem)
 - **Tutoriais (vídeos)**
   - [1. Executando a aplicação - Com Kubernetes - localmente](https://drive.google.com/file/d/1CloOrEDDemPQSZ8cqH2SL5Oh6xoJIAXb/view?usp=sharing)
   - [2. Executando a aplicação - Com Kubernetes - na nuvem (AWS)](https://drive.google.com/file/d/1njxcGlQfmKcCtbqMI9Qf19vxJwZ-MD3D/view?usp=sharing)
   
-  **Entenda tudo de uma única vez**
+  **Entenda o fluxo do usuário de uma vez só**
 
-  - [2. Fluxo inteiro](https://drive.google.com/file/d/1VTyIiK2U3QD6bJR_qfqcXjnM9rrR28b-/view?usp=sharing)
+  - [Fluxo inteiro](https://drive.google.com/file/d/1Rr19LOmZgfViqO1NN9MvOKxz2yemDmL_/view?usp=sharing)
 
-  **Entenda o fluxo por partes**
+  **Entenda o fluxo do usuário por partes**
 
-  - [2. Se identificando (opcional)](https://drive.google.com/file/d/1bju8UWoqZsbBnEKla8-jTX7MMUT_7z_1/view?usp=sharing)
-  - [3. Montando o `payload` com os itens do seu pedido](https://drive.google.com/file/d/1U2TRn4kerONNgG21dugjLrfBcWzrxdKT/view?usp=sharing)
-  - [4. Pagando o pedido](https://drive.google.com/file/d/1vV3wZzFVNcnvOvxM0MaJ-2rET_7tlazL/view?usp=sharing)
-  - [5. Atualizando status do pedido](https://drive.google.com/file/d/1RdVzS6jiC0mbnTH7vW-2H640A-kYRBht/view?usp=sharing)
-  - [6. Consultando pedidos por status (simulando um totem)](https://drive.google.com/file/d/1IFsE6sMsJIG6ymnFMLJtY-f1CoxVwTOF/view?usp=sharing)
+  - [1. Se identificando (opcional)](https://drive.google.com/file/d/1bju8UWoqZsbBnEKla8-jTX7MMUT_7z_1/view?usp=sharing)
+  - [2. Montando o `payload` com os itens do seu pedido](https://drive.google.com/file/d/1U2TRn4kerONNgG21dugjLrfBcWzrxdKT/view?usp=sharing)
+  - [3. Pagando o pedido](https://drive.google.com/file/d/1vV3wZzFVNcnvOvxM0MaJ-2rET_7tlazL/view?usp=sharing)
+  - [4. Avançando o status do pedido (fila)](https://drive.google.com/file/d/1RdVzS6jiC0mbnTH7vW-2H640A-kYRBht/view?usp=sharing)
+  - [5. Consultando pedidos por status (simulando um totem)](https://drive.google.com/file/d/1IFsE6sMsJIG6ymnFMLJtY-f1CoxVwTOF/view?usp=sharing)
 
 ## Tecnologia
 
-- Java 17 - _backend_
-- Maven - _gerenciar dependências do backend_
-- MySQL 8 - _banco de dados_
-- Swagger - _documentação e uso de API's_
-- Docker - _containerização da aplicação_
-- Kubernetes - _orquestração da aplicação_
+- **Linguagem de Programação:** Java 17
+- **Framework:** Spring Boot
+- **Gerenciador de dependências:** Maven
+- **Banco de dados:** MySQL 8
+- **Documentação e uso de API's:** Swagger
+- **Containerização:** Docker
+- **Orquestração:** Kubernetes
 
 ## Requisitos
 
 - Docker _(versão 27.0.3)_ - para rodar localmente
 - Kubernetes _(versão 1.30)_ - para rodar localmente e na nuvem (AWS)
 
+## Arquitetura
+
+### Visão Geral
+
+A aplicação está estruturada no padrão de _Clean Architecture_. Pode ser executada tanto via _Docker_ como _Kubernetes_. Podendo ser hospedada tanto localmente ou na nuvem, usando serviços como _AWS_. A interação da aplicação se dá através de _APIs_ com o _Swagger_ disponibilizado.
+
+[Vídeo - Arquitetura da aplicação: Kubernetes + AWS](https://drive.google.com/file/d/1wuyAu3_Hne0w3iy7KY5_TZ-NDytB4kTw/view?usp=sharing)
+
+[Vídeo - Arquitetura da aplicação: código e aplicação do Clean Architecture](https://youtu.be/H04AmyucSN0)
+
+### Microsserviços
+
+2 microsserviços atendem nessa estrutura:
+
+- backend (`svc-food`)
+- banco de dados (`svc-db-food`)
+
 ## Executando a aplicação
+
+### Localmente
+
+<details>
+  <summary>Passo a passo</summary>
+
+No terminal, execute:
 
 Adicione _configmaps_ e _secrets_:
 
 ```bash
 kubectl apply -f food/k8s/dev/shared
-```
-
-Adicione o drive aws-ebs-csi-drive:
-
-```bash
-kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.32"
 ```
 
 Adicione _banco de dados_:
@@ -104,31 +128,67 @@ kubectl apply -f food/k8s/dev/backend
 kubectl apply -f food/k8s/dev/autoscaling
 ```
 
-# Realizando o pedido
+</details>
+
+### Na nuvem (AWS)
+
+<details>
+  <summary>Passo a passo</summary>
+
+No terminal, execute:
+
+Adicione _configmaps_ e _secrets_:
+
+```bash
+kubectl apply -f food/k8s/prod/shared
+```
+
+Adicione o driver _aws-ebs-csi-driver_:
+
+```bash
+kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.32"
+```
+
+Adicione _banco de dados_:
+
+```bash
+kubectl apply -f food/k8s/prod/db
+```
+
+Adicionando _backend_:
+
+```bash
+kubectl apply -f food/k8s/prod/backend
+```
+
+1.4 - (opcional) Adicione _autoscaling_:
+
+```bash
+kubectl apply -f food/k8s/prod/autoscaling
+```
+
+</details>
+
+## Fluxo do usuário
 
 Uma vez a aplicação rodando, é necessário acessar o `Swagger` da aplicação pelo navegador:
 
-* [http://localhost:30001/api-docs](http://localhost:30001/api-docs) 
-* ou [http://localhost:30001/swagger-ui/index.html](http://localhost:30001/swagger-ui/index.html)
-
+- [http://localhost:30001/api-docs](http://localhost:30001/api-docs)
+- ou [http://localhost:30001/swagger-ui/index.html](http://localhost:30001/swagger-ui/index.html)
 
 O fluxo deve ser feito na sequência:
 
 1. Se identificando (opcional)
 2. Montando o `payload` do seu pedido, contendo ao menos um dos itens a seguir:
-
-- Lanche
-  - Acompanhamento
-  - Bebida
-  - Sobremesa
-
+    - Lanche
+    - Acompanhamento
+    - Bebida
+    - Sobremesa
 3. Registrando o seu pedido
-
 4. Realizando o pagamento
-
 5. Avançando o status do pedido (fila)
-
 6. Pedido sendo finalizado
+7. Acompanhamento do pedido (simulação de totem)
 
 ### 1. Se identificando (opcional)
 
@@ -157,15 +217,14 @@ curl -X 'POST' \
 }'
 ```
 
-### Resposta
+#### Resposta
 
-```bash
+```json
 {
   "nome": "Nome do cliente",
-  "cpf": null,
   "email": "email@provedor.com",
-  "id": "92190798-aa89-4d7d-91f2-1e155688cbcd"
-  "uuid": null
+  "id": "1",
+  "uuid": "00000000-0000-0000-0000-000000000000"
 }
 ```
 
@@ -179,7 +238,7 @@ Com isso, você terá seu cliente cadastrado.
 
 Você precisa escolher os itens que deseja.
 
-Onde `CATEGORIA`:
+Onde `CATEGORIA` deve ser um dos itens:
 
 - `LANCHE`;
 - `COMPLEMENTO`;
@@ -198,13 +257,12 @@ Para consultar os itens disponíveis:
 Exemplo (pega todos os produtos (itens) disponíveis na categoria de LANCHE):
 
 ```bash
-
 curl -X 'GET' \
   'http://localhost:30001/api/v1/itens/por-categoria/LANCHE/itens' \
   -H 'accept: application/json'
 ```
 
-### Resposta
+#### Resposta
 
 ```json
 [
@@ -256,7 +314,7 @@ No fim, após escolher todos os itens, monte um objeto com a seguinte estrutura:
 
 O `payload` anterior contempla:
 
-```
+```markdown
 Cliente
 id: 1
 Nome: Joaquim Da Silva
@@ -331,7 +389,7 @@ curl -X 'POST' \
 }'
 ```
 
-### Resposta
+#### Resposta
 
 ```json
 {
@@ -349,30 +407,29 @@ Todo pedido realizado começa com status de `Aguardando Pagamento`.
 
 Sendo assim, precisamos realizar o `pagamento` deste pedido.
 
+Podemos tanto `APROVAR` como `REPROVAR` o pagamento.
+
 #### Via Swagger
 
-[http://localhost:30001/swagger-ui/index.html#/Pagamento/pagar](http://localhost:30001/swagger-ui/index.html#/Pagamento/pagar)
+[http://localhost:30001/swagger-ui/index.html#/Retorno%20Pagamento/consultarPedidoPorStatus](http://localhost:30001/swagger-ui/index.html#/Retorno%20Pagamento/consultarPedidoPorStatus)
 
 #### Via Terminal
 
 ```bash
 curl -X 'POST' \
-  'http://localhost:8081/api/v1/pagamento' \
+  'http://localhost:30001/wh/v1/pagamentos' \
   -H 'accept: */*' \
   -H 'Content-Type: application/json' \
   -d '{
-  "idPedido": 1
+  "pagamentoId": 1,
+  "statusConfirmacaoPagamento": "APROVADO"
 }'
 ```
 
-### Resposta
+#### Resposta
 
 ```json
-{
-  "idPedido": 1,
-  "realizado": true,
-  "statusPedido": "RECEBIDO"
-}
+200 OK
 ```
 
 Após o pagamento, é necessário avançar o status do pedido na fila. Veja o tópico a seguir.
@@ -407,7 +464,7 @@ curl -X 'PUT' \
   -H 'accept: application/json'
 ```
 
-### Resposta
+#### Resposta
 
 ```json
 {
@@ -515,7 +572,7 @@ Para isso, podemos listar os pedidos finalizados:
 
 #### Via Swagger
 
-[http://localhost:30001/swagger-ui/index.html#/Pedido/listarPedidos](http://localhost:30001/swagger-ui/index.html#/Pedido/listarPedidos)
+[http://localhost:30001/swagger-ui/index.html#/Pedido/consultarPedidoPorStatus_1](http://localhost:30001/swagger-ui/index.html#/Pedido/consultarPedidoPorStatus_1)
 
 #### Via Terminal
 
@@ -527,6 +584,21 @@ curl -X 'GET' \
 
 Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz com seu lance :) .
 
+</details>
+
+### 7. Acompanhamento do pedido (simulação de totem)
+
+<details>
+  <summary>Passo a passo</summary>
+Uma vez que o pedido é realizado e pago, ele irá automaticamente ser atualizado para `RECEBIDO`. Com isso, podemos ver o seu progresso, simulando o totem.
+
+É possível acompanhar o pedido entre os status: `RECEBIDO`, `EM_PREPARACAO` e `PRONTO`.
+
+Para isso, é necessário seguir a ordem: [registrando o seu pedido](#3-registrando-o-seu-pedido), [realizando o pagamento](#4-realizando-o-pagamento)
+e por fim [avançando o status do pedido (fila)](#5-avançando-o-status-do-pedido-fila).
+
+[Veja este vídeo de demonstração para melhor entendimento](https://drive.google.com/file/d/1ZpjbJ1gIHJ5RgNASV-KS6is5Nw9I788H/view?usp=sharing)
+  </summary>
 </details>
 
 ## Roadmap
@@ -557,14 +629,14 @@ Veja em https://github.com/ALFAC-Org/food/tree/hexagonal#roadmap
 #### Documentação
 
 - [x] Atualização de README;
-- [ ] Desenho da arquitetura pensado por você, pessoa arquiteta de software, contemplando:
+- [x] Desenho da arquitetura pensado por você, pessoa arquiteta de software, contemplando:
   - [x] - i. Os requisitos do negócio (problema).
   - [x] - ii. Os requisitos de infraestrutura:
     - Você pode utilizar o MiniKube, Docker Kubernetes, AKS, EKS, GKE ou qualquer nuvem que você desenha.
 - [x] Collection com todas as APIs desenvolvidas:
   - [x] i. Link do Swagger no projeto ou link para download da collection do Postman (JSON).
-- [ ] Guia completo com todas as instruções para execução do projeto e a ordem de execução das APIs, caso seja necessário;
-- [ ] Link para vídeo demonstrando a arquitetura desenvolvida na nuvem ou localmente.
+- [x] Guia completo com todas as instruções para execução do projeto e a ordem de execução das APIs, caso seja necessário;
+- [x] Link para vídeo demonstrando a arquitetura desenvolvida na nuvem ou localmente.
 
 #### Melhorias (identificadas pelo time)
 
