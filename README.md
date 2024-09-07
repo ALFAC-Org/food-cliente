@@ -24,44 +24,35 @@ Para isso, o consumidor desta plataforma deve seguir o fluxo estabelecido na ima
 
 Veja em: [https://miro.com/app/board/uXjVKZNCxxM](https://miro.com/app/board/uXjVKZNCxxM=/?share_link_id=127959473892)
 
+### Fase 3
+
+TODO - Link para MER (Modelo de Entidade e Relacionamento)
+
 > [!WARNING]  
-> **Essa documentação foca na 2° FASE do Tech Challenge - usando Kubernetes como base para a aplicação. Se precisar, consulte o README.md da 1° FASE no link: https://github.com/ALFAC-Org/food/tree/hexagonal**
+> **Essa documentação foca na 3° FASE do Tech Challenge - usando Terraform e GitHub Actions. Se precisar, consulte o README.md da 2° FASE no link: https://github.com/ALFAC-Org/food/tree/fase2-clean-arch**
 
 ## Tabela de conteúdos
 
-- [Tecnologia](#tecnologia)
-- [Requisitos](#requisitos)
-- [Arquitetura](#arquitetura)
-  - [Visão Geral](#visão-geral)
-    - [Vídeo - Arquitetura da aplicação: Kubernetes + AWS](https://drive.google.com/file/d/1wuyAu3_Hne0w3iy7KY5_TZ-NDytB4kTw/view?usp=sharing)
-    - [Vídeo - Arquitetura da aplicação: código e aplicação do Clean Architecture](https://youtu.be/H04AmyucSN0)
-  - [Microsserviços](#microsserviços)
-- [Executando a aplicação](#executando-a-aplicação)
-  - [Localmente](#localmente)
-  - [Na nuvem (AWS)](#na-nuvem-aws)
-- [Fluxo do usuário](#fluxo-do-usuário)
-  - [1. Se identificando (opcional)](#1-se-identificando-opcional)
-  - [2. Montando o `payload` com os itens do seu pedido](#2-montando-o-payload-com-os-itens-do-seu-pedido)
-  - [3. Registrando o seu pedido](#3-registrando-o-seu-pedido)
-  - [4. Realizando o pagamento](#4-realizando-o-pagamento)
-  - [5. Avançando o status do pedido (fila)](#5-avançando-o-status-do-pedido-fila)
-  - [6. Pedido sendo finalizado](#6-pedido-sendo-finalizado)
-  - [7. Acompanhamento do pedido(simulação de totem)](#7-acompanhamento-do-pedido-simulação-de-totem)
-- **Tutoriais (vídeos)**
-  - [1. Executando a aplicação - Com Kubernetes - localmente](https://drive.google.com/file/d/1CloOrEDDemPQSZ8cqH2SL5Oh6xoJIAXb/view?usp=sharing)
-  - [2. Executando a aplicação - Com Kubernetes - na nuvem (AWS)](https://drive.google.com/file/d/1njxcGlQfmKcCtbqMI9Qf19vxJwZ-MD3D/view?usp=sharing)
-  
-  **Entenda o fluxo do usuário de uma vez só**
-
-  - [Fluxo inteiro](https://drive.google.com/file/d/1Rr19LOmZgfViqO1NN9MvOKxz2yemDmL_/view?usp=sharing)
-
-  **Entenda o fluxo do usuário por partes**
-
-  - [1. Se identificando (opcional)](https://drive.google.com/file/d/1bju8UWoqZsbBnEKla8-jTX7MMUT_7z_1/view?usp=sharing)
-  - [2. Montando o `payload` com os itens do seu pedido](https://drive.google.com/file/d/1U2TRn4kerONNgG21dugjLrfBcWzrxdKT/view?usp=sharing)
-  - [3. Pagando o pedido](https://drive.google.com/file/d/1vV3wZzFVNcnvOvxM0MaJ-2rET_7tlazL/view?usp=sharing)
-  - [4. Avançando o status do pedido (fila)](https://drive.google.com/file/d/1RdVzS6jiC0mbnTH7vW-2H640A-kYRBht/view?usp=sharing)
-  - [5. Consultando pedidos por status (simulando um totem)](https://drive.google.com/file/d/1IFsE6sMsJIG6ymnFMLJtY-f1CoxVwTOF/view?usp=sharing)
+- [Aplicação Fast Food - ALFAC](#aplicação-fast-food---alfac)
+  - [Fluxo completo no MIRO](#fluxo-completo-no-miro)
+    - [Fase 1](#fase-1)
+    - [Fase 2](#fase-2)
+    - [Fase 3](#fase-3)
+  - [Tabela de conteúdos](#tabela-de-conteúdos)
+  - [Tecnologia](#tecnologia)
+    - [Na Nuvem](#na-nuvem)
+  - [Requisitos](#requisitos)
+  - [Arquitetura](#arquitetura)
+    - [Visão Geral](#visão-geral)
+    - [Microsserviços](#microsserviços)
+  - [Executando a aplicação](#executando-a-aplicação)
+    - [Localmente](#localmente)
+    - [Na nuvem (AWS)](#na-nuvem-aws)
+    - [GitHub Actions](#github-actions)
+  - [Fluxo do usuário](#fluxo-do-usuário)
+  - [Roadmap](#roadmap)
+  - [Entregas](#entregas)
+  - [Membros](#membros)
 
 ## Tecnologia
 
@@ -70,23 +61,31 @@ Veja em: [https://miro.com/app/board/uXjVKZNCxxM](https://miro.com/app/board/uXj
 - **Gerenciador de dependências:** Maven
 - **Banco de dados:** MySQL 8
 - **Documentação e uso de API's:** Swagger
-- **Containerização:** Docker
+- **Conteinerização:** Docker
 - **Orquestração:** Kubernetes
+
+### Na Nuvem
+
+- **Web Services**:  AWS
+- **IaC**: Terraform - v1.9.5
 
 ## Requisitos
 
 - Docker _(versão 27.0.3)_ - para rodar localmente
 - Kubernetes _(versão 1.30)_ - para rodar localmente e na nuvem (AWS)
+- Terraform _(versão 1.9.5)_ - para rodar na nuvem (AWS) e GitHub Actions
 
 ## Arquitetura
 
 ### Visão Geral
 
-A aplicação está estruturada no padrão de _Clean Architecture_. Pode ser executada tanto via _Docker_ como _Kubernetes_. Podendo ser hospedada tanto localmente ou na nuvem, usando serviços como _AWS_. A interação da aplicação se dá através de _APIs_ com o _Swagger_ disponibilizado.
+A aplicação está estruturada no padrão de _Clean Architecture_. Pode ser executada tanto via _Docker_, _Kubernetes_ e _Terraform_. Podendo ser hospedada tanto localmente ou na nuvem, usando serviços como _AWS_. A interação da aplicação se dá através de _APIs_ com o _Swagger_ disponibilizado.
 
 [Vídeo - Arquitetura da aplicação: Kubernetes + AWS](https://drive.google.com/file/d/1wuyAu3_Hne0w3iy7KY5_TZ-NDytB4kTw/view?usp=sharing)
 
 [Vídeo - Arquitetura da aplicação: código e aplicação do Clean Architecture](https://youtu.be/H04AmyucSN0)
+
+**<span style="color:red">TODO - Vídeo Arquitetura da aplicação: Terraform + AWS + GitHub Actions</span>**
 
 ### Microsserviços
 
@@ -94,6 +93,7 @@ A aplicação está estruturada no padrão de _Clean Architecture_. Pode ser exe
 
 - backend (`svc-food`)
 - banco de dados (`svc-db-food`)
+- **<span style="color:red">TODO</span>**
 
 ## Executando a aplicação
 
@@ -122,7 +122,7 @@ Adicionando _backend_:
 kubectl apply -f food/k8s/dev/backend
 ```
 
-1.4 - (opcional) Adicione _autoscaling_:
+(opcional) Adicione _autoscaling_:
 
 ```bash
 kubectl apply -f food/k8s/dev/autoscaling
@@ -137,520 +137,73 @@ kubectl apply -f food/k8s/dev/autoscaling
 
 No terminal, execute:
 
-Adicione _configmaps_ e _secrets_:
-
-```bash
-kubectl apply -f food/k8s/prod/shared
-```
-
-Adicione o driver _aws-ebs-csi-driver_:
-
-```bash
-kubectl apply -k "github.com/kubernetes-sigs/aws-ebs-csi-driver/deploy/kubernetes/overlays/stable/?ref=release-1.32"
-```
+**<span style="color:red">TODO</span>**
 
 Adicione _banco de dados_:
 
-```bash
-kubectl apply -f food/k8s/prod/db
-```
+**<span style="color:red">TODO</span>**
 
 Adicionando _backend_:
 
-```bash
-kubectl apply -f food/k8s/prod/backend
-```
+**<span style="color:red">TODO</span>**
 
-1.4 - (opcional) Adicione _autoscaling_:
+</details>
 
-```bash
-kubectl apply -f food/k8s/prod/autoscaling
-```
+### GitHub Actions
+
+<details>
+  <summary>Passo a passo</summary>
+
+**<span style="color:red">TODO</span>**
 
 </details>
 
 ## Fluxo do usuário
 
-Uma vez a aplicação rodando, é necessário acessar o `Swagger` da aplicação pelo navegador:
+Como fazer um pedido em nossa plataforma?
 
-- [http://localhost:30001/api-docs](http://localhost:30001/api-docs)
-- ou [http://localhost:30001/swagger-ui/index.html](http://localhost:30001/swagger-ui/index.html)
-
-O fluxo deve ser feito na sequência:
-
-1. Se identificando (opcional)
-2. Montando o `payload` do seu pedido, contendo ao menos um dos itens a seguir:
-    - Lanche
-    - Acompanhamento
-    - Bebida
-    - Sobremesa
-3. Registrando o seu pedido
-4. Realizando o pagamento
-5. Avançando o status do pedido (fila)
-6. Pedido sendo finalizado
-7. Acompanhamento do pedido (simulação de totem)
-
-### 1. Se identificando (opcional)
-
-<details>
-  <summary>Passo a passo</summary>
-
-Seguindo o cenário feliz, faça o cadastro do seu cliente. E com o id que irá retornar da `response`, você irá utilizá-lo nas etapas seguintes.
-
-#### Via Swagger
-
-[http://localhost:30001/swagger-ui/index.html#/Cliente/cadastrarCliente](http://localhost:30001/swagger-ui/index.html#/Cliente/cadastrarCliente)
-
-#### Via Terminal
-
-`POST http://localhost:30001/api/v1/clientes`
-
-```bash
-curl -X 'POST' \
-'http://localhost:30001/api/v1/clientes' \
--H 'accept: */*' \
--H 'Content-Type: application/json' \
--d '{
-    "nome": "Nome do cliente",
-    "email": "email@provedor.com",
-    "cpf": "12121212121"
-}'
-```
-
-#### Resposta
-
-```json
-{
-  "nome": "Nome do cliente",
-  "email": "email@provedor.com",
-  "id": "1",
-  "uuid": "00000000-0000-0000-0000-000000000000"
-}
-```
-
-Com isso, você terá seu cliente cadastrado.
-</details>
-
-### 2. Montando o `payload` com os itens do seu pedido
-
-<details>
-  <summary>Passo a passo</summary>
-
-Você precisa escolher os itens que deseja.
-
-Onde `CATEGORIA` deve ser um dos itens:
-
-- `LANCHE`;
-- `COMPLEMENTO`;
-- `ACOMPANHAMENTO`;
-- `BEBIDA`;
-- `SOBREMESA`;
-
-Para consultar os itens disponíveis:
-
-#### Via Swagger
-
-[http://localhost:30001/swagger-ui/index.html#/Item/consultarItensPorCategoria](http://localhost:30001/swagger-ui/index.html#/Item/consultarItensPorCategoria)
-
-#### Via Terminal
-
-Exemplo (pega todos os produtos (itens) disponíveis na categoria de LANCHE):
-
-```bash
-curl -X 'GET' \
-  'http://localhost:30001/api/v1/itens/por-categoria/LANCHE/itens' \
-  -H 'accept: application/json'
-```
-
-#### Resposta
-
-```json
-[
-  {
-    "id": "d649a7fd-16f5-11ef-b59f-0242ac120002",
-    "nome": "Hamburguer",
-    "preco": 15,
-    "categoria": "LANCHE"
-  },
-  {
-    "id": "d649aad0-16f5-11ef-b59f-0242ac120002",
-    "nome": "Hot Dog",
-    "preco": 10,
-    "categoria": "LANCHE"
-  },
-  ...
-]
-```
-
-No fim, após escolher todos os itens, monte um objeto com a seguinte estrutura:
-
-```json
-{
-  "clienteId": 1,
-  "combos": [
-    {
-      "lanche": {
-        "id": 15,
-        "complementos": [
-          {
-             "id": 6
-          }
-        ],
-        "observacoes": "Capricha no queijo!"
-      },
-      "acompanhamento": {
-        "id": 8
-      },
-      "bebida": {
-        "id": 11
-      },
-      "sobremesa": {
-        "id": 14
-      }
-    }
-  ]
-}
-```
-
-O `payload` anterior contempla:
-
-```markdown
-Cliente
-id: 1
-Nome: Joaquim Da Silva
-
-Lanche
-id: 15
-Nome: Hamburguer
-
-Complemento
-id: 6
-Nome: Queijo extra
-
-Acompanhamento
-id: 8
-Nome: Batata Frita
-
-Bebida
-id: 11
-Nome: Refrigerante
-
-Sobremesa
-id: 14
-Nome: Sorvete
-```
-
-Basta então registrar o pedido, como na próxima etapa.
-
-</details>
-
-### 3. Registrando o seu pedido
-
-<details>
-  <summary>Passo a passo</summary>
-
-Envie o `payload` para o pedido ser registrado:
-
-#### Via Swagger
-
-[http://localhost:30001/swagger-ui/index.html#/Pedido/criarPedido](http://localhost:30001/swagger-ui/index.html#/Pedido/criarPedido)
-
-#### Via Terminal
-
-```bash
-curl -X 'POST' \
-  'http://localhost:30001/api/v1/pedidos' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "clienteId": 1,
-  "combos": [
-    {
-      "lanche": {
-        "id": 15,
-        "complementos": [
-          {
-            "id": 6
-          }
-        ],
-        "observacoes": "Capricha no queijo!"
-      },
-      "acompanhamento": {
-        "id": 8
-      },
-      "bebida": {
-        "id": 11
-      },
-      "sobremesa": {
-        "id": 14
-      }
-    }
-  ]
-}'
-```
-
-#### Resposta
-
-```json
-{
-  "id": 2
-}
-```
-</details>
-
-### 4. Realizando o pagamento
-
-<details>
-  <summary>Passo a passo</summary>
-
-Todo pedido realizado começa com status de `Aguardando Pagamento`.
-
-Sendo assim, precisamos realizar o `pagamento` deste pedido.
-
-Podemos tanto `APROVAR` como `REPROVAR` o pagamento.
-
-#### Via Swagger
-
-[http://localhost:30001/swagger-ui/index.html#/Retorno%20Pagamento/consultarPedidoPorStatus](http://localhost:30001/swagger-ui/index.html#/Retorno%20Pagamento/consultarPedidoPorStatus)
-
-#### Via Terminal
-
-```bash
-curl -X 'POST' \
-  'http://localhost:30001/wh/v1/pagamentos' \
-  -H 'accept: */*' \
-  -H 'Content-Type: application/json' \
-  -d '{
-  "pagamentoId": 1,
-  "statusConfirmacaoPagamento": "APROVADO"
-}'
-```
-
-#### Resposta
-
-```json
-200 OK
-```
-
-Após o pagamento, é necessário avançar o status do pedido na fila. Veja o tópico a seguir.
-
-</details>
-
-### 5. Avançando o status do pedido (fila)
-
-<details>
-  <summary>Passo a passo</summary>
-
-Havendo a confirmação do pagamento, precisamos executar a API que irá atualizar o status e mover o pedido no fluxo.
-
-Fluxo da alteração dos status:
-
-- Uma vez que o pedido é realizado: `Aguardando Pagamento`;
-  - Executa a API para pagar: `Recebido`;
-    - Executa a API para atualizar status: `Em preparação`;
-      - Executa a API para atualizar status: `Pronto`;
-        - Executa a API para atualizar status: `Finalizado`;
-          - Executa a API para atualizar status: recebe a mensagem `Status do pedido já finalizado não permite alteração.`;
-
-#### Via Swagger
-
-[http://localhost:30001/swagger-ui/index.html#/Pedido/atualizarStatusPedido](http://localhost:30001/swagger-ui/index.html#/Pedido/atualizarStatusPedido)
-
-#### Via Terminal
-
-```bash
-curl -X 'PUT' \
-  'http://localhost:30001/api/v1/pedidos/1/atualizar-status' \
-  -H 'accept: application/json'
-```
-
-#### Resposta
-
-```json
-{
-  "pedidos": [
-    {
-      "combos": [
-        {
-          "lanche": {
-            "id": 1,
-            "nome": "Hamburguer",
-            "preco": 15,
-            "categoria": "LANCHE",
-            "complementos": [
-              {
-                "id": 6,
-                "nome": "Queijo Extra",
-                "preco": 2,
-                "categoria": "COMPLEMENTO"
-              }
-            ],
-            "observacoes": "Capricha no queijo!"
-          },
-          "acompanhamento": {
-            "id": 8,
-            "nome": "Batata Frita",
-            "preco": 5,
-            "categoria": "ACOMPANHAMENTO"
-          },
-          "bebida": {
-            "id": 11,
-            "nome": "Refrigerante",
-            "preco": 4,
-            "categoria": "BEBIDA"
-          },
-          "sobremesa": {
-            "id": 14,
-            "nome": "Sorvete",
-            "preco": 5,
-            "categoria": "SOBREMESA"
-          }
-        }
-      ],
-      "clienteId": 1,
-      "id": 1,
-      "statusPedido": "FINALIZADO"
-    },
-    {
-      "combos": [
-        {
-          "lanche": {
-            "id": 1,
-            "nome": "Hamburguer",
-            "preco": 15,
-            "categoria": "LANCHE",
-            "complementos": [
-              {
-                "id": 6,
-                "nome": "Queijo Extra",
-                "preco": 2,
-                "categoria": "COMPLEMENTO"
-              }
-            ],
-            "observacoes": "Capricha no queijo!"
-          },
-          "acompanhamento": {
-            "id": 8,
-            "nome": "Batata Frita",
-            "preco": 5,
-            "categoria": "ACOMPANHAMENTO"
-          },
-          "bebida": {
-            "id": 11,
-            "nome": "Refrigerante",
-            "preco": 4,
-            "categoria": "BEBIDA"
-          },
-          "sobremesa": {
-            "id": 14,
-            "nome": "Sorvete",
-            "preco": 5,
-            "categoria": "SOBREMESA"
-          }
-        }
-      ],
-      "clienteId": 14,
-      "id": 14,
-      "statusPedido": "FINALIZADO"
-    }
-  ]
-}
-```
-
-A atualização deve ser feita até que se chegue ao status de `FINALIZADO`.
-
-</details>
-
-### 6. Pedido sendo finalizado
-
-<details>
-  <summary>Passo a passo</summary>
-
-Uma vez que o pedido chegou ao status de `FINALIZADO`, consideramos que o cliente recebeu o mesmo e que assim, podemos verificar todos os itens finalizados.
-
-Para isso, podemos listar os pedidos finalizados:
-
-#### Via Swagger
-
-[http://localhost:30001/swagger-ui/index.html#/Pedido/consultarPedidoPorStatus_1](http://localhost:30001/swagger-ui/index.html#/Pedido/consultarPedidoPorStatus_1)
-
-#### Via Terminal
-
-```bash
-curl -X 'GET' \
-  'http://localhost:30001/api/v1/pedidos/status/FINALIZADO' \
-  -H 'accept: application/json'
-```
-
-Com isso, podemos considerar o fluxo encerrado e que o nosso cliente está feliz com seu lance :) .
-
-</details>
-
-### 7. Acompanhamento do pedido (simulação de totem)
-
-<details>
-  <summary>Passo a passo</summary>
-Uma vez que o pedido é realizado e pago, ele irá automaticamente ser atualizado para `RECEBIDO`. Com isso, podemos ver o seu progresso, simulando o totem.
-
-É possível acompanhar o pedido entre os status: `RECEBIDO`, `EM_PREPARACAO` e `PRONTO`.
-
-Para isso, é necessário seguir a ordem: [registrando o seu pedido](#3-registrando-o-seu-pedido), [realizando o pagamento](#4-realizando-o-pagamento)
-e por fim [avançando o status do pedido (fila)](#5-avançando-o-status-do-pedido-fila).
-
-[Veja este vídeo de demonstração para melhor entendimento](https://drive.google.com/file/d/1ZpjbJ1gIHJ5RgNASV-KS6is5Nw9I788H/view?usp=sharing)
-  </summary>
-</details>
+Veja em [Fluxo do usuário](./docs/FLUXO_USUARIO.md).
 
 ## Roadmap
 
 <details>
   <summary>FASE 1</summary>
 
-Veja em https://github.com/ALFAC-Org/food/tree/hexagonal#roadmap
+Veja em [https://github.com/ALFAC-Org/food/tree/hexagonal#roadmap](https://github.com/ALFAC-Org/food/tree/hexagonal#roadmap)
 
 </details>
 
 <details>
   <summary>FASE 2</summary>
 
-#### Alterar/criar as APIs
+Veja em [https://github.com/ALFAC-Org/food/tree/fase2-clean-arch?tab=readme-ov-file#roadmap](https://github.com/ALFAC-Org/food/tree/fase2-clean-arch?tab=readme-ov-file#roadmap)
 
-- [x] Checkout do pedido: deverá receber os produtos solicitados e retornar a identificação do pedido;
-- [x] Consultar status do pagamento do pedido: informando se o pagamento foi aprovado ou não (incluindo cancelado).
-- [x] Webhook: para receber confirmação de pagamento aprovado ou recusado;
-- [x] A lista de pedidos deverá retorná-los com suas descrições, ordenados com a seguinte regra:
-  - [x] 1. Pronto > Em Preparação > Recebido;
-  - [x] 2. Pedidos mais antigos primeiro e mais novos depois;
-  - [x] 3. Pedidos com status Finalizado não devem aparecer na lista.
-- [x] Atualizar o status do pedido;
-- ~~[ ] Como desafio extra (opcionalmente), você pode implementar a integração com Mercado Pago para gerar o QRCode para pagamento e integrar com o WebHook para capturar os pagamentos.~~
-- [x] Caso contrário, será necessário realizar o mock da parte de pagamentos. Como referência, acesse: https://www.mercadopago.com.br/developers/pt/docs/qr-code/integration-configuration/qr-dynamic/integration.
+</details>
 
-#### Documentação
+<details>
+  <summary>FASE 3</summary>
 
-- [x] Atualização de README;
-- [x] Desenho da arquitetura pensado por você, pessoa arquiteta de software, contemplando:
-  - [x] - i. Os requisitos do negócio (problema).
-  - [x] - ii. Os requisitos de infraestrutura:
-    - Você pode utilizar o MiniKube, Docker Kubernetes, AKS, EKS, GKE ou qualquer nuvem que você desenha.
-- [x] Collection com todas as APIs desenvolvidas:
-  - [x] i. Link do Swagger no projeto ou link para download da collection do Postman (JSON).
-- [x] Guia completo com todas as instruções para execução do projeto e a ordem de execução das APIs, caso seja necessário;
-- [x] Link para vídeo demonstrando a arquitetura desenvolvida na nuvem ou localmente.
-
-#### Melhorias (identificadas pelo time)
-
-- [ ] Quando tentar deletar um item que está sendo usando em um pedido, devemos tratar melhor a mensagem de erro;
-- [ ] Quando criar um novo item, podemos ter uma uk no nome + categoria para não deixar criar um item com nome e categoria igual a um item que já existe;
-- [x] Em todas as tabelas termos: `data_cadastro`, `data_atualizacao`;
-- [x] Atualizar a aplicação desenvolvida na FASE 1 refatorando o código para seguir os padrões clean code e clean architecture.
+- [ ] 1. Implementar um API Gateway e um `function serverless` para `autenticar o cliente` com base no CPF.
+  - [ ] 1. Integrar ao sistema de autenticação para identificar o cliente.
+      1. Desenho (room): https://excalidraw.com/#room=1cf48787e8cd8028a3bd,Pb8UVcTDexZQseHv8VOFpQ
+      2. Desenho (estático): https://excalidraw.com/#json=J_qszI3T0Q_ppK9SychFs,aBuXjzcOrsndQuOsvP9o4A
+      
+- [ ] 2. Implementar as melhores práticas de `CI/CD` para a aplicação, segregando os códigos em repositórios, por exemplo:
+  - [ ] 1 repositório para o Lambda - repositório `food-serveless-function`.
+  - [ ] 1 repositório para sua infra Kubernetes com Terraform - repositório `food-cloud-infra`.
+  - [ ] 1 repositório para sua infra banco de dados gerenciáveis com Terraform - repositório `food-database`.
+    4. 1 repositório para sua aplicação que é executada no Kubernetes - repositório `food`
+- [ ] 3. Os repositórios devem fazer deploy automatizado na conta da nuvem utilizando actions. As branchs `main/master` devem ser protegidas, não permitindo commits direto. Sempre utilize `pull request`.
+- [ ] 4. Melhorar a estrutura do banco de dados escolhido, documentar seguindo os padrões de modelagem de dados e justificar a escolha do banco de dados.
+- [ ] 5. Você tem a liberdade para escolher qual a infra de nuvem desejar, mas terá de utilizar os serviços serverless: functions (AWS Lamba, Azure functions ou Google Functions, por exemplo), banco de dados gerenciáveis (AWS RDS, Banco de Dados do Azure ou Cloud SQL no GCP, por exemplo), sistema de autenticação (AWS Cognito, Microsoft AD ou Google Identity platform no GCP, por exemplo).
 
 </details>
 
 ## Entregas
 
 - FASE 1 - **28/05/2024** - **<span style="color:green">FEITO</span>**
-- FASE 2 - **30/07/2024** - **<span style="color:red">AGUARDANDO</span>**
+- FASE 2 - **30/07/2024** - **<span style="color:green">FEITO</span>**
+- FASE 3 - **01/10/2024** - **<span style="color:red">AGUARDANDO</span>**
 
 ## Membros
 
