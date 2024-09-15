@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment-food
+  name: deployment-food-app
 spec:
   replicas: 2
   template:
     metadata:
-      name: pod-food
+      name: deployment-food-app
       labels:
-        app: pod-food
+        app: deployment-food-app
     spec:
       containers:
-        - name: pod-food-container
-          image: carlohcs/food-repo:6
+        - name: deployment-food-app-container
+          image: carlohcs/food-repo:withoutdb18
           ports:
             - containerPort: 8080
           envFrom:
@@ -20,12 +20,6 @@ spec:
                 name: cm-food
             - secretRef:
                 name: secret-food
-          # Necessário para autoscaling
-          # -----
-          # Segundo o Chat GPT, eis o necessário: 
-          # - Comece com 0.5 CPU e 512Mi de memória para aplicações leves.
-          # - Para aplicações de complexidade média, use 1 CPU e 1Gi de memória.
-          # - Para aplicações pesadas, comece com 2 CPUs e 2Gi de memória, ajustando conforme necessário.
           resources:
             requests:
               memory: "512Mi"
@@ -33,6 +27,12 @@ spec:
             limits:
               memory: "1Gi"
               cpu: "1"
+          # livenessProbe:
+          #   httpGet:
+          #     path: "/api/v2/health-check"
+          #     port: 8080
+          #   initialDelaySeconds: 3
+          #   periodSeconds: 3
   selector:
     matchLabels:
-      app: pod-food
+      app: deployment-food-app

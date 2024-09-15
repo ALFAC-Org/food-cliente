@@ -1,0 +1,56 @@
+# Use a imagem com JDK e Maven para compilar a aplicacao
+FROM --platform=linux/amd64 maven:3.8.1-openjdk-17-slim AS build
+
+# Define o WORKDIR no container
+WORKDIR /app
+
+# Copia o arquivo pom.xml para o WORKDIR
+COPY pom.xml .
+
+# Copia os modulos para o WORKDIR
+COPY food-main ./food-main
+COPY food-infra ./food-infra
+COPY food-core ./food-core
+
+# Compila o aplicativo com o Maven
+RUN mvn clean install -U
+
+# Crie uma imagem baseada na JDK para executar a aplicacao
+FROM openjdk:17-slim
+
+# Define o WORKDIR no container
+WORKDIR /app
+
+# Aceita argumentos de construção
+ARG APPLICATION_VERSION
+ARG APPLICATION_DATABASE_VERSION
+ARG APPLICATION_PORT
+ARG MYSQL_ROOT_PASSWORD
+ARG MYSQL_DATABASE
+ARG MYSQL_USER
+ARG MYSQL_PASSWORD
+ARG SPRING_DATASOURCE_URL
+ARG SPRING_DATASOURCE_USERNAME
+ARG SPRING_DATASOURCE_PASSWORD
+
+# Define variáveis de ambiente
+
+# MySQL config
+ENV APPLICATION_VERSION=${APPLICATION_VERSION}
+ENV APPLICATION_DATABASE_VERSION=${APPLICATION_DATABASE_VERSION}
+ENV APPLICATION_PORT=${APPLICATION_PORT}
+ENV MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+ENV MYSQL_DATABASE=${MYSQL_DATABASE}
+ENV MYSQL_USER=${MYSQL_USER}
+ENV MYSQL_PASSWORD=${MYSQL_PASSWORD}
+
+# Spring database config
+ENV SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+ENV SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+ENV SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+
+# Copia o JAR da aplicacao para o WORKDIR
+COPY --from=build /app/food-main/target/*.jar ./app.jar
+
+# Executa a aplicacao
+CMD ["java", "-Dspring.profiles.active=prod", "-Dlogging.level.root=DEBUG", "-jar", "app.jar"]

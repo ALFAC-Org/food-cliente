@@ -6,7 +6,7 @@ spec:
   type: NodePort
   # type: LoadBalancer // Quando for na AWS
   selector:
-    app: pod-food
+    app: deployment-food-app
   ports:
     - port: 8080
       nodePort: 30001
