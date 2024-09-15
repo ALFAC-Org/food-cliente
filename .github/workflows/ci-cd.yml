@@ -4,10 +4,10 @@ name: CI/CD
 on:
   push:
     branches:
-      - feat/apply-new-version
+      - main
   pull_request:
     branches:
-      - feat/apply-new-version
+      - main
   workflow_dispatch:
 
 jobs:
