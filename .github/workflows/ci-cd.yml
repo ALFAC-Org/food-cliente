@@ -89,7 +89,7 @@ jobs:
           -var "aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
           -var "aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
           -var "aws_session_token=${{ secrets.AWS_SESSION_TOKEN }}" \
-          -var "image_name=${{ secrets.IMAGE_NAME }}" \
+          -var "image_name=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.IMAGE_NAME }}" \
           -var "image_version=${{ env.BUILD_VERSION }}" \
           -var "cluster_name=${{ secrets.CLUSTER_NAME }}" \
           -var "app_port=${{ secrets.APP_PORT }}"
@@ -104,7 +104,7 @@ jobs:
           -var "aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
           -var "aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
           -var "aws_session_token=${{ secrets.AWS_SESSION_TOKEN }}" \
-          -var "image_name=${{ secrets.IMAGE_NAME }}" \
+          -var "image_name=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.IMAGE_NAME }}" \
           -var "image_version=${{ env.BUILD_VERSION }}" \
           -var "cluster_name=${{ secrets.CLUSTER_NAME }}" \
           -var "app_port=${{ secrets.APP_PORT }}"
