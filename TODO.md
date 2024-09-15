@@ -6,7 +6,10 @@ docker build --no-cache --platform linux/amd64 -f Dockerfile.prod.yml \
   --build-arg SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/mydatabase \
   --build-arg SPRING_DATASOURCE_USERNAME=myuser \
   --build-arg SPRING_DATASOURCE_PASSWORD=mypassword \
-  -t carlohcs/food-repo:withoutdb7 .
+  --build-arg APPLICATION_VERSION=latest \
+  --build-arg APPLICATION_DATABASE_VERSION=latest \
+  --build-arg APPLICATION_PORT=8080 \
+  -t carlohcs/food-repo:withoutdb11 .
 
-docker push carlohcs/food-repo:withoutdb7
-docker run -p 8080:8080 carlohcs/food-repo:withoutdb7
+docker push carlohcs/food-repo:withoutdb11
+docker run -p 8080:8080 carlohcs/food-repo:withoutdb11
