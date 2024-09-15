@@ -45,10 +45,10 @@ jobs:
             APPLICATION_VERSION=${{ env.BUILD_VERSION }}
           platforms: linux/amd64
           push: true
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE }}:cache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE }}:cache,mode=max
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.IMAGE_NAME }}:cache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.IMAGE_NAME }}:cache,mode=max
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_IMAGE }}:${{ env.BUILD_VERSION }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.IMAGE_NAME }}:${{ env.BUILD_VERSION }}
 
   apply-new-version:
     runs-on: ubuntu-latest
@@ -58,7 +58,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: terraform/prod
+        working-directory: terraform/dev
 
     steps:
       - name: Checkout code
