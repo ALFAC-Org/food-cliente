@@ -34,3 +34,8 @@ build/
 ### VS Code ###
 .vscode/
 .DS_Store
+
+## Terraform ##
+.terraform
+.terraform.lock.hcl
+.DS_Store
