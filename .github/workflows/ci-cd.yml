@@ -68,8 +68,13 @@ jobs:
         uses: thaind0/envfile@v1
         with:
           secrets: ${{ toJSON(secrets) }}
-          override: false # prevent overriding IMAGE_VERSION
+          override: false # prevent overriding IMAGE_VERSION -> don't create the env variables
           file: food-cloud-infra/.env
+
+      - name: Overwrite .env variable
+        run: |
+          echo "IMAGE_VERSION=${{ env.IMAGE_VERSION }}" >> .env
+        working-directory: food-cloud-infra
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
