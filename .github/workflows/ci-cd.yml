@@ -4,7 +4,13 @@ name: CI/CD
 on:
   push:
     branches:
-      - feat/apply-new-version
+      - main
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+  # TODO: se pudermos provisionar mais máquinas, isso aqui faz sentido
   # pull_request:
   #   branches:
   #     - main
@@ -12,6 +18,8 @@ on:
 
 jobs:
   build-docker-image:
+    # Garante que o build seja executado apenas quando houver um merge na branch main
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
 
     env:
