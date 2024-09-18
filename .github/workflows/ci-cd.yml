@@ -4,10 +4,10 @@ name: CI/CD
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - feat/apply-new-version
+  # pull_request:
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 jobs:
@@ -16,15 +16,15 @@ jobs:
 
     env:
       BUILD_VERSION: ${{ github.event.inputs.app_image_version || github.sha }}
-      NODE_ROLE_ARN: ${{ secrets.NODE_ROLE_ARN }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Load environment variables
+        uses: thaind0/envfile@v1
+        with:
+          secrets: ${{ toJSON(secrets) }}
 
       - name: Setup Docker
         uses: docker/setup-buildx-action@v1
@@ -40,9 +40,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile.prod.yml
-          build-args: |
-            APPLICATION_VERSION=${{ env.BUILD_VERSION }}
+          file: ./Dockerfile.yml
+          # build-args: |
+          #   APPLICATION_VERSION=${{ env.BUILD_VERSION }}
           platforms: linux/amd64
           push: true
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.IMAGE_NAME }}:cache
@@ -56,18 +56,19 @@ jobs:
 
     env:
       BUILD_VERSION: ${{ github.event.inputs.app_image_version || github.sha }}
-      NODE_ROLE_ARN: ${{ secrets.NODE_ROLE_ARN }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
+      
       - name: Clone Terraform Config Repository
         run: git clone https://github.com/ALFAC-Org/food-cloud-infra.git
+
+      - name: Load environment variables
+        uses: thaind0/envfile@v1
+        with:
+          secrets: ${{ toJSON(secrets) }}
+          file: food-cloud-infra/.env
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -81,31 +82,9 @@ jobs:
         working-directory: food-cloud-infra
 
       - name: Terraform Plan
-        # run: ../terraform/dev/terraform.sh plan
-        run: |
-          terraform plan \
-          -var "node_role_arn=${{ secrets.ARN_AWS_LAB_ROLE }}" \
-          -var "aws_region=${{ secrets.AWS_REGION }}" \
-          -var "aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
-          -var "aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
-          -var "aws_session_token=${{ secrets.AWS_SESSION_TOKEN }}" \
-          -var "image_name=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.IMAGE_NAME }}" \
-          -var "image_version=${{ env.BUILD_VERSION }}" \
-          -var "cluster_name=${{ secrets.CLUSTER_NAME }}" \
-          -var "app_port=${{ secrets.APP_PORT }}"
+        run: bash terraform.sh plan
         working-directory: food-cloud-infra
 
       - name: Terraform Apply
-        # run: ../terraform/dev/terraform.sh apply -auto-approve
-        run: |
-          terraform apply -auto-approve \
-          -var "node_role_arn=${{ secrets.ARN_AWS_LAB_ROLE }}" \
-          -var "aws_region=${{ secrets.AWS_REGION }}" \
-          -var "aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
-          -var "aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
-          -var "aws_session_token=${{ secrets.AWS_SESSION_TOKEN }}" \
-          -var "image_name=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.IMAGE_NAME }}" \
-          -var "image_version=${{ env.BUILD_VERSION }}" \
-          -var "cluster_name=${{ secrets.CLUSTER_NAME }}" \
-          -var "app_port=${{ secrets.APP_PORT }}"
+        run: bash terraform.sh apply -auto-approve
         working-directory: food-cloud-infra
