@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile.yml
+          file: ./Dockerfile
           # build-args: |
           #   APPLICATION_VERSION=${{ env.BUILD_VERSION }}
           platforms: linux/amd64
