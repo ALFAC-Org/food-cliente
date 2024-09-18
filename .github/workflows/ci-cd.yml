@@ -55,7 +55,7 @@ jobs:
     needs: build-docker-image
 
     env:
-      BUILD_VERSION: ${{ github.event.inputs.app_image_version || github.sha }}
+      IMAGE_VERSION: ${{ github.event.inputs.app_image_version || github.sha }}
 
     steps:
       - name: Checkout code
@@ -68,6 +68,7 @@ jobs:
         uses: thaind0/envfile@v1
         with:
           secrets: ${{ toJSON(secrets) }}
+          exclude: IMAGE_VERSION
           file: food-cloud-infra/.env
 
       - name: Setup Terraform
