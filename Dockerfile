@@ -25,4 +25,4 @@ WORKDIR /app
 COPY --from=build /app/food-main/target/*.jar ./app.jar
 
 # Executa a aplicacao
-CMD ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
+CMD ["java", "-Dspring.profiles.active=prod", "-Dlogging.level.root=DEBUG", "-jar", "app.jar"]
