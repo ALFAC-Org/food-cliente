@@ -5,21 +5,23 @@ on:
   push:
     branches:
       - main
+  # TODO: se pudermos provisionar mais máquinas, isso aqui faz sentido
   pull_request:
     branches:
       - main
     types:
       - closed
-  # TODO: se pudermos provisionar mais máquinas, isso aqui faz sentido
-  # pull_request:
-  #   branches:
-  #     - main
   workflow_dispatch:
+    inputs:
+      app_image_version:
+        description: 'Version of the application image'
+        required: false
+        default: 'latest'
 
 jobs:
   build-docker-image:
     # Garante que o build seja executado apenas quando houver um merge na branch main
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' || github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main')
     runs-on: ubuntu-latest
 
     env:
