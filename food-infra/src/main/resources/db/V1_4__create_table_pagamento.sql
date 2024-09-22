@@ -1,3 +1,5 @@
+USE fooddb;
+
 CREATE TABLE pagamento (
    id BIGINT AUTO_INCREMENT PRIMARY KEY,
    pedido_id BIGINT NOT NULL,

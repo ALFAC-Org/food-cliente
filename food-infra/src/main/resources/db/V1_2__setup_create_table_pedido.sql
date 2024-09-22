@@ -1,4 +1,4 @@
-USE pedidos;
+USE fooddb;
 
 CREATE TABLE IF NOT EXISTS pedido (
     id int auto_increment  primary key,
