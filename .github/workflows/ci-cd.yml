@@ -79,9 +79,16 @@ jobs:
           override: false # prevent overriding IMAGE_VERSION -> don't create the env variables
           file: food-cloud-infra/.env
 
+      - name: Get RDS endpoint
+        run: |
+          DB_HOST=$(aws rds describe-db-instances --db-instance-identifier ${{ secrets.DB_IDENTIFIER }} --query "DBInstances[0].Endpoint.Address" --output text)
+          echo "DB_HOST=$DB_HOST" >> $GITHUB_ENV
+
       - name: Overwrite .env variable
         run: |
           echo "IMAGE_VERSION=${{ env.IMAGE_VERSION }}" >> .env
+          echo "ENABLE_FLYWAY=true" >> .env
+          echo "DB_HOST=${{ env.DB_HOST }}" >> .env
         working-directory: food-cloud-infra
 
       - name: Setup Terraform
