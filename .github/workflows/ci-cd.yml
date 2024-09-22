@@ -19,7 +19,7 @@ on:
 jobs:
   build-docker-image:
     # Garante que o build seja executado apenas quando houver um merge na branch main
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
 
     env:
@@ -68,7 +68,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      
+
       - name: Clone Terraform Config Repository
         run: git clone https://github.com/ALFAC-Org/food-cloud-infra.git
 
