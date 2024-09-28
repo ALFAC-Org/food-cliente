@@ -1,5 +1,7 @@
 package br.com.alfac.food.infra.config;
 
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,7 +19,17 @@ public class SwaggerConfig {
         info.description("API para manipulação de pedidos, itens e clientes");
         info.version("0.2");
 
-        return new OpenAPI().info(info);
+        SecurityScheme securityScheme = new SecurityScheme()
+                .type(SecurityScheme.Type.APIKEY)
+                .in(SecurityScheme.In.HEADER)
+                .name("auth");
+
+        SecurityRequirement securityRequirement = new SecurityRequirement().addList("auth");
+
+
+        return new OpenAPI().info(info)
+                .addSecurityItem(securityRequirement)
+                .components(new io.swagger.v3.oas.models.Components().addSecuritySchemes("auth", securityScheme));
     }
     
 }

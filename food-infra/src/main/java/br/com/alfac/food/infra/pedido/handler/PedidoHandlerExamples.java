@@ -1,6 +1,7 @@
 package br.com.alfac.food.infra.pedido.handler;
 
 import br.com.alfac.food.core.application.pedido.dto.PedidoCriadoDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
@@ -14,13 +15,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 public interface PedidoHandlerExamples {
 
   @Operation(summary = "Registrar Pedidos", description = "Lembre-se de adicionar os itens que deseja dentro da estrutura exemplificada", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(examples = {
       @ExampleObject(name = "Pedido completo", value = """
           {
-                  "clienteId": 1,
+                 
                   "combos": [
                       {
                           "lanche": {
@@ -48,7 +50,7 @@ public interface PedidoHandlerExamples {
                                   """),
       @ExampleObject(name = "Apenas lanche e complemento", value = """
           {
-                  "clienteId": 1,
+                 
                   "combos": [
                       {
                           "lanche": {
@@ -67,7 +69,6 @@ public interface PedidoHandlerExamples {
                                   """),
       @ExampleObject(name = "Apenas acompanhamento", value = """
           {
-                  "clienteId": 1,
                   "combos": [
                       {
                           "acompanhamento": {
@@ -80,7 +81,6 @@ public interface PedidoHandlerExamples {
                                   """),
       @ExampleObject(name = "Apenas bebida", value = """
           {
-                  "clienteId": 1,
                   "combos": [
                       {
                           "bebida": {
@@ -112,5 +112,5 @@ public interface PedidoHandlerExamples {
           @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))
       }) })
 
-  ResponseEntity<PedidoCriadoDTO> registrarPedido(@RequestBody PedidoRequest pedidoRequest) throws FoodException;
+  ResponseEntity<PedidoCriadoDTO> registrarPedido(@RequestBody PedidoRequest pedidoRequest, HttpServletRequest request) throws FoodException;
 }

@@ -5,11 +5,13 @@ import br.com.alfac.food.core.application.pedido.dto.PedidoCriadoDTO;
 import br.com.alfac.food.core.application.pedido.dto.PedidoDTO;
 import br.com.alfac.food.core.domain.pedido.StatusPedido;
 import br.com.alfac.food.core.exception.FoodException;
+import br.com.alfac.food.infra.helper.JwtHelper;
 import br.com.alfac.food.infra.pedido.dto.PedidoRequest;
 import br.com.alfac.food.infra.pedido.dto.PedidosResponse;
 import br.com.alfac.food.infra.pedido.mapper.PedidoMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/v1/pedidos")
@@ -47,8 +50,11 @@ public class PedidoHandler implements PedidoHandlerExamples {
     @Transactional(rollbackFor = Exception.class)
     @Override
     @PostMapping
-    public ResponseEntity<PedidoCriadoDTO> registrarPedido(@RequestBody PedidoRequest pedidoRequest) throws FoodException {
-        PedidoCriadoDTO pedidoCriado = controladorPedido.criarPedido(pedidoMapper.toDTO(pedidoRequest));
+    public ResponseEntity<PedidoCriadoDTO> registrarPedido(@RequestBody PedidoRequest pedidoRequest, HttpServletRequest request) throws FoodException {
+        String authToken = request.getHeader("auth");
+        Long clienteId = JwtHelper.getID(authToken);
+
+        PedidoCriadoDTO pedidoCriado = controladorPedido.criarPedido(pedidoMapper.toDTO(pedidoRequest, clienteId));
 
         return new ResponseEntity<>(pedidoCriado, HttpStatus.CREATED);
     }
