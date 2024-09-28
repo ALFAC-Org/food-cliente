@@ -8,6 +8,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface PedidoMapper {
 
-    PedidoDTO toDTO(PedidoRequest pedidoRequest);
+    PedidoDTO toDTO(PedidoRequest pedidoRequest, Long clienteId);
 
 }
