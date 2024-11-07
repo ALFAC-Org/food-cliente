@@ -44,6 +44,14 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
+        <!-- Config para carregar automaticamente as variaveis ENV no ambiente de teste -->
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>2.2.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- // Config para carregar automaticamente as variaveis ENV no ambiente de teste -->
     </dependencies>
 
     <build>
@@ -55,7 +63,21 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <environmentVariables>
+                        <SPRING_DATASOURCE_URL>jdbc:mysql://localhost:31006/pedidos</SPRING_DATASOURCE_URL>
+                        <SPRING_DATASOURCE_USERNAME>root</SPRING_DATASOURCE_USERNAME>
+                        <SPRING_DATASOURCE_PASSWORD>root</SPRING_DATASOURCE_PASSWORD>
+                        <APPLICATION_VERSION>latest</APPLICATION_VERSION>
+                        <APPLICATION_DATABASE_VERSION>latest</APPLICATION_DATABASE_VERSION>
+                        <ENABLE_FLYWAY>false</ENABLE_FLYWAY>
+                        <APPLICATION_PORT>8080</APPLICATION_PORT>
+                        <!-- Add other environment variables here -->
+                    </environmentVariables>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+
+
 </project>
