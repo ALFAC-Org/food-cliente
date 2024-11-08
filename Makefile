@@ -6,6 +6,10 @@ unit-test:
 	@echo "Running unit tests"
 	@mvn test
 
+test-coverage:
+	@echo "Running unit tests with coverage"
+	@mvn clean test jacoco:report
+
 #integration-test:
 #	@echo "Running integration tests"
 #	@mvn test -P integration-test
