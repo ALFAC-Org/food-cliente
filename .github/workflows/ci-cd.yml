@@ -21,7 +21,7 @@ on:
 jobs:
   test-unit:
     # Garante que o build seja executado apenas quando houver um merge na branch main
-    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     container: maven:3.8.1-openjdk-17-slim
 
@@ -33,7 +33,6 @@ jobs:
         run: mvn --batch-mode --update-snapshots verify
 
   build-docker-image:
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main')
     needs: test-unit
     runs-on: ubuntu-latest
 
@@ -41,6 +40,9 @@ jobs:
       BUILD_VERSION: ${{ github.event.inputs.app_image_version || github.sha }}
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Load environment variables
         uses: thaind0/envfile@v1
         with:
