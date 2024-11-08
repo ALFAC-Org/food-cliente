@@ -124,6 +124,14 @@ Veja em [https://github.com/ALFAC-Org/food/tree/fase2-clean-arch?tab=readme-ov-f
 
 </details>
 
+## Checando a execução do github workflow actions
+
+Add `--verbose` to see the logs.
+
+- https://nektosact.com/
+- `act --list`
+- `act -j <job>`
+- `act -j test-unit --container-architecture linux/amd64`
 <details>
   <summary>FASE 4</summary>
 
