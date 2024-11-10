@@ -1,4 +1,4 @@
-# Aplicação Fast Food - ALFAC
+# Aplicação Fast Food - ALFAC · ![Coverage](.github/badges/jacoco.svg)
 
 Esta é uma aplicação que tem por objetivo, fornecer uma plataforma de pedidos de fast food. A plataforma permite aos clientes seguir o fluxo comum de um pedido: escolher o lanche com seu complemento, acompanhamento, bebida e sobremesa.
 
@@ -124,6 +124,14 @@ Veja em [https://github.com/ALFAC-Org/food/tree/fase2-clean-arch?tab=readme-ov-f
 
 </details>
 
+## Checando a execução do github workflow actions
+
+Add `--verbose` to see the logs.
+
+- https://nektosact.com/
+- `act --list`
+- `act -j <job>`
+- `act -j test-unit --container-architecture linux/amd64`
 <details>
   <summary>FASE 4</summary>
 

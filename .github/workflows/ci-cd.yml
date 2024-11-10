@@ -19,9 +19,21 @@ on:
         default: 'latest'
 
 jobs:
-  build-docker-image:
+  test-unit:
     # Garante que o build seja executado apenas quando houver um merge na branch main
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main')
+    if: github.event_name == 'push' || github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    container: maven:3.8.1-openjdk-17-slim
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run the Maven verify phase
+        run: mvn --batch-mode --update-snapshots verify
+
+  build-docker-image:
+    needs: test-unit
     runs-on: ubuntu-latest
 
     env:
@@ -29,7 +41,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Load environment variables
         uses: thaind0/envfile@v1
@@ -92,6 +104,13 @@ jobs:
           echo "ENABLE_FLYWAY=true" >> .env
           echo "DB_HOST=${{ env.DB_HOST }}" >> .env
         working-directory: food-cloud-infra
+
+      - name: Check if .env.DB_HOST was set
+        run: |
+          if [ -z "${{ env.DB_HOST }}" ]; then
+            echo "DB_HOST is not set. Skipping remaining steps."
+            exit 1
+          fi
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
