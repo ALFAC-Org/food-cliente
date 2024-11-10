@@ -37,7 +37,7 @@ jobs:
         run: |
           if [ -z "${{ env.DB_HOST }}" ]; then
             echo "Verifique se subiu food-infra e se os recursos foram provisionados (razão: o banco de dados está fora do ar)."
-            exit 0
+            exit 1
           fi
 
   build-docker-image:
