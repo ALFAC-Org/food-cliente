@@ -105,6 +105,13 @@ jobs:
           echo "DB_HOST=${{ env.DB_HOST }}" >> .env
         working-directory: food-cloud-infra
 
+      - name: Check if .env.DB_HOST was set
+        run: |
+          if [ -z "${{ env.DB_HOST }}" ]; then
+            echo "DB_HOST is not set. Skipping remaining steps."
+            exit 1
+          fi
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
