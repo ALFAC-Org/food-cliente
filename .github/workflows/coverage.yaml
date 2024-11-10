@@ -1,6 +1,10 @@
 name: Coverage
 
-on: [push, pull_request]
+#on: [push, pull_request]
+on:
+  push:
+    branches:
+      - feat/add-coverage-info
 
 jobs:
   coverage:
@@ -11,12 +15,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Cache local Maven repository
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
       - name: Build and test with coverage
         run: mvn clean verify
 
-#       TODO: exibir o coverage no github
-#      - name: Upload coverage report
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: coverage-report
-#          path: food-main/target/jacoco-report
+      - name: Publish test coverage results
+        uses: PavanMudigonda/jacoco-reporter@v4.8
+        with:
+            coverage_results_path: 'food-main/target/jacoco-report/jacoco.xml'
+            coverage_report_title: 'Test coverage results'
+            coverage_report_name: 'Test coverage results'
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate JaCoCo Badge
+        id: jacoco
+        uses: cicirello/jacoco-badge-generator@v2
+        with:
+          jacoco-csv-file: food-main/target/jacoco-report/jacoco.csv
