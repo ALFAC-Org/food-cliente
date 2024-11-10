@@ -8,6 +8,7 @@ on:
 
 jobs:
   coverage:
+    permissions: write-all
     runs-on: ubuntu-latest
 #    container: maven:3.8.1-openjdk-17-slim
 
@@ -37,10 +38,12 @@ jobs:
       - name: Build and test with coverage
         run: mvn clean verify
 
+      # Para evitar erros com permissão de escrita
+      # https://stackoverflow.com/a/75250838/3929980
       # generates coverage-report.md and publishes as checkrun
       - name: JaCoCo Code Coverage Report
         id: jacoco_reporter
-        uses: PavanMudigonda/jacoco-reporter@v4.9
+        uses: PavanMudigonda/jacoco-reporter@v5.0
         with:
           coverage_results_path: food-main/target/jacoco-report/jacoco.xml
           coverage_report_name: Coverage
