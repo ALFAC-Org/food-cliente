@@ -63,7 +63,7 @@
 
         <dependency>
             <groupId>br.com.alfac</groupId>
-            <artifactId>food-core</artifactId>
+            <artifactId>food-cliente-core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

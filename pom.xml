@@ -6,7 +6,7 @@
 
     <modules>
         <module>food-main</module>
-        <module>food-core</module>
+        <module>food-cliente-core</module>
         <module>food-infra</module>
     </modules>
     <parent>

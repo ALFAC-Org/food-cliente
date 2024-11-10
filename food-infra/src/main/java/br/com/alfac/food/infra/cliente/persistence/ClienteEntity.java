@@ -1,11 +1,9 @@
 package br.com.alfac.food.infra.cliente.persistence;
 
-import br.com.alfac.food.infra.pedido.persistence.PedidoEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -26,9 +24,6 @@ public class ClienteEntity implements Serializable {
     private String email;
 
     private UUID uuid;
-
-    @OneToMany(mappedBy = "cliente")
-    private Set<PedidoEntity> pedidos;
 
     public String getNome() {
         return nome;
