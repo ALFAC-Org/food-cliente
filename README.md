@@ -1,4 +1,4 @@
-# Aplicação Fast Food - ALFAC · ![Coverage](.github/badges/jacoco.svg)
+# Aplicação Fast Food - ALFAC · ![Coverage](.github/badges/jacoco.svg) ![CI/CD](.github/badges/branches.svg)
 
 Esta é uma aplicação que tem por objetivo, fornecer uma plataforma de pedidos de fast food. A plataforma permite aos clientes seguir o fluxo comum de um pedido: escolher o lanche com seu complemento, acompanhamento, bebida e sobremesa.
 
