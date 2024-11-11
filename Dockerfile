@@ -10,7 +10,7 @@ COPY pom.xml .
 # Copia os modulos para o WORKDIR
 COPY food-main ./food-main
 COPY food-infra ./food-infra
-COPY food-core ./food-core
+COPY food-cliente-core ./food-cliente-core
 
 # Compila o aplicativo com o Maven
 RUN mvn clean install -U
