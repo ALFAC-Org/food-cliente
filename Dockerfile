@@ -7,10 +7,8 @@ WORKDIR /app
 # Copia o arquivo pom.xml para o WORKDIR
 COPY pom.xml .
 
-# Copia os modulos para o WORKDIR
-COPY food-main ./food-main
-COPY food-infra ./food-infra
-COPY food-cliente-core ./food-cliente-core
+# Copia o código fonte para o WORKDIR
+COPY src ./src
 
 # Compila o aplicativo com o Maven
 RUN mvn clean install -U
@@ -22,7 +20,7 @@ FROM openjdk:17-slim
 WORKDIR /app
 
 # Copia o JAR da aplicacao para o WORKDIR
-COPY --from=build /app/food-main/target/*.jar ./app.jar
+COPY --from=build /app/target/*.jar ./app.jar
 
 # Executa a aplicacao
 CMD ["java", "-Dspring.profiles.active=prod", "-Dlogging.level.root=DEBUG", "-jar", "app.jar"]
