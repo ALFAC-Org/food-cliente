@@ -2,7 +2,7 @@ package br.com.alfac.foodcliente.core.application.usecases;
 
 import java.util.Optional;
 
-import br.com.alfac.foodcliente.core.application.adapters.gateways.RepositorioClienteGateway;
+import br.com.alfac.foodcliente.gateways.RepositorioClienteGateway;
 import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
 import br.com.alfac.foodcliente.core.exception.FoodException;
 import br.com.alfac.foodcliente.core.exception.cliente.ClienteError;

@@ -2,7 +2,6 @@ package br.com.alfac.foodcliente.core.domain.cliente.vo;
 
 import java.util.Objects;
 
-
 public class CPF {
     private String numero;
 

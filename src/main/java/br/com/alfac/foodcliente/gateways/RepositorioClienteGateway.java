@@ -1,4 +1,4 @@
-package br.com.alfac.foodcliente.core.application.adapters.gateways;
+package br.com.alfac.foodcliente.gateways;
 
 import java.util.Optional;
 import java.util.UUID;

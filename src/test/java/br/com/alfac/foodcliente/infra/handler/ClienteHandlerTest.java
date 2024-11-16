@@ -1,10 +1,9 @@
-package br.com.alfac.foodcliente.core.application.adapters.infra.handler;
+package br.com.alfac.foodcliente.infra.handler;
 
-import br.com.alfac.foodcliente.core.application.adapters.controller.ControladorCliente;
+import br.com.alfac.foodcliente.controller.ControladorCliente;
 import br.com.alfac.foodcliente.core.application.dto.ClienteDTO;
 import br.com.alfac.foodcliente.infra.config.exception.FoodExceptionHandler;
 import br.com.alfac.foodcliente.infra.dto.ClienteRequest;
-import br.com.alfac.foodcliente.infra.handler.ClienteHandler;
 import br.com.alfac.foodcliente.infra.mapper.ClienteMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;

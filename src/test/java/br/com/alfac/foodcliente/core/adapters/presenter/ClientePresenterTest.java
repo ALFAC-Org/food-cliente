@@ -1,6 +1,6 @@
-package br.com.alfac.foodcliente.core.application.adapters.core.adapters.presenter;
+package br.com.alfac.foodcliente.core.adapters.presenter;
 
-import br.com.alfac.foodcliente.core.application.adapters.presenter.ClientePresenter;
+import br.com.alfac.foodcliente.presenter.ClientePresenter;
 import br.com.alfac.foodcliente.core.application.dto.ClienteDTO;
 import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
 import org.junit.jupiter.api.Test;

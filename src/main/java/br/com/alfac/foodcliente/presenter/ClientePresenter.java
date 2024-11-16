@@ -1,4 +1,4 @@
-package br.com.alfac.foodcliente.core.application.adapters.presenter;
+package br.com.alfac.foodcliente.presenter;
 
 import br.com.alfac.foodcliente.core.application.dto.ClienteDTO;
 import br.com.alfac.foodcliente.core.domain.cliente.Cliente;

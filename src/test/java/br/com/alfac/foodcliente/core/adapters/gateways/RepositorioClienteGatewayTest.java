@@ -1,6 +1,6 @@
-package br.com.alfac.foodcliente.core.application.adapters.core.adapters.gateways;
+package br.com.alfac.foodcliente.core.adapters.gateways;
 
-import br.com.alfac.foodcliente.core.application.adapters.gateways.RepositorioClienteGateway;
+import br.com.alfac.foodcliente.gateways.RepositorioClienteGateway;
 import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

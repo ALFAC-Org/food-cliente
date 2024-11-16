@@ -1,7 +1,7 @@
-package br.com.alfac.foodcliente.core.application.adapters.controller;
+package br.com.alfac.foodcliente.controller;
 
-import br.com.alfac.foodcliente.core.application.adapters.gateways.RepositorioClienteGateway;
-import br.com.alfac.foodcliente.core.application.adapters.presenter.ClientePresenter;
+import br.com.alfac.foodcliente.gateways.RepositorioClienteGateway;
+import br.com.alfac.foodcliente.presenter.ClientePresenter;
 import br.com.alfac.foodcliente.core.application.dto.ClienteDTO;
 import br.com.alfac.foodcliente.core.application.usecases.CadastrarClienteUseCase;
 import br.com.alfac.foodcliente.core.application.usecases.ConsultarClientePorCpfUseCase;

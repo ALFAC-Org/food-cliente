@@ -1,6 +1,6 @@
 package br.com.alfac.foodcliente.infra.gateways;
 
-import br.com.alfac.foodcliente.core.application.adapters.gateways.RepositorioClienteGateway;
+import br.com.alfac.foodcliente.gateways.RepositorioClienteGateway;
 import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
 import br.com.alfac.foodcliente.infra.mapper.ClienteEntityMapper;
 import br.com.alfac.foodcliente.infra.persistence.ClienteEntity;

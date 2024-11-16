@@ -1,6 +1,6 @@
 package br.com.alfac.foodcliente.core.application.usecases;
 
-import br.com.alfac.foodcliente.core.application.adapters.gateways.RepositorioClienteGateway;
+import br.com.alfac.foodcliente.gateways.RepositorioClienteGateway;
 import br.com.alfac.foodcliente.core.application.dto.ClienteDTO;
 import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
 import br.com.alfac.foodcliente.core.domain.cliente.vo.CPF;

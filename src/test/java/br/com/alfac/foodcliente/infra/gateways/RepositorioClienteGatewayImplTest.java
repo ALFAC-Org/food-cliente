@@ -1,4 +1,4 @@
-package br.com.alfac.foodcliente.core.application.adapters.infra.gateways;
+package br.com.alfac.foodcliente.infra.gateways;
 
 import br.com.alfac.foodcliente.infra.gateways.RepositorioClienteMySQLGatewayImpl;
 import br.com.alfac.foodcliente.infra.mapper.ClienteEntityMapper;
