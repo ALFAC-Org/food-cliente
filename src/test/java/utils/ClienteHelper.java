@@ -1,8 +1,8 @@
 package utils;
 
-import br.com.alfac.food.core.application.dto.ClienteDTO;
-import br.com.alfac.food.core.domain.cliente.Cliente;
-import br.com.alfac.food.core.domain.cliente.vo.CPF;
+import br.com.alfac.foodcliente.core.application.dto.ClienteDTO;
+import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
+import br.com.alfac.foodcliente.core.domain.cliente.vo.CPF;
 
 import java.util.UUID;
 
