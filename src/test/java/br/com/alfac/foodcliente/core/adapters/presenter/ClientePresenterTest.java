@@ -1,8 +1,8 @@
 package br.com.alfac.foodcliente.core.adapters.presenter;
 
-import br.com.alfac.foodcliente.presenter.ClientePresenter;
+import br.com.alfac.foodcliente.core.application.adapters.presenter.ClientePresenter;
 import br.com.alfac.foodcliente.core.application.dto.ClienteDTO;
-import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
+import br.com.alfac.foodcliente.core.domain.Cliente;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

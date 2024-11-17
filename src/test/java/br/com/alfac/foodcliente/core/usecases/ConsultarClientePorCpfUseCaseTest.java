@@ -1,9 +1,9 @@
 package br.com.alfac.foodcliente.core.usecases;
 
-import br.com.alfac.foodcliente.gateways.RepositorioClienteGateway;
+import br.com.alfac.foodcliente.core.application.adapters.gateways.RepositorioClienteGateway;
 import br.com.alfac.foodcliente.core.application.usecases.ConsultarClientePorCpfUseCase;
-import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
-import br.com.alfac.foodcliente.core.domain.cliente.vo.CPF;
+import br.com.alfac.foodcliente.core.domain.Cliente;
+import br.com.alfac.foodcliente.core.domain.vo.CPF;
 import br.com.alfac.foodcliente.core.exception.FoodException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

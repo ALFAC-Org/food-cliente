@@ -1,7 +1,7 @@
 package br.com.alfac.foodcliente.core.adapters.gateways;
 
-import br.com.alfac.foodcliente.gateways.RepositorioClienteGateway;
-import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
+import br.com.alfac.foodcliente.core.application.adapters.gateways.RepositorioClienteGateway;
+import br.com.alfac.foodcliente.core.domain.Cliente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +17,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class RepositorioClienteGatewayTest {
+class RepositorioClienteGatewayImplTest {
 
     @Mock
     private RepositorioClienteGateway repositorioClienteGateway;

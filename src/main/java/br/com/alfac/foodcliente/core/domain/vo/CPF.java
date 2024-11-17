@@ -1,4 +1,4 @@
-package br.com.alfac.foodcliente.core.domain.cliente.vo;
+package br.com.alfac.foodcliente.core.domain.vo;
 
 import java.util.Objects;
 

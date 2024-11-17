@@ -1,7 +1,7 @@
 package br.com.alfac.foodcliente.infra.config.beans;
 
-import br.com.alfac.foodcliente.controller.ControladorCliente;
-import br.com.alfac.foodcliente.gateways.RepositorioClienteGateway;
+import br.com.alfac.foodcliente.core.application.adapters.controller.ControladorCliente;
+import br.com.alfac.foodcliente.core.application.adapters.gateways.RepositorioClienteGateway;
 import br.com.alfac.foodcliente.infra.gateways.RepositorioClienteMySQLGatewayImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

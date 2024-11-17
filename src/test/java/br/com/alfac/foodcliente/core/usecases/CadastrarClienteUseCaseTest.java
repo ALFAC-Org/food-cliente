@@ -1,10 +1,10 @@
 package br.com.alfac.foodcliente.core.usecases;
 
-import br.com.alfac.foodcliente.gateways.RepositorioClienteGateway;
+import br.com.alfac.foodcliente.core.application.adapters.gateways.RepositorioClienteGateway;
 import br.com.alfac.foodcliente.core.application.dto.ClienteDTO;
 import br.com.alfac.foodcliente.core.application.usecases.CadastrarClienteUseCase;
-import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
-import br.com.alfac.foodcliente.core.domain.cliente.vo.CPF;
+import br.com.alfac.foodcliente.core.domain.Cliente;
+import br.com.alfac.foodcliente.core.domain.vo.CPF;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

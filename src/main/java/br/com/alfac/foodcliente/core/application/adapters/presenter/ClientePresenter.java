@@ -1,7 +1,7 @@
-package br.com.alfac.foodcliente.presenter;
+package br.com.alfac.foodcliente.core.application.adapters.presenter;
 
 import br.com.alfac.foodcliente.core.application.dto.ClienteDTO;
-import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
+import br.com.alfac.foodcliente.core.domain.Cliente;
 
 public final class ClientePresenter {
 

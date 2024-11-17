@@ -1,9 +1,9 @@
-package br.com.alfac.foodcliente.gateways;
+package br.com.alfac.foodcliente.core.application.adapters.gateways;
 
 import java.util.Optional;
 import java.util.UUID;
 
-import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
+import br.com.alfac.foodcliente.core.domain.Cliente;
 
 public interface RepositorioClienteGateway {
     Optional<Cliente> consultarClientePorCPF(String cpf);

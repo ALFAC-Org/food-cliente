@@ -1,6 +1,6 @@
-package br.com.alfac.foodcliente.core.domain.cliente;
+package br.com.alfac.foodcliente.core.domain;
 
-import br.com.alfac.foodcliente.core.domain.cliente.vo.CPF;
+import br.com.alfac.foodcliente.core.domain.vo.CPF;
 
 import java.util.UUID;
 

@@ -1,7 +1,7 @@
 package br.com.alfac.foodcliente.infra.gateways;
 
-import br.com.alfac.foodcliente.gateways.RepositorioClienteGateway;
-import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
+import br.com.alfac.foodcliente.core.application.adapters.gateways.RepositorioClienteGateway;
+import br.com.alfac.foodcliente.core.domain.Cliente;
 import br.com.alfac.foodcliente.infra.mapper.ClienteEntityMapper;
 import br.com.alfac.foodcliente.infra.persistence.ClienteEntity;
 import org.springframework.stereotype.Component;
@@ -52,7 +52,7 @@ public class RepositorioClienteGatewayMemoria implements RepositorioClienteGatew
         return clienteEntityMapper.toDomain(clienteEntity);
     }
 
-    private Optional<Cliente> montarCliente(Optional<ClienteEntity> clienteEntityOpt) {
+    protected Optional<Cliente> montarCliente(Optional<ClienteEntity> clienteEntityOpt) {
         Optional<Cliente> clienteOpt = Optional.empty();
 
         if (clienteEntityOpt.isPresent()) {

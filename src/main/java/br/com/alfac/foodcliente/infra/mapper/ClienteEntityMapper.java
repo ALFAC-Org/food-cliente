@@ -1,6 +1,6 @@
 package br.com.alfac.foodcliente.infra.mapper;
 
-import br.com.alfac.foodcliente.core.domain.cliente.Cliente;
+import br.com.alfac.foodcliente.core.domain.Cliente;
 import br.com.alfac.foodcliente.infra.persistence.ClienteEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
