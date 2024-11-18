@@ -26,11 +26,11 @@ jobs:
           cache: 'maven'
           # cache-dependency-path: 'sub-project/pom.xml' # optional
 
-      - name: Clean Maven repository
+      - name: Clean Maven repository (JaCoCo only)
         run: rm -rf ~/.m2/repository/org/jacoco
 
-      - name: Verify JaCoCo Agent
-        run: ls -l ~/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/
+      - name: Download dependencies
+        run: mvn dependency:resolve
 
       - name: Build and test with coverage
         run: mvn clean verify -X
