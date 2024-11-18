@@ -36,7 +36,7 @@ jobs:
         id: jacoco_reporter
         uses: PavanMudigonda/jacoco-reporter@v5.0
         with:
-          coverage_results_path: target/jacoco-report/jacoco.xml
+          coverage_results_path: target/site/jacoco/jacoco.xml
           coverage_report_name: Coverage
           coverage_report_title: JaCoCo
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -68,7 +68,7 @@ jobs:
         uses: cicirello/jacoco-badge-generator@v2
         with:
           generate-branches-badge: true
-          jacoco-csv-file: target/jacoco-report/jacoco.csv
+          jacoco-csv-file: target/site/jacoco/jacoco.csv
 
       - name: Commit the badge (if it changed)
         run: |
