@@ -138,6 +138,7 @@
                                 <exclude>br/com/alfac/foodcliente/infra/persistence/**</exclude>
                                 <exclude>br/com/alfac/foodcliente/infra/dto/**</exclude>
                                 <exclude>br/com/alfac/foodcliente/core/utils/**</exclude>
+                                <exclude>br/com/alfac/foodcliente/FoodClienteApplication*</exclude>
                             </excludes>
                         </configuration>
                     </execution>

@@ -1,4 +1,4 @@
-package br.com.alfac.foodcliente.core.adapters.gateways;
+package br.com.alfac.foodcliente.infra.gateways;
 
 import br.com.alfac.foodcliente.core.application.adapters.gateways.RepositorioClienteGateway;
 import br.com.alfac.foodcliente.core.domain.Cliente;
@@ -21,6 +21,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -59,6 +60,12 @@ class RepositorioClienteMySQLGatewayImplTest {
     @Test
     void deveConsultarClientePorCPF() {
         // Arrange
+        cliente.setCpf(new CPF("12345678900"));
+        UUID uuid = UUID.randomUUID();
+        cliente.setUuid(uuid);
+        clienteEntity.setUuid(uuid);
+        clienteEntity.setCpf("12345678900");
+
         when(clienteEntityRepository.findByCpf(anyString())).thenReturn(Optional.of(clienteEntity));
         when(clienteEntityMapper.toDomain(clienteEntity)).thenReturn(cliente);
 
@@ -73,11 +80,17 @@ class RepositorioClienteMySQLGatewayImplTest {
     @Test
     void deveConsultarClientePorUuId() {
         // Arrange
+        cliente.setCpf(new CPF("12345678900"));
+        UUID uuid = UUID.randomUUID();
+        cliente.setUuid(uuid);
+        clienteEntity.setUuid(uuid);
+        clienteEntity.setCpf("12345678900");
+
         when(clienteEntityRepository.findByUuid(any(UUID.class))).thenReturn(Optional.of(clienteEntity));
         when(clienteEntityMapper.toDomain(clienteEntity)).thenReturn(cliente);
 
         // Act
-        Optional<Cliente> result = repositorioClienteMySQLGateway.consultarClientePorUuId(UUID.randomUUID());
+        Optional<Cliente> result = repositorioClienteMySQLGateway.consultarClientePorUuId(uuid);
 
         // Assert
         assertThat(result).isPresent();
@@ -87,6 +100,12 @@ class RepositorioClienteMySQLGatewayImplTest {
     @Test
     void deveConsultarClientePorId() {
         // Arrange
+        cliente.setCpf(new CPF("12345678900"));
+        UUID uuid = UUID.randomUUID();
+        cliente.setUuid(uuid);
+        clienteEntity.setUuid(uuid);
+        clienteEntity.setCpf("12345678900");
+
         when(clienteEntityRepository.findById(anyLong())).thenReturn(Optional.of(clienteEntity));
         when(clienteEntityMapper.toDomain(clienteEntity)).thenReturn(cliente);
 
@@ -108,14 +127,25 @@ class RepositorioClienteMySQLGatewayImplTest {
         clienteEntity.setCpf("12345678900");
 
         when(clienteEntityMapper.toEntity(cliente)).thenReturn(clienteEntity);
-        when(clienteEntityRepository.save(clienteEntity)).thenReturn(clienteEntity);
+        when(clienteEntityRepository.save(any(ClienteEntity.class))).thenReturn(clienteEntity);
         when(clienteEntityMapper.toDomain(clienteEntity)).thenReturn(cliente);
+
+        assertThat(clienteEntityMapper.toEntity(cliente)).isEqualTo(clienteEntity);
+        assertThat(clienteEntityRepository.save(clienteEntity)).isEqualTo(clienteEntity);
+        assertThat(clienteEntityMapper.toDomain(clienteEntity)).isEqualTo(cliente);
 
         // Act
         Cliente result = repositorioClienteMySQLGateway.cadastrarCliente(cliente);
 
-        // Assert
         assertThat(result).isNotNull();
+
+        // Assert
         assertThat(result).usingRecursiveComparison().isEqualTo(cliente);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenClienteIsNull() {
+        // Act & Assert
+        assertThrows(NullPointerException.class, () -> repositorioClienteMySQLGateway.cadastrarCliente(null));
     }
 }
