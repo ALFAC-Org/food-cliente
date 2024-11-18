@@ -17,5 +17,5 @@ jobs:
     with:
       java_version: "17"
       minimum_coverage: "0"
-      coverage_results_path: "target/site/jacoco/jacoco.xml"
-      jacoco_csv_file: "target/site/jacoco/jacoco.csv"
+      coverage_results_path: "./target/site/jacoco/jacoco.xml"
+      jacoco_csv_file: "./target/site/jacoco/jacoco.csv"
