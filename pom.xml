@@ -189,12 +189,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
+<!--                <version>3.1.2</version>-->
                 <configuration>
-                    <argLine>-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=${project.build.directory}/jacoco.exec</argLine>
-                    <includes>
-                        <include>**/*Test.java</include> <!-- Inclua os arquivos de teste -->
-                    </includes>
+<!--                    <argLine>-javaagent:${settings.localRepository}/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=${project.build.directory}/jacoco.exec</argLine>-->
+<!--                    <includes>-->
+<!--                        <include>**/*Test.java</include> &lt;!&ndash; Inclua os arquivos de teste &ndash;&gt;-->
+<!--                    </includes>-->
                     <environmentVariables>
                         <SPRING_DATASOURCE_URL>jdbc:mysql://localhost:31006/pedidos</SPRING_DATASOURCE_URL>
                         <SPRING_DATASOURCE_USERNAME>root</SPRING_DATASOURCE_USERNAME>
