@@ -125,15 +125,16 @@
                             <goal>report</goal>
                         </goals>
                         <configuration>
-                            <!-- Faz com que o Jacoco gere uma unica saída de relatorios -->
-
                             <formats>
                                 <format>HTML</format>
                                 <format>XML</format>
                                 <format>CSV</format>
                             </formats>
-
-
+                            <excludes>
+                                <exclude>br/com/alfac/foodcliente/core/utils/**</exclude>
+                                <exclude>br/com/alfac/foodcliente/infra/config/**</exclude>
+                                <exclude>br/com/alfac/foodcliente/FoodClienteApplication*</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                     <execution>
@@ -166,7 +167,6 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.6.1</version>
             </plugin>
-
             <!-- Plugin Surefire (Testes) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
