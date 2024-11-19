@@ -6,10 +6,10 @@
       
 | Outcome                 | Value                                                               |
 |-------------------------|---------------------------------------------------------------------|
-| Code Coverage %         | 73.18%               |
-| :heavy_check_mark: Number of Lines Covered | 292    |
-| :x: Number of Lines Missed  | 107     |
-| Total Number of Lines   | 399     |
+| Code Coverage %         | 94.51%               |
+| :heavy_check_mark: Number of Lines Covered | 344    |
+| :x: Number of Lines Missed  | 20     |
+| Total Number of Lines   | 364     |
 
 
 ## Details:
@@ -155,19 +155,6 @@
 </details>
 
     
-### br/com/alfac/foodcliente/core/utils
-
-<details>
-    <summary>
-:x: CollectionsUtils.java
-    </summary>
-
-        
-#### Lines Missed:
-        
-</details>
-
-    
 ### br/com/alfac/foodcliente/core/application/usecases
 
 <details>
@@ -217,31 +204,6 @@
 </details>
 
     
-### br/com/alfac/foodcliente/infra/config/beans
-
-<details>
-    <summary>
-:heavy_check_mark: ClienteConfiguration.java
-    </summary>
-
-        
-#### All Lines Covered!
-        
-</details>
-
-    
-
-<details>
-    <summary>
-:heavy_check_mark: JacksonConfiguration.java
-    </summary>
-
-        
-#### All Lines Covered!
-        
-</details>
-
-    
 ### br/com/alfac/foodcliente/infra/gateways
 
 <details>
@@ -259,48 +221,6 @@
 <details>
     <summary>
 :heavy_check_mark: RepositorioClienteMySQLGatewayImpl.java
-    </summary>
-
-        
-#### All Lines Covered!
-        
-</details>
-
-    
-### br/com/alfac/foodcliente
-
-<details>
-    <summary>
-:x: FoodClienteApplication.java
-    </summary>
-
-        
-#### Lines Missed:
-        
-- Line #12
-```
-    }
-```
-</details>
-
-    
-### br/com/alfac/foodcliente/infra/config
-
-<details>
-    <summary>
-:heavy_check_mark: SwaggerConfig.java
-    </summary>
-
-        
-#### All Lines Covered!
-        
-</details>
-
-    
-
-<details>
-    <summary>
-:heavy_check_mark: WebConfig.java
     </summary>
 
         
@@ -352,60 +272,24 @@
 
 <details>
     <summary>
-:x: ApiErrorItem.java
+:heavy_check_mark: ApiErrorItem.java
     </summary>
 
         
-#### Lines Missed:
+#### All Lines Covered!
         
-- Line #17
-```
-    }
-```
-- Line #22
-```
-    }
-```
 </details>
 
     
 
 <details>
     <summary>
-:x: ApiError.java
+:heavy_check_mark: ApiError.java
     </summary>
 
         
-#### Lines Missed:
+#### All Lines Covered!
         
-- Line #25
-```
-    }
-```
-- Line #58
-```
-    }
-```
-- Line #66
-```
-    }
-```
-- Line #74
-```
-    }
-```
-- Line #82
-```
-    }
-```
-- Line #90
-```
-    }
-```
-- Line #95
-```
-    }
-```
 </details>
 
     
@@ -418,10 +302,6 @@
         
 #### Lines Missed:
         
-- Line #73
-```
-        }
-```
 </details>
 
     
