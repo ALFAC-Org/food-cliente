@@ -1,8 +1,10 @@
-import br.com.alfac.foodcliente.BaseTest;
+package br.com.alfac.foodcliente;
+
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest(classes = br.com.alfac.foodcliente.FoodClienteApplication.class)
+@SpringBootTest
 public class FoodClienteApplicationTest extends BaseTest {
 
     @Test
