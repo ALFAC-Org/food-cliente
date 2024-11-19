@@ -132,7 +132,9 @@
                             </formats>
                             <excludes>
                                 <exclude>br/com/alfac/foodcliente/core/utils/**</exclude>
-                                <exclude>br/com/alfac/foodcliente/infra/config/**</exclude>
+                                <exclude>br/com/alfac/foodcliente/infra/config/SwaggerConfig*</exclude>
+                                <exclude>br/com/alfac/foodcliente/infra/config/WebConfig*</exclude>
+                                <exclude>br/com/alfac/foodcliente/infra/config/beans/***</exclude>
                                 <exclude>br/com/alfac/foodcliente/FoodClienteApplication*</exclude>
                             </excludes>
                         </configuration>

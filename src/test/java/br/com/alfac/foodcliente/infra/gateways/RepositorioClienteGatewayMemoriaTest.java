@@ -34,11 +34,6 @@ class RepositorioClienteGatewayMemoriaTest {
     @Mock
     private ClienteEntityMapper clienteEntityMapper;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
     @Test
     void consultarClientePorCPF_clienteExistente() {
         // Arrange
