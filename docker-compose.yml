@@ -1,0 +1,36 @@
+version: "2.26"
+
+volumes:
+  mysql_data: {}
+
+services:
+  mysqldb:
+    image: mysql:8.0
+    volumes: 
+      - ./mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - foodapi-network
+    restart: always
+    env_file:
+      - ./config/env/.env.prod
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  springboot-app:
+    image: springboot-app
+    networks:
+      - foodapi-network
+    env_file:
+      - ./config/env/.env.prod
+    build: .
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+networks:
+  foodapi-network:

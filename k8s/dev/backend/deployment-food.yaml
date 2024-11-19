@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-food-app
+spec:
+  replicas: 2
+  template:
+    metadata:
+      name: deployment-food-app
+      labels:
+        app: deployment-food-app
+    spec:
+      containers:
+        - name: deployment-food-app-container
+          image: carlohcs/food-repo:withoutdb18
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: cm-food
+            - secretRef:
+                name: secret-food
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+          # livenessProbe:
+          #   httpGet:
+          #     path: "/api/v2/health-check"
+          #     port: 8080
+          #   initialDelaySeconds: 3
+          #   periodSeconds: 3
+  selector:
+    matchLabels:
+      app: deployment-food-app
