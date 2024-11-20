@@ -79,8 +79,6 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          # build-args: |
-          #   FOOD_CLIENTE_VERSION=${{ env.BUILD_VERSION }}
           platforms: linux/amd64
           push: true
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.FOOD_CLIENTE_IMAGE_NAME }}:cache
@@ -99,15 +97,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Clone Terraform Config Repository
-        run: git clone https://github.com/ALFAC-Org/food-cloud-infra.git
-
       - name: Load environment variables
         uses: thaind0/envfile@v1
         with:
           secrets: ${{ toJSON(secrets) }}
           override: false # prevent overriding FOOD_CLIENTE_IMAGE_VERSION -> don't create the env variables
-          file: food-cloud-infra/.env
+          file: terraform/.env
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -122,28 +117,33 @@ jobs:
           DB_FOOD_CLIENT_HOST_NAME=$(aws rds describe-db-instances --db-instance-identifier ${{ secrets.DB_FOOD_CLIENTE_IDENTIFIER }} --query "DBInstances[0].Endpoint.Address" --output text)
           echo "DB_FOOD_CLIENT_HOST_NAME=DB_FOOD_CLIENT_HOST_NAME" >> $GITHUB_ENV
 
+      - name: Get K8s host
+        run: |
+          K8S_HOST=$(aws eks describe-cluster --name ${{ secrets.CLUSTER_NAME }} --query "cluster.endpoint" --output text)
+          echo "K8S_HOST=$K8S_HOST" >> $GITHUB_ENV
+
       - name: Overwrite .env variable
         run: |
           echo "FOOD_CLIENTE_IMAGE_VERSION=${{ env.FOOD_CLIENTE_IMAGE_VERSION }}" >> .env
-          echo "ENABLE_FLYWAY=true" >> .env
+          echo "ENABLE_FOOD_CLIENTE_FLYWAY=true" >> .env
           echo "DB_FOOD_CLIENT_HOST_NAME=${{ env.DB_FOOD_CLIENT_HOST_NAME }}" >> .env
-        working-directory: food-cloud-infra
+        working-directory: terraform
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
-        run: terraform init  -reconfigure -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" -backend-config="key=terraform.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}"
-        working-directory: food-cloud-infra
+        run: terraform init  -reconfigure -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" -backend-config="key=terraform-food-cliente.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}"
+        working-directory: terraform
 
       - name: Terraform Validate
         run: terraform validate
-        working-directory: food-cloud-infra
+        working-directory: terraform
 
       - name: Terraform Plan
         run: bash terraform.sh plan
-        working-directory: food-cloud-infra
+        working-directory: terraform
 
       - name: Terraform Apply
         run: bash terraform.sh apply -auto-approve
-        working-directory: food-cloud-infra
+        working-directory: terraform
