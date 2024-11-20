@@ -127,6 +127,7 @@ jobs:
           echo "FOOD_CLIENTE_IMAGE_VERSION=${{ env.FOOD_CLIENTE_IMAGE_VERSION }}" >> .env
           echo "ENABLE_FOOD_CLIENTE_FLYWAY=true" >> .env
           echo "DB_FOOD_CLIENT_HOST_NAME=${{ env.DB_FOOD_CLIENT_HOST_NAME }}" >> .env
+          echo "K8S_HOST=${{ env.K8S_HOST }}" >> .env
         working-directory: terraform
 
       - name: Setup Terraform
