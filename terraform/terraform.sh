@@ -23,7 +23,6 @@ terraform $METHOD $PARAMS \
 -var "environment=$ENVIRONMENT" \
 -var "image_username=$DOCKERHUB_USERNAME" \
 -var "app_port=$APP_PORT" \
--var "app_service_port=$FOOD_SERVICE_PORT" \
 -var "enable_flyway=$ENABLE_FOOD_CLIENTE_FLYWAY" \
 -var "aws_region=$AWS_REGION" \
 -var "node_role_arn=$ARN_AWS_LAB_ROLE" \
