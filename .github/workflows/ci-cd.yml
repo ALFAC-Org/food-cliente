@@ -115,7 +115,7 @@ jobs:
       - name: Get RDS endpoint
         run: |
           DB_FOOD_CLIENT_HOST_NAME=$(aws rds describe-db-instances --db-instance-identifier ${{ secrets.DB_FOOD_CLIENTE_IDENTIFIER }} --query "DBInstances[0].Endpoint.Address" --output text)
-          echo "DB_FOOD_CLIENT_HOST_NAME=DB_FOOD_CLIENT_HOST_NAME" >> $GITHUB_ENV
+          echo "DB_FOOD_CLIENT_HOST_NAME=$DB_FOOD_CLIENT_HOST_NAME" >> $GITHUB_ENV
 
       - name: Get K8s host
         run: |
