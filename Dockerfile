@@ -9,6 +9,7 @@ COPY pom.xml .
 
 # Copia o código fonte para o WORKDIR
 COPY src ./src
+COPY config ./config
 
 # Compila o aplicativo com o Maven
 RUN mvn clean install -U
@@ -24,3 +25,9 @@ COPY --from=build /app/target/*.jar ./app.jar
 
 # Executa a aplicacao
 CMD ["java", "-Dspring.profiles.active=prod", "-Dlogging.level.root=DEBUG", "-jar", "app.jar"]
+
+# Build e envio da imagem para o Docker Hub
+# docker buildx build --platform linux/amd64,linux/arm64 -f Dockerfile -t carlohcs/food-cliente:1 . --push
+
+# Rodando a aplicação
+# docker run -it --platform linux/amd64 -p 8080:8080 carlohcs/food-cliente:1

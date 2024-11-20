@@ -175,7 +175,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <environmentVariables>
-                        <SPRING_DATASOURCE_URL>jdbc:mysql://localhost:31006/pedidos</SPRING_DATASOURCE_URL>
+                        <SPRING_DATASOURCE_URL>jdbc:mysql://localhost:31006/foodcliente</SPRING_DATASOURCE_URL>
                         <SPRING_DATASOURCE_USERNAME>root</SPRING_DATASOURCE_USERNAME>
                         <SPRING_DATASOURCE_PASSWORD>root</SPRING_DATASOURCE_PASSWORD>
                         <APPLICATION_VERSION>latest</APPLICATION_VERSION>
@@ -202,6 +202,20 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
+            </plugin>
+
+            <!-- Plugin para empacotar a aplicação Spring Boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.2.5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
