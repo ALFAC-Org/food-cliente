@@ -99,7 +99,8 @@ resource "kubernetes_deployment" "deployment_food_cliente" {
     }
   }
 
-  depends_on = [aws_eks_node_group.food_node_group]
+  # TODO: verificar uma alternativa
+  # depends_on = [aws_eks_node_group.food_node_group]
 }
 
 resource "kubernetes_service" "food_cliente_service" {

@@ -17,7 +17,3 @@ output "food_cliente_ingress_namespace" {
 output "food_cliente_load_balancer_host" {
   value = kubernetes_service.food_cliente_service.status[0].load_balancer[0].ingress[0].hostname
 }
-
-output "food_cliente_ingress_host" {
-  value = kubernetes_ingress_v1.food_cliente_ingress.spec[0].rules[0].host
-}
