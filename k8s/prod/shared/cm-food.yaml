@@ -4,5 +4,5 @@ metadata:
   name: cm-food
 data:
   # Se for usar RDS:
-  # SPRING_DATASOURCE_URL: jdbc:mysql://alfac-db-instance-01.cvqnndaq7eyn.us-east-1.rds.amazonaws.com:3306/pedidos
-  SPRING_DATASOURCE_URL: jdbc:mysql://svc-db-food:3306/pedidos
+  # SPRING_CLIENTE_DATASOURCE_URL: jdbc:mysql://alfac-db-instance-01.cvqnndaq7eyn.us-east-1.rds.amazonaws.com:3306/foodcliente
+  SPRING_CLIENTE_DATASOURCE_URL: jdbc:mysql://svc-db-food:3306/foodcliente

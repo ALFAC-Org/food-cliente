@@ -175,13 +175,13 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <environmentVariables>
-                        <SPRING_DATASOURCE_URL>jdbc:mysql://localhost:31006/foodcliente</SPRING_DATASOURCE_URL>
-                        <SPRING_DATASOURCE_USERNAME>root</SPRING_DATASOURCE_USERNAME>
-                        <SPRING_DATASOURCE_PASSWORD>root</SPRING_DATASOURCE_PASSWORD>
-                        <APPLICATION_VERSION>latest</APPLICATION_VERSION>
+                        <SPRING_CLIENTE_DATASOURCE_URL>jdbc:mysql://localhost:31006/foodcliente</SPRING_CLIENTE_DATASOURCE_URL>
+                        <FOOD_CLIENTE_DATASOURCE_USERNAME>root</FOOD_CLIENTE_DATASOURCE_USERNAME>
+                        <FOOD_CLIENTE_DATASOURCE_PASSWORD>root</FOOD_CLIENTE_DATASOURCE_PASSWORD>
+                        <FOOD_CLIENTE_VERSION>latest</FOOD_CLIENTE_VERSION>
                         <APPLICATION_DATABASE_VERSION>latest</APPLICATION_DATABASE_VERSION>
                         <ENABLE_FLYWAY>false</ENABLE_FLYWAY>
-                        <APPLICATION_PORT>8080</APPLICATION_PORT>
+                        <FOOD_CLIENTE_PORT>8090</FOOD_CLIENTE_PORT>
                     </environmentVariables>
                 </configuration>
             </plugin>

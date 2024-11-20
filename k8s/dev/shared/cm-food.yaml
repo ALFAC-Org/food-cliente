@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: cm-food
 data:
-  # SPRING_DATASOURCE_URL: outro valor // Quando for na AWS
-  SPRING_DATASOURCE_URL: jdbc:mysql://svc-db-food:3306/pedidos
+  # SPRING_CLIENTE_DATASOURCE_URL: outro valor // Quando for na AWS
+  SPRING_CLIENTE_DATASOURCE_URL: jdbc:mysql://svc-db-food:3306/foodcliente
