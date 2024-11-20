@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS foodcliente;
+CREATE DATABASE IF NOT EXISTS foodclientedb;
 
-USE foodcliente;
+USE foodclientedb;
 
 CREATE TABLE IF NOT EXISTS cliente (
     id int auto_increment  primary key,
