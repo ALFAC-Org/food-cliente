@@ -6,10 +6,10 @@
       
 | Outcome                 | Value                                                               |
 |-------------------------|---------------------------------------------------------------------|
-| Code Coverage %         | 94.51%               |
-| :heavy_check_mark: Number of Lines Covered | 344    |
-| :x: Number of Lines Missed  | 20     |
-| Total Number of Lines   | 364     |
+| Code Coverage %         | 93.71%               |
+| :heavy_check_mark: Number of Lines Covered | 313    |
+| :x: Number of Lines Missed  | 21     |
+| Total Number of Lines   | 334     |
 
 
 ## Details:
@@ -24,18 +24,6 @@
 
         
 #### Lines Missed:
-        
-</details>
-
-    
-
-<details>
-    <summary>
-:heavy_check_mark: ClienteMemoriaHandler.java
-    </summary>
-
-        
-#### All Lines Covered!
         
 </details>
 
@@ -205,18 +193,6 @@
 
     
 ### br/com/alfac/foodcliente/infra/gateways
-
-<details>
-    <summary>
-:heavy_check_mark: RepositorioClienteGatewayMemoria.java
-    </summary>
-
-        
-#### All Lines Covered!
-        
-</details>
-
-    
 
 <details>
     <summary>
