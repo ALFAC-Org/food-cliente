@@ -8,7 +8,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.5</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <groupId>br.com.alfac</groupId>
@@ -99,6 +99,47 @@
         </dependency>
         <!-- // Config para carregar automaticamente as variáveis ENV no ambiente de teste -->
 
+        <!-- Cucumber -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.13.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit-platform-engine</artifactId>
+            <version>7.13.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite-api</artifactId>
+            <version>1.9.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>5.3.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.3.0</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.groovy</groupId>
+                    <artifactId>groovy-xml</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!-- Dependência do JaCoCo (Agente) -->
 
     </dependencies>
@@ -120,8 +161,6 @@
                         <id>report</id>
                         <phase>test</phase>
                         <goals>
-                            <!-- Se quiser apenas pastas separadas -->
-                            <!-- <goal>report</goal>-->
                             <goal>report</goal>
                         </goals>
                         <configuration>
@@ -131,6 +170,7 @@
                                 <format>CSV</format>
                             </formats>
                             <excludes>
+                                <exclude>**/bdd/**/*.java</exclude>
                                 <exclude>br/com/alfac/foodcliente/core/utils/**</exclude>
                                 <exclude>br/com/alfac/foodcliente/infra/config/SwaggerConfig*</exclude>
                                 <exclude>br/com/alfac/foodcliente/infra/config/WebConfig*</exclude>
@@ -152,8 +192,6 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <!--                                            <minimum>0.80</minimum> valor requirido pelo projeto -->
-                                            <!-- Coverage mínimo Por hora vamos colocar um valor baixo para que passe -->
                                             <minimum>0.00</minimum>
                                         </limit>
                                     </limits>
@@ -173,7 +211,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
                 <configuration>
+                    <excludes>
+                        <exclude>**/bdd/**/*.java</exclude>
+                        <exclude>br/com/alfac/foodcliente/core/utils/**</exclude>
+                        <exclude>br/com/alfac/foodcliente/infra/config/SwaggerConfig*</exclude>
+                        <exclude>br/com/alfac/foodcliente/infra/config/WebConfig*</exclude>
+                        <exclude>br/com/alfac/foodcliente/infra/config/beans/***</exclude>
+                        <exclude>br/com/alfac/foodcliente/FoodClienteApplication*</exclude>
+                    </excludes>
                     <environmentVariables>
                         <SPRING_CLIENTE_DATASOURCE_URL>jdbc:mysql://localhost:31006/foodcliente</SPRING_CLIENTE_DATASOURCE_URL>
                         <FOOD_CLIENTE_DATASOURCE_USERNAME>root</FOOD_CLIENTE_DATASOURCE_USERNAME>
@@ -219,5 +266,116 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+
+    <profiles>
+        <profile>
+            <id>bdd-tests</id>
+            <build>
+                <plugins>
+                    <!-- Plugin Surefire para testes BDD -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <includes>
+                                <include>**/CucumberTest.java</include>
+                            </includes>
+                            <properties>
+                                <configurationParameters>
+                                    cucumber.plugin=pretty, json:target/cucumber-report.json
+                                    cucumber.glue=br.com.alfac.foodcliente.bdd
+                                </configurationParameters>
+                            </properties>
+                        </configuration>
+                    </plugin>
+            </plugins>
+        </build>
+    </profile>
+
+        <profile>
+            <id>unit-tests</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.8.8</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>report</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                                <configuration>
+                                    <formats>
+                                        <format>HTML</format>
+                                        <format>XML</format>
+                                        <format>CSV</format>
+                                    </formats>
+                                    <excludes>
+                                        <exclude>**/bdd/**/*.java</exclude>
+                                        <exclude>br/com/alfac/foodcliente/core/utils/**</exclude>
+                                        <exclude>br/com/alfac/foodcliente/infra/config/SwaggerConfig*</exclude>
+                                        <exclude>br/com/alfac/foodcliente/infra/config/WebConfig*</exclude>
+                                        <exclude>br/com/alfac/foodcliente/infra/config/beans/***</exclude>
+                                        <exclude>br/com/alfac/foodcliente/FoodClienteApplication*</exclude>
+                                        <exclude>**/*$.class</exclude>
+                                    </excludes>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>check</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <rule>
+                                            <element>PACKAGE</element>
+                                            <limits>
+                                                <limit>
+                                                    <counter>LINE</counter>
+                                                    <value>COVEREDRATIO</value>
+                                                    <minimum>0.00</minimum>
+                                                </limit>
+                                            </limits>
+                                        </rule>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/bdd/**/*.java</exclude>
+                                <exclude>br/com/alfac/foodcliente/core/utils/**</exclude>
+                                <exclude>br/com/alfac/foodcliente/infra/config/SwaggerConfig*</exclude>
+                                <exclude>br/com/alfac/foodcliente/infra/config/WebConfig*</exclude>
+                                <exclude>br/com/alfac/foodcliente/infra/config/beans/***</exclude>
+                                <exclude>br/com/alfac/foodcliente/FoodClienteApplication*</exclude>
+                                <exclude>**/*$.class</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
