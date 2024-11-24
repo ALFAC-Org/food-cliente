@@ -26,14 +26,20 @@ public class PassosClienteTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(clienteRequest)
                 .when().post(ENDPOINT_CLIENTES);
-        clienteResponse = response.then().extract().as(Cliente.class);
+        //clienteResponse = response.then().extract().as(Cliente.class);
+        if (response.getStatusCode() == HttpStatus.CREATED.value()) {
+            response.then().body(matchesJsonSchemaInClasspath("schemas/ClienteSchema.json"));
+            clienteResponse = response.then().extract().as(Cliente.class);
+        } else {
+            throw new RuntimeException("Failed to create client: " + response.getBody().asString());
+        }
     }
 
     @Então("o cliente é registrado com sucesso")
     public void clienteRegistradoComSucesso() {
         response.then()
-                .statusCode(HttpStatus.CREATED.value())
-                .body(matchesJsonSchemaInClasspath("./schemas/ClienteResponseSchema.json"));
+                .statusCode(HttpStatus.CREATED.value());
+                //.body(matchesJsonSchemaInClasspath("./schemas/ClienteResponseSchema.json"));
     }
 
     @Dado("que um cliente já foi cadastrado")
