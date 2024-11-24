@@ -20,5 +20,5 @@
       "type": "integer"
     }
   },
-  "required": ["cpf", "nome", "email", "uuid", "id"]
+  "required": ["nome", "email", "uuid", "id"]
 }

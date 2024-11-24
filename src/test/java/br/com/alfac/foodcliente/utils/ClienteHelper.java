@@ -3,10 +3,23 @@ package br.com.alfac.foodcliente.utils;
 import br.com.alfac.foodcliente.core.application.dto.ClienteDTO;
 import br.com.alfac.foodcliente.core.domain.Cliente;
 import br.com.alfac.foodcliente.core.domain.vo.CPF;
+import br.com.alfac.foodcliente.infra.dto.ClienteRequest;
 
+import java.util.Random;
 import java.util.UUID;
 
 public abstract class ClienteHelper {
+    
+    public static ClienteRequest criarClienteRequest() {
+        ClienteRequest clienteRequest = new ClienteRequest();
+
+        String cpf = gerarCpfRandom();
+        clienteRequest.setCpf(cpf);
+        clienteRequest.setNome("Ayrton Senna");
+        clienteRequest.setEmail(cpf + "@teste.com.br");
+
+        return clienteRequest;
+    }
 
     public static ClienteDTO criarClienteDTO() {
         return criarClienteDTO(null, null, null);
@@ -38,4 +51,17 @@ public abstract class ClienteHelper {
 
         return cliente;
     }
+
+    public static String gerarCpfRandom() {
+        Random random = new Random();
+        StringBuilder stringBuilder = new StringBuilder(11);
+
+        for (int i = 0; i < 11; i++) {
+            int numero = random.nextInt(10); // Gera um número de 0 a 9
+            stringBuilder.append(numero);
+        }
+
+        return stringBuilder.toString();
+    }
+
 }

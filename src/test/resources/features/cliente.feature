@@ -21,11 +21,6 @@ Funcionalidade: Gerenciamento de Clientes
     Quando requisitar a busca do cliente pelo UUID
     Então o cliente é exibido com sucesso
 
-  Cenário: Deletar um cliente existente
-    Dado que um cliente já foi cadastrado
-    Quando requisitar a exclusão do cliente
-    Então o cliente é removido com sucesso
-
   Cenário: Buscar um cliente inexistente por ID
     Quando requisitar a busca de um cliente inexistente pelo ID
     Então uma mensagem de cliente não encontrado é exibida

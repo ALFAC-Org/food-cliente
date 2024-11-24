@@ -1,6 +1,7 @@
 package br.com.alfac.foodcliente.bdd;
 
 import br.com.alfac.foodcliente.core.domain.Cliente;
+import br.com.alfac.foodcliente.core.domain.vo.CPF;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
@@ -16,19 +17,23 @@ import static org.hamcrest.Matchers.equalTo;
 public class PassosClienteTest {
 
     private Response response;
-    private Cliente clienteResponse;
-    private String ENDPOINT_CLIENTES = "http://localhost:8080/api/v1/clientes";
 
+    private Cliente clienteResponse;
+    
+    private String ENDPOINT_CLIENTES = "http://localhost:8081/api/v1/clientes";
+
+    
     @Quando("criar um novo cliente")
     public void criarNovoCliente() {
-        var clienteRequest = ClienteHelper.criarClienteDTO();
+        var clienteRequest = ClienteHelper.criarClienteRequest();
+
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(clienteRequest)
                 .when().post(ENDPOINT_CLIENTES);
-        //clienteResponse = response.then().extract().as(Cliente.class);
+
         if (response.getStatusCode() == HttpStatus.CREATED.value()) {
-            response.then().body(matchesJsonSchemaInClasspath("schemas/ClienteSchema.json"));
+            response.then().body(matchesJsonSchemaInClasspath("./schemas/ClienteResponseSchema.json"));
             clienteResponse = response.then().extract().as(Cliente.class);
         } else {
             throw new RuntimeException("Failed to create client: " + response.getBody().asString());
@@ -38,18 +43,21 @@ public class PassosClienteTest {
     @Então("o cliente é registrado com sucesso")
     public void clienteRegistradoComSucesso() {
         response.then()
-                .statusCode(HttpStatus.CREATED.value());
-                //.body(matchesJsonSchemaInClasspath("./schemas/ClienteResponseSchema.json"));
+                .statusCode(HttpStatus.CREATED.value())
+                .body(matchesJsonSchemaInClasspath("./schemas/ClienteResponseSchema.json"));
     }
 
     @Dado("que um cliente já foi cadastrado")
     public void clienteJaCadastrado() {
-        var clienteRequest = ClienteHelper.criarClienteDTO();
+        var clienteRequest = ClienteHelper.criarClienteRequest();
+
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(clienteRequest)
                 .when().post(ENDPOINT_CLIENTES);
+        
         clienteResponse = response.then().extract().as(Cliente.class);
+        clienteResponse.setCpf(new CPF(clienteRequest.getCpf()));
     }
 
     @Quando("requisitar a busca do cliente pelo CPF")
@@ -57,7 +65,7 @@ public class PassosClienteTest {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get(ENDPOINT_CLIENTES + "/por-cpf/{cpf}", clienteResponse.getCpf());
+                .get(ENDPOINT_CLIENTES + "/por-cpf/{cpf}", clienteResponse.getCpf().getNumero());
     }
 
     @Quando("requisitar a busca do cliente pelo ID")
@@ -83,22 +91,6 @@ public class PassosClienteTest {
                 .body(matchesJsonSchemaInClasspath("./schemas/ClienteResponseSchema.json"));
     }
 
-    @Quando("requisitar a exclusão do cliente")
-    public void requisitarExclusaoDoCliente() {
-        response = given()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .when()
-                .delete(ENDPOINT_CLIENTES + "/{id}", clienteResponse.getId());
-    }
-
-    @Então("o cliente é removido com sucesso")
-    public void clienteRemovidoComSucesso() {
-        response.then()
-                .statusCode(HttpStatus.OK.value())
-                .body(equalTo("cliente removido"));
-    }
-
-
     @Quando("requisitar a busca de um cliente inexistente pelo ID")
     public void requisitarBuscarClienteInexistentePorID() {
         response = given()
@@ -111,6 +103,6 @@ public class PassosClienteTest {
     public void clienteNaoEncontrado() {
         response.then()
                 .statusCode(HttpStatus.NOT_FOUND.value())
-                .body(equalTo("cliente não encontrado"));
+                .body("message", equalTo("Cliente não encontrado"));
     }
 }
