@@ -17,7 +17,7 @@ public class PassosClienteTest {
 
     private Response response;
     private Cliente clienteResponse;
-    private String ENDPOINT_CLIENTES = "http://localhost:8081/api/v1/clientes";
+    private String ENDPOINT_CLIENTES = "http://localhost:8080/api/v1/clientes";
 
     @Quando("criar um novo cliente")
     public void criarNovoCliente() {
