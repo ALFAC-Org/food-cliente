@@ -1,4 +1,4 @@
-build:
+makbuild:
 	@echo "Building the application"
 	@mvn compile
 

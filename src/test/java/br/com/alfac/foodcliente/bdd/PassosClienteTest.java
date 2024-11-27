@@ -19,9 +19,8 @@ public class PassosClienteTest {
     private Response response;
 
     private Cliente clienteResponse;
-    
-    private String ENDPOINT_CLIENTES = "http://localhost:8081/api/v1/clientes";
 
+    private String FULL_ENDPOINT_CLIENTES = "http://localhost:8081/api/v1/clientes";
     
     @Quando("criar um novo cliente")
     public void criarNovoCliente() {
@@ -30,7 +29,7 @@ public class PassosClienteTest {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(clienteRequest)
-                .when().post(ENDPOINT_CLIENTES);
+                .when().post(FULL_ENDPOINT_CLIENTES);
 
         if (response.getStatusCode() == HttpStatus.CREATED.value()) {
             response.then().body(matchesJsonSchemaInClasspath("./schemas/ClienteResponseSchema.json"));
@@ -54,7 +53,7 @@ public class PassosClienteTest {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(clienteRequest)
-                .when().post(ENDPOINT_CLIENTES);
+                .when().post(FULL_ENDPOINT_CLIENTES);
         
         clienteResponse = response.then().extract().as(Cliente.class);
         clienteResponse.setCpf(new CPF(clienteRequest.getCpf()));
@@ -65,7 +64,7 @@ public class PassosClienteTest {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get(ENDPOINT_CLIENTES + "/por-cpf/{cpf}", clienteResponse.getCpf().getNumero());
+                .get(FULL_ENDPOINT_CLIENTES + "/por-cpf/{cpf}", clienteResponse.getCpf().getNumero());
     }
 
     @Quando("requisitar a busca do cliente pelo ID")
@@ -73,7 +72,7 @@ public class PassosClienteTest {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get(ENDPOINT_CLIENTES + "/{id}", clienteResponse.getId());
+                .get(FULL_ENDPOINT_CLIENTES + "/{id}", clienteResponse.getId());
     }
 
     @Quando("requisitar a busca do cliente pelo UUID")
@@ -81,7 +80,7 @@ public class PassosClienteTest {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get(ENDPOINT_CLIENTES + "/por-uuid/{uuid}", clienteResponse.getUuid());
+                .get(FULL_ENDPOINT_CLIENTES + "/por-uuid/{uuid}", clienteResponse.getUuid());
     }
 
     @Então("o cliente é exibido com sucesso")
@@ -96,7 +95,7 @@ public class PassosClienteTest {
         response = given()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .when()
-                .get(ENDPOINT_CLIENTES + "/{id}", 9999); // ID inexistente
+                .get(FULL_ENDPOINT_CLIENTES + "/{id}", 9999); // ID inexistente
     }
 
     @Então("uma mensagem de cliente não encontrado é exibida")

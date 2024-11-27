@@ -153,91 +153,11 @@
 
     <build>
         <plugins>
-            <!-- Plugin JaCoCo -->
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.8</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <formats>
-                                <format>HTML</format>
-                                <format>XML</format>
-                                <format>CSV</format>
-                            </formats>
-                            <excludes>
-                                <exclude>**/bdd/**/*.java</exclude>
-                                <exclude>br/com/alfac/foodcliente/core/utils/**</exclude>
-                                <exclude>br/com/alfac/foodcliente/infra/config/SwaggerConfig*</exclude>
-                                <exclude>br/com/alfac/foodcliente/infra/config/WebConfig*</exclude>
-                                <exclude>br/com/alfac/foodcliente/infra/config/beans/***</exclude>
-                                <exclude>br/com/alfac/foodcliente/FoodClienteApplication*</exclude>
-                            </excludes>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>check</id>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <rules>
-                                <rule>
-                                    <element>PACKAGE</element>
-                                    <limits>
-                                        <limit>
-                                            <counter>LINE</counter>
-                                            <value>COVEREDRATIO</value>
-                                            <minimum>0.00</minimum>
-                                        </limit>
-                                    </limits>
-                                </rule>
-                            </rules>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <!-- Plugin para dependências -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>3.6.1</version>
-            </plugin>
-            <!-- Plugin Surefire (Testes) -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/bdd/**/*.java</exclude>
-                        <exclude>br/com/alfac/foodcliente/core/utils/**</exclude>
-                        <exclude>br/com/alfac/foodcliente/infra/config/SwaggerConfig*</exclude>
-                        <exclude>br/com/alfac/foodcliente/infra/config/WebConfig*</exclude>
-                        <exclude>br/com/alfac/foodcliente/infra/config/beans/***</exclude>
-                        <exclude>br/com/alfac/foodcliente/FoodClienteApplication*</exclude>
-                    </excludes>
-                    <environmentVariables>
-                        <SPRING_CLIENTE_DATASOURCE_URL>jdbc:mysql://localhost:31006/foodcliente</SPRING_CLIENTE_DATASOURCE_URL>
-                        <FOOD_CLIENTE_DATASOURCE_USERNAME>root</FOOD_CLIENTE_DATASOURCE_USERNAME>
-                        <FOOD_CLIENTE_DATASOURCE_PASSWORD>root</FOOD_CLIENTE_DATASOURCE_PASSWORD>
-                        <FOOD_CLIENTE_VERSION>latest</FOOD_CLIENTE_VERSION>
-                        <APPLICATION_DATABASE_VERSION>latest</APPLICATION_DATABASE_VERSION>
-                        <ENABLE_FLYWAY>false</ENABLE_FLYWAY>
-                        <FOOD_CLIENTE_PORT>8090</FOOD_CLIENTE_PORT>
-                    </environmentVariables>
-                </configuration>
             </plugin>
 
             <!-- Plugin para Compilação -->
@@ -292,19 +212,13 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
                             <includes>
-                                <include>**/CucumberTest.java</include>
+                                <include>**/bdd/**/*.java</include>
                             </includes>
-                            <properties>
-                                <configurationParameters>
-                                    cucumber.plugin=pretty, json:target/cucumber-report.json
-                                    cucumber.glue=br.com.alfac.foodcliente.bdd
-                                </configurationParameters>
-                            </properties>
                         </configuration>
                     </plugin>
-            </plugins>
-        </build>
-    </profile>
+                </plugins>
+            </build>
+        </profile>
 
         <profile>
             <id>unit-tests</id>
@@ -337,7 +251,7 @@
                                         <exclude>br/com/alfac/foodcliente/core/utils/**</exclude>
                                         <exclude>br/com/alfac/foodcliente/infra/config/SwaggerConfig*</exclude>
                                         <exclude>br/com/alfac/foodcliente/infra/config/WebConfig*</exclude>
-                                        <exclude>br/com/alfac/foodcliente/infra/config/beans/***</exclude>
+                                        <exclude>br/com/alfac/foodcliente/infra/config/beans/**</exclude>
                                         <exclude>br/com/alfac/foodcliente/FoodClienteApplication*</exclude>
                                         <exclude>**/*$.class</exclude>
                                     </excludes>
@@ -384,5 +298,4 @@
             </build>
         </profile>
     </profiles>
-
 </project>
