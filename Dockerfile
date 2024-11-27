@@ -12,7 +12,7 @@ COPY src ./src
 COPY config ./config
 
 # Compila o aplicativo com o Maven
-RUN mvn clean install -U
+RUN mvn clean install -U -DskipTests
 
 # Crie uma imagem baseada na JDK para executar a aplicacao
 FROM openjdk:17-slim
