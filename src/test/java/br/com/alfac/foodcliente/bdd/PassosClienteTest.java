@@ -20,7 +20,7 @@ public class PassosClienteTest {
 
     private Cliente clienteResponse;
 
-    private String FULL_ENDPOINT_CLIENTES = "http://localhost:8081/api/v1/clientes";
+    private String FULL_ENDPOINT_CLIENTES = "http://localhost:8080/api/v1/clientes";
     
     @Quando("criar um novo cliente")
     public void criarNovoCliente() {
