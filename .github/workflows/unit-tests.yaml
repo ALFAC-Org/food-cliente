@@ -1,6 +1,14 @@
-name: Coverage
+name: Unit Tests
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      start:
+        description: 'Start Unit Tests'
+        required: false
+        default: 'true'
 
 # Descomente se precisar de uma nova branch para fazer alterações/testes
 #on:

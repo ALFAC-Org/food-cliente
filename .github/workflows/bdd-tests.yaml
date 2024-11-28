@@ -3,10 +3,6 @@ name: BDD Tests
 on:
   push:
   pull_request:
-  workflow_run:
-    workflows: ["Coverage"]
-    types:
-      - completed
   workflow_dispatch:
     inputs:
       start:
