@@ -23,12 +23,14 @@ jobs:
         uses: thaind0/envfile@v1
         with:
           secrets: ${{ toJSON(secrets) }}
+          override: false # prevent overriding IMAGE_VERSION -> don't create the env variables
+          file: terraform/.env
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
-        run: terraform init  -reconfigure -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" -backend-config="key=terraform-food-cliente.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}"
+        run: terraform init -reconfigure -backend-config="bucket=${{ secrets.AWS_BUCKET_NAME }}" -backend-config="key=terraform-food-cliente.tfstate" -backend-config="region=${{ secrets.AWS_REGION }}"
         working-directory: terraform
 
       - name: Terraform Destroy
