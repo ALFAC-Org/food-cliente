@@ -10,7 +10,7 @@ on: [push, pull_request]
 
 jobs:
   coverage:
-    name: Coverage
+#    name: Coverage
     uses: ALFAC-Org/github-workflows/.github/workflows/coverage.yaml@main
     secrets: inherit
     permissions: write-all
