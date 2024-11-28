@@ -43,5 +43,11 @@ jobs:
       - name: Run BDD tests
         run: mvn test -P bdd-tests
 
+      - name: Generate Cucumber report
+        uses: deblockt/cucumber-report-annotations-action@v1.7
+        with:
+          access-token: ${{ secrets.GITHUB_TOKEN }}
+          path: "target/cucumber-reports/cucumber.json"
+
       - name: Stop and remove services
         run: docker-compose down
