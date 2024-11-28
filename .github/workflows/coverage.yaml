@@ -8,9 +8,12 @@ on: [push, pull_request]
 #    branches:
 #      - feat/add-coverage-info
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  coverage:
-#    name: Coverage
+  execute-unit-tests:
     uses: ALFAC-Org/github-workflows/.github/workflows/coverage.yaml@main
     secrets: inherit
     permissions: write-all

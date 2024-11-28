@@ -14,8 +14,12 @@ on:
         required: false
         default: 'true'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  bdd:
+  execute-bdd-tests:
     runs-on: ubuntu-latest
     permissions: write-all
 
