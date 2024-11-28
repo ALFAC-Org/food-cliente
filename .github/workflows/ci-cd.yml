@@ -2,19 +2,18 @@
 name: CI/CD
 
 on:
-#  push:
-#    branches:
-#      - main
-#  # TODO: se pudermos provisionar mais máquinas, isso aqui faz sentido
-#  pull_request:
-#    branches:
-#      - main
-#    types:
-#      - closed
-  workflow_run:
-    workflows: ["BDD Tests"]
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
     types:
-      - completed
+      - closed
+#  workflow_run:
+#    workflows: ["BDD Tests"]
+#    types:
+#      - completed
   workflow_dispatch:
     inputs:
       app_image_version:
@@ -24,8 +23,9 @@ on:
 
 jobs:
   check-aws-online:
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
