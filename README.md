@@ -71,6 +71,8 @@ Acesse a aplicação da API em:
 
 </details>
 
+![swagger-aplicacao](docs/swagger-aplicacao.png)
+
 ## Testes
 
 Certifique-se de instalar as dependências do projeto antes de executar os testes.
@@ -103,8 +105,8 @@ make unit-test-coverage
 senão:
 
 ```bash
-  mvn clean test -P unit-tests
-  ```
+mvn clean test -P unit-tests
+```
 
 Você poderá ver o relatório de cobertura de testes em `target/site/jacoco/index.html`.
 
