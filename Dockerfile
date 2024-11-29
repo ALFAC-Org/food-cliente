@@ -20,14 +20,17 @@ FROM openjdk:17-slim
 # Define o WORKDIR no container
 WORKDIR /app
 
+ARG PROFILE=prod
+ENV PROFILE=${PROFILE}
+
 # Copia o JAR da aplicacao para o WORKDIR
 COPY --from=build /app/target/*.jar ./app.jar
 
 # Executa a aplicacao
-CMD ["java", "-Dspring.profiles.active=prod", "-Dlogging.level.root=DEBUG", "-jar", "app.jar"]
+CMD ["java", "-Dspring.profiles.active=${PROFILE}", "-Dlogging.level.root=DEBUG", "-jar", "app.jar"]
 
 # Build e envio da imagem para o Docker Hub
 # docker buildx build --platform linux/amd64,linux/arm64 -f Dockerfile -t carlohcs/food-cliente:1 . --push
 
 # Rodando a aplicação
-# docker run -it --platform linux/amd64 -p 8080:8080 carlohcs/food-cliente:1
+# docker run -it --platform linux/amd64 -p 8082:8082 carlohcs/food-cliente:1
