@@ -6,6 +6,8 @@ import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
 import io.restassured.response.Response;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import br.com.alfac.foodcliente.utils.ClienteHelper;
@@ -20,8 +22,16 @@ public class PassosClienteTest {
 
     private Cliente clienteResponse;
 
-    private String FULL_ENDPOINT_CLIENTES = "http://localhost:8080/api/v1/clientes";
-    
+    private String FULL_ENDPOINT_CLIENTES;
+
+    @Value("${server.port}")
+    private String applicationPort;
+
+    @PostConstruct
+    public void init() {
+        FULL_ENDPOINT_CLIENTES = "http://localhost:" + applicationPort + "/api/v1/clientes";
+    }
+
     @Quando("criar um novo cliente")
     public void criarNovoCliente() {
         var clienteRequest = ClienteHelper.criarClienteRequest();
@@ -54,7 +64,7 @@ public class PassosClienteTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(clienteRequest)
                 .when().post(FULL_ENDPOINT_CLIENTES);
-        
+
         clienteResponse = response.then().extract().as(Cliente.class);
         clienteResponse.setCpf(new CPF(clienteRequest.getCpf()));
     }

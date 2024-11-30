@@ -47,7 +47,7 @@ A interação da aplicação se dá através de APIs com o Swagger disponibiliza
 3. Clique em `Run workflow` (ou Executar workflow);
 4. Aguarde. Se tudo der certo, o `check` verde deverá aparecer - o processo dura em torno de 2 minutos;
 
-![applicacao-atualizada-sucesso](./docs/aplicacao-atualizada-sucesso.png)
+![applicacao-atualizada-sucesso](docs/aplicacao-atualizada-sucesso.png)
 
 Para acessar a aplicação é necessário acessar a URL da através do Kubernetes, acessando a área de Services e acessando ao serviço `food-cliente`.
 A URL será algo como: [http://aa326084c74cf48c6a15f7832f4edb95-21c002b943a9cff6.elb.us-east-1.amazonaws.com:8080/api-docs](http://aa326084c74cf48c6a15f7832f4edb95-21c002b943a9cff6.elb.us-east-1.amazonaws.com:8080/api-docs).
@@ -67,7 +67,7 @@ docker compose up
 
 Acesse a aplicação da API em:
 
-[http://localhost:8080/api-docs](http://localhost:8080/api-docs)
+[http://localhost:8082/api-docs](http://localhost:8082/api-docs)
 
 </details>
 
@@ -110,7 +110,7 @@ mvn clean test -P unit-tests
 
 Você poderá ver o relatório de cobertura de testes em `target/site/jacoco/index.html`.
 
-![jacoco-coverage.png](./docs/jacoco-coverage.png)
+![jacoco-coverage.png](docs/jacoco-coverage.png)
 
 Além disso, é possível ver o coverage atualizado nesta página, ao lado do título do repositório.
 
@@ -143,7 +143,7 @@ mvn clean test -P bdd-tests
 
 Você poderá ver o relatório de cobertura de testes em `target/cucumber-reports/cucumber.html`.
 
-![cucumber-coverage.png](./docs/cucumber-coverage.png)
+![cucumber-coverage.png](docs/cucumber-coverage.png)
 
 </details>
 
